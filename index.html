@@ -213,9 +213,11 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // --- Daftar nama-nama valid ---
-        // Pastikan format penulisan (huruf besar/kecil) sama persis dengan yang akan diinput
-        const daftarNamaValid = [
+        // --- Daftar nama-nama valid (dipisah berdasarkan peran) ---
+        // Penting: Pastikan format penulisan (huruf besar/kecil) di sini
+        // sesuai dengan cara Anda ingin pengguna menginput, atau gunakan toUpperCase()
+        // untuk memastikan perbandingan yang konsisten.
+        const daftarSiswa = [
             "AHMAD",
             "Aji Setiawan",
             "Akhdan Raihan Putra",
@@ -248,6 +250,14 @@
             "Sulaeman",
             "Supriatna",
             "Zulpikri Maulana"
+        ];
+
+        const daftarGuru = [
+            "EGI", // Contoh nama guru
+            "KHOERUNISA",   // Contoh nama guru
+            "JIMMY",
+            "Ibu Ani"
+            // Tambahkan nama-nama guru di sini
         ];
 
         // --- Jadwal Pelajaran ---
@@ -312,6 +322,32 @@
         updateSchedule();
         setInterval(updateSchedule, 60000); // cek jadwal tiap 1 menit
 
+        // --- Deteksi peran saat input ID berubah ---
+        userIdInput.addEventListener('input', () => {
+            const inputId = userIdInput.value.trim();
+            const inputIdNormalized = inputId.toUpperCase(); // Normalisasi input
+
+            const daftarSiswaNormalized = daftarSiswa.map(nama => nama.toUpperCase());
+            const daftarGuruNormalized = daftarGuru.map(nama => nama.toUpperCase());
+
+            if (daftarSiswaNormalized.includes(inputIdNormalized)) {
+                roleSelect.value = 'siswa';
+                statusP.textContent = 'Peran terdeteksi: Siswa';
+            } else if (daftarGuruNormalized.includes(inputIdNormalized)) {
+                roleSelect.value = 'guru';
+                statusP.textContent = 'Peran terdeteksi: Guru';
+            } else {
+                // Jika nama tidak ditemukan di kedua daftar
+                roleSelect.value = 'siswa'; // Atau bisa diset ke default atau biarkan saja
+                if (inputId.length > 0) { // Hanya tampilkan pesan jika ada input
+                     statusP.textContent = 'ID/Nama tidak dikenal. Peran default: Siswa.';
+                } else {
+                    statusP.textContent = ''; // Kosongkan jika input kosong
+                }
+            }
+        });
+
+
         // --- Kamera dan ambil foto ---
         btnStartCamera.addEventListener('click', async () => {
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -331,19 +367,28 @@
         // --- Proses absensi ---
         btnAbsen.addEventListener('click', async () => {
             const inputId = userIdInput.value.trim();
+            const inputIdNormalized = inputId.toUpperCase(); // Normalisasi input
 
-            // Validasi ID/Nama
-            // Ubah input menjadi huruf besar agar cocok dengan daftar (jika daftar nama ditulis huruf besar semua)
-            // Jika daftar nama Anda bervariasi huruf besar/kecil, pertimbangkan untuk mengubah daftarNamaValid.map(nama => nama.toLowerCase()) juga
-            const inputIdNormalized = inputId.toUpperCase(); // Mengubah input ke huruf besar
-            const daftarNamaValidNormalized = daftarNamaValid.map(nama => nama.toUpperCase()); // Mengubah daftar nama ke huruf besar untuk perbandingan
+            const daftarSiswaNormalized = daftarSiswa.map(nama => nama.toUpperCase());
+            const daftarGuruNormalized = daftarGuru.map(nama => nama.toUpperCase());
+
+            let detectedRole = ''; // Variabel untuk menyimpan peran yang terdeteksi
+            let isValidName = false;
+
+            if (daftarSiswaNormalized.includes(inputIdNormalized)) {
+                detectedRole = 'siswa';
+                isValidName = true;
+            } else if (daftarGuruNormalized.includes(inputIdNormalized)) {
+                detectedRole = 'guru';
+                isValidName = true;
+            }
 
             if (!inputId) {
                 alert('Masukkan ID/Nama dengan benar.');
                 return;
             }
 
-            if (!daftarNamaValidNormalized.includes(inputIdNormalized)) {
+            if (!isValidName) {
                 alert('ID/Nama tidak terdaftar. Anda tidak diizinkan untuk absensi.');
                 statusP.textContent = 'Absensi Gagal: ID/Nama tidak valid.';
                 return; // Hentikan proses jika nama tidak valid
@@ -377,13 +422,13 @@
             const dataAbsensi = {
                 id: inputId, // Simpan ID/Nama sesuai input asli
                 nama: inputId, // Gunakan inputId sebagai nama
-                role: roleSelect.value,
+                role: detectedRole, // Gunakan peran yang terdeteksi secara otomatis
                 waktu: new Date().toISOString(),
                 mapel: aktif ? aktif.subject : '-',
                 jam: aktif ? aktif.start + ' - ' + aktif.end : '-',
                 foto: photoData,
                 lokasi,
-                materi: roleSelect.value === 'guru' ? prompt("Masukkan materi pelajaran:") || '' : ''
+                materi: detectedRole === 'guru' ? prompt("Masukkan materi pelajaran:") || '' : ''
             };
 
             // Simpan data ke Firebase (path: absensi/{id}/{waktu})
