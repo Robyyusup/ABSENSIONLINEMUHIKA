@@ -213,9 +213,46 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
+        // --- Daftar nama-nama valid ---
+        // Pastikan format penulisan (huruf besar/kecil) sama persis dengan yang akan diinput
+        const daftarNamaValid = [
+            "AHMAD",
+            "Aji Setiawan",
+            "Akhdan Raihan Putra",
+            "ALDI",
+            "Anang Suryana",
+            "Andra Septiana",
+            "Anggi Permadani",
+            "Anwar Musadad",
+            "Axelle Aulia",
+            "DANDA DERA AZAHRA",
+            "Fadillah Nurosobah",
+            "Fajar Ramadhan",
+            "Fazry Rizki Restiana",
+            "Hasim Ramdani",
+            "ILPAN SAMSUL ARIP",
+            "M. Rizqi Al Mubarok",
+            "MOHAMAD RAFLI RAMADAN",
+            "Muhamad Dzikry Ilham",
+            "Muhamad Rizki",
+            "Muhammad Ihsan Aroyan",
+            "Muhammad Rahmat Aldila",
+            "MUSTOPA",
+            "PARHAN SUHENDI",
+            "Raka Aditya",
+            "Ramdani",
+            "RIDWAN",
+            "RIKI",
+            "RISKI MULYANA",
+            "Siti Patimah",
+            "Sulaeman",
+            "Supriatna",
+            "Zulpikri Maulana"
+        ];
+
         // --- Jadwal Pelajaran ---
         const scheduleList = [
-            { day: 'Rabu', start: '05:00', end: '09:40', subject: 'Matematika' },
+            { day: 'Senin', start: '08:00', end: '09:40', subject: 'Matematika' },
             { day: 'Senin', start: '10:00', end: '11:40', subject: 'Bahasa Indonesia' },
             { day: 'Selasa', start: '08:00', end: '09:40', subject: 'Fisika' },
             { day: 'Selasa', start: '10:00', end: '11:40', subject: 'Kimia' },
@@ -293,9 +330,23 @@
 
         // --- Proses absensi ---
         btnAbsen.addEventListener('click', async () => {
-            if (!userIdInput.value.trim()) {
-                alert('Masukkan ID dengan benar.');
+            const inputId = userIdInput.value.trim();
+
+            // Validasi ID/Nama
+            // Ubah input menjadi huruf besar agar cocok dengan daftar (jika daftar nama ditulis huruf besar semua)
+            // Jika daftar nama Anda bervariasi huruf besar/kecil, pertimbangkan untuk mengubah daftarNamaValid.map(nama => nama.toLowerCase()) juga
+            const inputIdNormalized = inputId.toUpperCase(); // Mengubah input ke huruf besar
+            const daftarNamaValidNormalized = daftarNamaValid.map(nama => nama.toUpperCase()); // Mengubah daftar nama ke huruf besar untuk perbandingan
+
+            if (!inputId) {
+                alert('Masukkan ID/Nama dengan benar.');
                 return;
+            }
+
+            if (!daftarNamaValidNormalized.includes(inputIdNormalized)) {
+                alert('ID/Nama tidak terdaftar. Anda tidak diizinkan untuk absensi.');
+                statusP.textContent = 'Absensi Gagal: ID/Nama tidak valid.';
+                return; // Hentikan proses jika nama tidak valid
             }
 
             // Ambil foto dari video stream
@@ -324,8 +375,8 @@
 
             // Siapkan data absensi
             const dataAbsensi = {
-                id: userIdInput.value.trim(),
-                nama: "User " + userIdInput.value.slice(-4), // Contoh nama
+                id: inputId, // Simpan ID/Nama sesuai input asli
+                nama: inputId, // Gunakan inputId sebagai nama
                 role: roleSelect.value,
                 waktu: new Date().toISOString(),
                 mapel: aktif ? aktif.subject : '-',
