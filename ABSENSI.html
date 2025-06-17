@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Absensi Online</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f2f4f7;
+      max-width: 700px;
+      margin: auto;
+      padding: 30px;
+      color: #333;
+    }
+    h2 {
+      text-align: center;
+      color: #1e88e5;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+    label {
+      margin-top: 15px;
+      font-weight: 600;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    button {
+      background-color: #1e88e5;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #1565c0;
+    }
+    #photoPreview {
+      margin-top: 15px;
+      max-width: 100%;
+      border-radius: 8px;
+      border: 2px solid #ddd;
+    }
+    p {
+      font-size: 15px;
+      margin-top: 10px;
+    }
+    .status {
+      padding: 10px;
+      margin-top: 15px;
+      background: #f8f9fa;
+      border-left: 5px solid #1e88e5;
+      border-radius: 4px;
+      color: #333;
+    }
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+</head>
+<body>
+
+<h2>Absensi Online</h2>
+<div class="card">
+  <label for="userId">ID Siswa/Guru (Scan QR Code via Aplikasi)</label>
+  <input type="text" id="userId" placeholder="Masukkan ID unik" autofocus />
+
+  <label for="role">Pilih Peran</label>
+  <select id="role">
+    <option value="siswa">Siswa</option>
+    <option value="guru">Guru</option>
+  </select>
+
+  <p>Mata Pelajaran Sekarang: <strong><span id="subject">-</span></strong></p>
+  <p>Jam Pelajaran Sekarang: <strong><span id="schedule">-</span></strong></p>
+
+  <video id="video" width="320" height="240" autoplay style="display:none;"></video>
+  <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+  <img id="photoPreview" alt="Foto akan muncul di sini" />
+
+  <button id="btnStartCamera">Aktifkan Kamera</button>
+  <button id="btnAbsen" disabled>Konfirmasi Hadir</button>
+  <div id="status" class="status"></div>
+</div>
+
+<script>
+  // Firebase Config di sini
+</script>
+
+</body>
+</html>
