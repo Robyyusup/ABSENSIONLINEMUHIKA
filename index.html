@@ -163,6 +163,10 @@
             font-weight: bold;
             color: #d9534f; /* Error/status color */
         }
+        /* --- Perubahan Baru: Sembunyikan label dan select peran --- */
+        #roleContainer { /* Tambahkan div pembungkus ini di HTML */
+            display: none;
+        }
     </style>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
@@ -179,11 +183,13 @@
     <label for="userId">Masukkan ID Siswa/Guru (Scan QR Code Bisa menggunakan aplikasi pemindai QR di HP)</label>
     <input type="text" id="userId" placeholder="Masukkan ID unik" autofocus />
 
-    <label for="role">Pilih Peran</label>
-    <select id="role">
-        <option value="siswa">Siswa</option>
-        <option value="guru">Guru</option>
-    </select>
+    <div id="roleContainer">
+        <label for="role">Pilih Peran</label>
+        <select id="role">
+            <option value="siswa">Siswa</option>
+            <option value="guru">Guru</option>
+        </select>
+    </div>
 
     <p>Mata Pelajaran Sekarang: <span id="subject">-</span></p>
     <p>Jam Pelajaran Sekarang: <span id="schedule">-</span></p>
@@ -214,55 +220,29 @@
         const db = firebase.database();
 
         // --- Daftar nama-nama valid (dipisah berdasarkan peran) ---
-        // Penting: Pastikan format penulisan (huruf besar/kecil) di sini
-        // sesuai dengan cara Anda ingin pengguna menginput, atau gunakan toUpperCase()
-        // untuk memastikan perbandingan yang konsisten.
         const daftarSiswa = [
-            "AHMAD",
-            "Aji Setiawan",
-            "Akhdan Raihan Putra",
-            "ALDI",
-            "Anang Suryana",
-            "Andra Septiana",
-            "Anggi Permadani",
-            "Anwar Musadad",
-            "Axelle Aulia",
-            "DANDA DERA AZAHRA",
-            "Fadillah Nurosobah",
-            "Fajar Ramadhan",
-            "Fazry Rizki Restiana",
-            "Hasim Ramdani",
-            "ILPAN SAMSUL ARIP",
-            "M. Rizqi Al Mubarok",
-            "MOHAMAD RAFLI RAMADAN",
-            "Muhamad Dzikry Ilham",
-            "Muhamad Rizki",
-            "Muhammad Ihsan Aroyan",
-            "Muhammad Rahmat Aldila",
-            "MUSTOPA",
-            "PARHAN SUHENDI",
-            "Raka Aditya",
-            "Ramdani",
-            "RIDWAN",
-            "RIKI",
-            "RISKI MULYANA",
-            "Siti Patimah",
-            "Sulaeman",
-            "Supriatna",
+            "AHMAD", "Aji Setiawan", "Akhdan Raihan Putra", "ALDI", "Anang Suryana",
+            "Andra Septiana", "Anggi Permadani", "Anwar Musadad", "Axelle Aulia",
+            "DANDA DERA AZAHRA", "Fadillah Nurosobah", "Fajar Ramadhan",
+            "Fazry Rizki Restiana", "Hasim Ramdani", "ILPAN SAMSUL ARIP",
+            "M. Rizqi Al Mubarok", "MOHAMAD RAFLI RAMADAN", "Muhamad Dzikry Ilham",
+            "Muhamad Rizki", "Muhammad Ihsan Aroyan", "Muhammad Rahmat Aldila",
+            "MUSTOPA", "PARHAN SUHENDI", "Raka Aditya", "Ramdani", "RIDWAN",
+            "RIKI", "RISKI MULYANA", "Siti Patimah", "Sulaeman", "Supriatna",
             "Zulpikri Maulana"
         ];
 
         const daftarGuru = [
-            "EGI", // Contoh nama guru
-            "KHOERUNISA",   // Contoh nama guru
-            "JIMMY",
+            "Bapak Asep", // Contoh nama guru
+            "Ibu Siti",   // Contoh nama guru
+            "Bapak Budi",
             "Ibu Ani"
             // Tambahkan nama-nama guru di sini
         ];
 
         // --- Jadwal Pelajaran ---
         const scheduleList = [
-            { day: 'Rabu', start: '06:00', end: '09:40', subject: 'Matematika' },
+            { day: 'Senin', start: '08:00', end: '09:40', subject: 'Matematika' },
             { day: 'Senin', start: '10:00', end: '11:40', subject: 'Bahasa Indonesia' },
             { day: 'Selasa', start: '08:00', end: '09:40', subject: 'Fisika' },
             { day: 'Selasa', start: '10:00', end: '11:40', subject: 'Kimia' },
@@ -291,7 +271,7 @@
 
         // --- Elemen DOM ---
         const userIdInput = document.getElementById('userId');
-        const roleSelect = document.getElementById('role');
+        const roleSelect = document.getElementById('role'); // Tetap ambil elemen ini untuk diatur nilainya
         const subjectSpan = document.getElementById('subject');
         const scheduleSpan = document.getElementById('schedule');
         const btnStartCamera = document.getElementById('btnStartCamera');
@@ -337,8 +317,7 @@
                 roleSelect.value = 'guru';
                 statusP.textContent = 'Peran terdeteksi: Guru';
             } else {
-                // Jika nama tidak ditemukan di kedua daftar
-                roleSelect.value = 'siswa'; // Atau bisa diset ke default atau biarkan saja
+                roleSelect.value = 'siswa'; // Default jika tidak ditemukan
                 if (inputId.length > 0) { // Hanya tampilkan pesan jika ada input
                      statusP.textContent = 'ID/Nama tidak dikenal. Peran default: Siswa.';
                 } else {
