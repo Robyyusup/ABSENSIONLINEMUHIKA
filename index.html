@@ -1,102 +1,351 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Absensi Online</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f2f4f7;
-      max-width: 700px;
-      margin: auto;
-      padding: 30px;
-      color: #333;
-    }
-    h2 {
-      text-align: center;
-      color: #1e88e5;
-    }
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 25px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      margin-top: 20px;
-    }
-    label {
-      margin-top: 15px;
-      font-weight: 600;
-    }
-    input, select, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      box-sizing: border-box;
-      font-size: 16px;
-    }
-    button {
-      background-color: #1e88e5;
-      color: #fff;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    button:hover {
-      background-color: #1565c0;
-    }
-    #photoPreview {
-      margin-top: 15px;
-      max-width: 100%;
-      border-radius: 8px;
-      border: 2px solid #ddd;
-    }
-    p {
-      font-size: 15px;
-      margin-top: 10px;
-    }
-    .status {
-      padding: 10px;
-      margin-top: 15px;
-      background: #f8f9fa;
-      border-left: 5px solid #1e88e5;
-      border-radius: 4px;
-      color: #333;
-    }
-  </style>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Absensi Online</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f4f7f6; /* Light background for contrast */
+            color: #333;
+            position: relative;
+            overflow: hidden; /* Hide overflowing shapes */
+        }
+
+        /* Geometric Shapes */
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .circle1 {
+            width: 150px;
+            height: 150px;
+            background-color: #4CAF50; /* Green */
+            border-radius: 50%;
+            top: -50px;
+            left: -50px;
+        }
+
+        .circle2 {
+            width: 100px;
+            height: 100px;
+            background-color: #2196F3; /* Blue */
+            border-radius: 50%;
+            bottom: -30px;
+            right: -30px;
+        }
+
+        .square1 {
+            width: 120px;
+            height: 120px;
+            background-color: #FFC107; /* Amber */
+            transform: rotate(45deg);
+            top: 100px;
+            right: -60px;
+        }
+
+        .triangle1 {
+            width: 0;
+            height: 0;
+            border-left: 75px solid transparent;
+            border-right: 75px solid transparent;
+            border-bottom: 150px solid #f44336; /* Red */
+            bottom: 80px;
+            left: -40px;
+            transform: rotate(20deg);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            width: 100%;
+            max-width: 400px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        select {
+            display: block;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        p {
+            margin: 10px 0;
+            font-size: 1.1em;
+            color: #666;
+        }
+
+        p span {
+            font-weight: bold;
+            color: #333;
+        }
+
+        video {
+            display: block;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        canvas {
+            display: none; /* Keep canvas hidden */
+        }
+
+        #photoPreview {
+            display: block;
+            margin: 20px auto;
+            max-width: 320px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #e9ecef;
+            min-height: 100px; /* Placeholder height */
+            object-fit: contain;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 15px;
+            width: 100%;
+            max-width: 400px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        #status {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #d9534f; /* Error/status color */
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 </head>
 <body>
 
-<h2>Absensi Online</h2>
-<div class="card">
-  <label for="userId">ID Siswa/Guru (Scan QR Code via Aplikasi)</label>
-  <input type="text" id="userId" placeholder="Masukkan ID unik" autofocus />
+    <div class="shape circle1"></div>
+    <div class="shape circle2"></div>
+    <div class="shape square1"></div>
+    <div class="shape triangle1"></div>
 
-  <label for="role">Pilih Peran</label>
-  <select id="role">
-    <option value="siswa">Siswa</option>
-    <option value="guru">Guru</option>
-  </select>
+    <h2>Absensi Online</h2>
 
-  <p>Mata Pelajaran Sekarang: <strong><span id="subject">-</span></strong></p>
-  <p>Jam Pelajaran Sekarang: <strong><span id="schedule">-</span></strong></p>
+    <label for="userId">Masukkan ID Siswa/Guru (Scan QR Code Bisa menggunakan aplikasi pemindai QR di HP)</label>
+    <input type="text" id="userId" placeholder="Masukkan ID unik" autofocus />
 
-  <video id="video" width="320" height="240" autoplay style="display:none;"></video>
-  <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
-  <img id="photoPreview" alt="Foto akan muncul di sini" />
+    <label for="role">Pilih Peran</label>
+    <select id="role">
+        <option value="siswa">Siswa</option>
+        <option value="guru">Guru</option>
+    </select>
 
-  <button id="btnStartCamera">Aktifkan Kamera</button>
-  <button id="btnAbsen" disabled>Konfirmasi Hadir</button>
-  <div id="status" class="status"></div>
-</div>
+    <p>Mata Pelajaran Sekarang: <span id="subject">-</span></p>
+    <p>Jam Pelajaran Sekarang: <span id="schedule">-</span></p>
 
-<script>
-  // Firebase Config di sini
-</script>
+    <video id="video" width="320" height="240" autoplay style="display:none;"></video>
+    <canvas id="canvas" width="320" height="240" style="display:none;"></canvas><br>
+    <img id="photoPreview" alt="Foto akan muncul di sini" />
+
+    <button id="btnStartCamera">Aktifkan Kamera</button>
+    <button id="btnAbsen" disabled>Konfirmasi Hadir</button>
+
+    <p id="status"></p>
+
+    <script>
+        // --- Konfigurasi Firebase (Ganti sesuai project Anda) ---
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyDrt5MHhs-Wjoye8swLwLb068HC4kme-rg",
+            authDomain: "absensionlinemuhika.firebaseapp.com",
+            databaseURL: "https://absensionlinemuhika-default-rtdb.firebaseio.com",
+            projectId: "absensionlinemuhika",
+            storageBucket: "absensionlinemuhika.firebasestorage.app",
+            messagingSenderId: "109622927610",
+            appId: "1:109622927610:web:0b5a6ab7e5bc3104f4e943",
+            measurementId: "G-VYJ320SDRM"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // --- Jadwal Pelajaran ---
+        const scheduleList = [
+            { day: 'Senin', start: '08:00', end: '09:40', subject: 'Matematika' },
+            { day: 'Senin', start: '10:00', end: '11:40', subject: 'Bahasa Indonesia' },
+            { day: 'Selasa', start: '08:00', end: '09:40', subject: 'Fisika' },
+            { day: 'Selasa', start: '10:00', end: '11:40', subject: 'Kimia' },
+            // Tambahkan jadwal lain sesuai kebutuhan
+        ];
+
+        // --- Fungsi Bantu ---
+        function getCurrentDay() {
+            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            return days[new Date().getDay()];
+        }
+
+        function isNowInRange(start, end) {
+            const now = new Date();
+            const [sh, sm] = start.split(':').map(Number);
+            const [eh, em] = end.split(':').map(Number);
+            const startTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), sh, sm);
+            const endTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), eh, em);
+            return now >= startTime && now <= endTime;
+        }
+
+        function getActiveSchedule() {
+            const today = getCurrentDay();
+            return scheduleList.find(item => item.day === today && isNowInRange(item.start, item.end));
+        }
+
+        // --- Elemen DOM ---
+        const userIdInput = document.getElementById('userId');
+        const roleSelect = document.getElementById('role');
+        const subjectSpan = document.getElementById('subject');
+        const scheduleSpan = document.getElementById('schedule');
+        const btnStartCamera = document.getElementById('btnStartCamera');
+        const btnAbsen = document.getElementById('btnAbsen');
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const photoPreview = document.getElementById('photoPreview');
+        const statusP = document.getElementById('status');
+
+        let stream;
+
+        // Tampilkan jadwal saat halaman dibuka dan juga setiap input id berubah
+        function updateSchedule() {
+            const active = getActiveSchedule();
+            if (active) {
+                subjectSpan.textContent = active.subject;
+                scheduleSpan.textContent = active.start + ' - ' + active.end;
+                btnAbsen.disabled = false;
+                statusP.textContent = '';
+            } else {
+                subjectSpan.textContent = '-';
+                scheduleSpan.textContent = '-';
+                btnAbsen.disabled = true;
+                statusP.textContent = 'Belum waktu absensi, silakan coba saat jadwal aktif.';
+            }
+        }
+
+        updateSchedule();
+        setInterval(updateSchedule, 60000); // cek jadwal tiap 1 menit
+
+        // --- Kamera dan ambil foto ---
+        btnStartCamera.addEventListener('click', async () => {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    video.srcObject = stream;
+                    video.style.display = 'block';
+                    statusP.textContent = 'Kamera aktif. Siapkan wajah Anda.';
+                } catch (error) {
+                    statusP.textContent = 'Gagal mengakses kamera: ' + error.message;
+                }
+            } else {
+                statusP.textContent = 'Browser Anda tidak mendukung akses kamera.';
+            }
+        });
+
+        // --- Proses absensi ---
+        btnAbsen.addEventListener('click', async () => {
+            if (!userIdInput.value.trim()) {
+                alert('Masukkan ID dengan benar.');
+                return;
+            }
+
+            // Ambil foto dari video stream
+            canvas.width = video.videoWidth || 320;
+            canvas.height = video.videoHeight || 240;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const photoData = canvas.toDataURL('image/png');
+            photoPreview.src = photoData;
+
+            // Ambil lokasi
+            statusP.textContent = 'Sedang mengakses lokasi...';
+            let lokasi = { latitude: 0, longitude: 0 };
+            try {
+                const posisi = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject);
+                });
+                lokasi.latitude = posisi.coords.latitude;
+                lokasi.longitude = posisi.coords.longitude;
+            } catch {
+                statusP.textContent = 'Tidak dapat mengakses lokasi.';
+            }
+
+            // Ambil jadwal aktif utk disimpan
+            const aktif = getActiveSchedule();
+
+            // Siapkan data absensi
+            const dataAbsensi = {
+                id: userIdInput.value.trim(),
+                nama: "User " + userIdInput.value.slice(-4), // Contoh nama
+                role: roleSelect.value,
+                waktu: new Date().toISOString(),
+                mapel: aktif ? aktif.subject : '-',
+                jam: aktif ? aktif.start + ' - ' + aktif.end : '-',
+                foto: photoData,
+                lokasi,
+                materi: roleSelect.value === 'guru' ? prompt("Masukkan materi pelajaran:") || '' : ''
+            };
+
+            // Simpan data ke Firebase (path: absensi/{id}/{waktu})
+            const path = `absensi/${dataAbsensi.id}/${Date.now()}`;
+            try {
+                await db.ref(path).set(dataAbsensi);
+                statusP.textContent = "Absensi berhasil disimpan.";
+                btnAbsen.disabled = true;
+            } catch (error) {
+                statusP.textContent = "Gagal menyimpan absensi: " + error.message;
+            }
+        });
+    </script>
 
 </body>
 </html>
