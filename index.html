@@ -28,7 +28,7 @@
             background-color: var(--background-light);
             color: var(--text-color);
             position: relative;
-            overflow: hidden; /* Sembunyikan shapes yang meluap dari body */
+            /* overflow: hidden; -- PROPERTI INI DIHAPUS AGAR HALAMAN BISA DI-SCROLL */
         }
 
         /* Styling untuk container utama form yang berfungsi sebagai "kartu" */
@@ -172,7 +172,6 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 100%; /* Video akan selalu memenuhi lebar yang tersedia */
             height: auto; /* Menjaga rasio aspek */
-            /* max-width: 320px; -- Dihapus agar video dapat diskalakan lebih besar pada perangkat yang lebih lebar */
         }
 
         canvas {
@@ -182,7 +181,6 @@
         #photoPreview {
             display: block;
             margin: 20px auto;
-            /* max-width: 320px; -- Dihapus agar preview foto dapat diskalakan lebih besar */
             width: 100%; /* Preview foto akan selalu memenuhi lebar yang tersedia */
             height: auto; /* Menjaga rasio aspek */
             border: 1px solid #ccc;
