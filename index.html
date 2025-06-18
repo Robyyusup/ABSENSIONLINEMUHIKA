@@ -27,7 +27,6 @@
             background-color: var(--background-light);
             color: var(--text-color);
             position: relative;
-            /* overflow: hidden; -- PROPERTI INI DIHAPUS AGAR HALAMAN BISA DI-SCROLL */
         }
 
         /* Styling untuk container utama form yang berfungsi sebagai "kartu" */
@@ -177,6 +176,20 @@
             color: #01579b; /* Darker blue text */
             font-size: 1.2em;
         }
+        
+        /* New style for the class display box */
+        #detectedClassBox {
+            background-color: #e6ffe6; /* Light green background */
+            border: 1px solid #b2f2b2; /* Light green border */
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #006400; /* Darker green text */
+            font-size: 1.2em;
+        }
 
         video {
             display: block;
@@ -274,7 +287,7 @@
                 padding: 10px;
                 font-size: 14px;
             }
-            #detectedRoleBox {
+            #detectedRoleBox, #detectedClassBox {
                 font-size: 1em; /* Adjust font size for smaller screens */
             }
         }
@@ -314,6 +327,8 @@
 
         <div id="detectedRoleBox">Peran: -</div>
 
+        <div id="detectedClassBox">Kelas: -</div>
+
         <video id="video" width="320" height="240" autoplay style="display:none;"></video>
         <canvas id="canvas" width="320" height="240" style="display:none;"></canvas><br>
         <img id="photoPreview" alt="Foto akan muncul di sini" />
@@ -326,7 +341,6 @@
 
     <script>
         // --- Konfigurasi Firebase (Ganti sesuai project Anda) ---
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
             apiKey: "AIzaSyDrt5MHhs-Wjoye8swLwLb068HC4kme-rg",
             authDomain: "absensionlinemuhika.firebaseapp.com",
@@ -340,34 +354,62 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // --- Daftar nama-nama valid (dipisah berdasarkan peran) ---
-        const daftarSiswa = [
-            "AHMAD", "Aji Setiawan", "Akhdan Raihan Putra", "ALDI", "Anang Suryana",
-            "Andra Septiana", "Anggi Permadani", "Anwar Musadad", "Axelle Aulia",
-            "DANDA DERA AZAHRA", "Fadillah Nurosobah", "Fajar Ramadhan",
-            "Fazry Rizki Restiana", "Hasim Ramdani", "ILPAN SAMSUL ARIP",
-            "M. Rizqi Al Mubarok", "MOHAMAD RAFLI RAMADAN", "Muhamad Dzikry Ilham",
-            "Muhamad Rizki", "Muhammad Ihsan Aroyan", "Muhammad Rahmat Aldila",
-            "MUSTOPA", "PARHAN SUHENDI", "Raka Aditya", "Ramdani", "RIDWAN",
-            "RIKI", "RISKI MULYANA", "Siti Patimah", "Sulaeman", "Supriatna",
-            "Zulpikri Maulana"
+        // --- Daftar pengguna (siswa dan guru) dengan kelas/subjek terkait ---
+        const userList = [
+            // Siswa X RPL A
+            { id: "AHMAD", role: "siswa", class: "X RPL A" },
+            { id: "AJI SETIAWAN", role: "siswa", class: "X RPL A" },
+            { id: "AKHDAN RAIHAN PUTRA", role: "siswa", class: "X RPL A" },
+            { id: "ALDI", role: "siswa", class: "X RPL A" },
+            { id: "ANANG SURYANA", role: "siswa", class: "X RPL A" },
+            // Siswa X TKJ B (contoh kelas lain)
+            { id: "SISWA_TKJ_B_01", role: "siswa", class: "X TKJ B" },
+            { id: "SISWA_TKJ_B_02", role: "siswa", class: "X TKJ B" },
+            // Tambahkan siswa lain dengan kelas masing-masing
+            { id: "Andra Septiana", role: "siswa", class: "X RPL A" },
+            { id: "Anggi Permadani", role: "siswa", class: "X RPL A" },
+            { id: "Anwar Musadad", role: "siswa", class: "X RPL A" },
+            { id: "Axelle Aulia", role: "siswa", class: "X RPL A" },
+            { id: "DANDA DERA AZAHRA", role: "siswa", class: "X RPL A" },
+            { id: "Fadillah Nurosobah", role: "siswa", class: "X RPL A" },
+            { id: "Fajar Ramadhan", role: "siswa", class: "X RPL A" },
+            { id: "Fazry Rizki Restiana", role: "siswa", class: "X RPL A" },
+            { id: "Hasim Ramdani", role: "siswa", class: "X RPL A" },
+            { id: "ILPAN SAMSUL ARIP", role: "siswa", class: "X RPL A" },
+            { id: "M. Rizqi Al Mubarok", role: "siswa", class: "X RPL A" },
+            { id: "MOHAMAD RAFLI RAMADAN", role: "siswa", class: "X RPL A" },
+            { id: "Muhamad Dzikry Ilham", role: "siswa", class: "X RPL A" },
+            { id: "Muhamad Rizki", role: "siswa", class: "X RPL A" },
+            { id: "Muhammad Ihsan Aroyan", role: "siswa", class: "X RPL A" },
+            { id: "Muhammad Rahmat Aldila", role: "siswa", class: "X RPL A" },
+            { id: "MUSTOPA", role: "siswa", class: "X RPL A" },
+            { id: "PARHAN SUHENDI", role: "siswa", class: "X RPL A" },
+            { id: "Raka Aditya", role: "siswa", class: "X RPL A" },
+            { id: "Ramdani", role: "siswa", class: "X RPL A" },
+            { id: "RIDWAN", role: "siswa", class: "X RPL A" },
+            { id: "RIKI", role: "siswa", class: "X RPL A" },
+            { id: "RISKI MULYANA", role: "siswa", class: "X RPL A" },
+            { id: "Siti Patimah", role: "siswa", class: "X RPL A" },
+            { id: "Sulaeman", role: "siswa", class: "X RPL A" },
+            { id: "Supriatna", role: "siswa", class: "X RPL A" },
+            { id: "Zulpikri Maulana", role: "siswa", class: "X RPL A" },
+
+            // Guru
+            { id: "JIMMY", role: "guru", subjectTeaching: "Matematika" },
+            { id: "SIGIT", role: "guru", subjectTeaching: "Bahasa Indonesia" },
+            { id: "EGI", role: "guru", subjectTeaching: "Fisika" },
+            { id: "NISA", role: "guru", subjectTeaching: "Kimia" },
+            // Tambahkan guru lain dengan mata pelajaran yang diajar
         ];
 
-        const daftarGuru = [
-            "JIMMY", // Contoh nama guru
-            "SIGIT",    // Contoh nama guru
-            "EGI",
-            "NISA"
-            // Tambahkan nama-nama guru di sini
-        ];
-
-        // --- Jadwal Pelajaran ---
+        // --- Jadwal Pelajaran dengan informasi kelas ---
         const scheduleList = [
-            { day: 'Rabu', start: '22:00', end: '23:40', subject: 'Matematika' },
-            { day: 'Senin', start: '10:00', end: '11:40', subject: 'Bahasa Indonesia' },
-            { day: 'Selasa', start: '08:00', end: '09:40', subject: 'Fisika' },
-            { day: 'Selasa', start: '10:00', end: '11:40', subject: 'Kimia' },
-            // Tambahkan jadwal lain sesuai kebutuhan
+            { day: 'Rabu', start: '22:00', end: '23:40', class: 'X RPL A', subject: 'Matematika' },
+            { day: 'Senin', start: '10:00', end: '11:40', class: 'X RPL A', subject: 'Bahasa Indonesia' },
+            { day: 'Selasa', start: '08:00', end: '09:40', class: 'X RPL A', subject: 'Fisika' },
+            { day: 'Selasa', start: '10:00', end: '11:40', class: 'X RPL A', subject: 'Kimia' },
+            { day: 'Rabu', start: '06:00', end: '09:40', class: 'X TKJ B', subject: 'Dasar Pemrograman' },
+            // Tambahkan jadwal lain sesuai kebutuhan, pastikan ada 'class'
         ];
 
         // --- Fungsi Bantu ---
@@ -385,17 +427,31 @@
             return now >= startTime && now <= endTime;
         }
 
-        function getActiveSchedule() {
+        // Modified to accept a specific class, or null for general active schedules
+        function getActiveSchedule(className = null) {
             const today = getCurrentDay();
-            return scheduleList.find(item => item.day === today && isNowInRange(item.start, item.end));
+            if (className) {
+                return scheduleList.find(item =>
+                    item.day === today &&
+                    item.class === className && // Match by class
+                    isNowInRange(item.start, item.end)
+                );
+            } else {
+                // For teachers, find a schedule matching their subject
+                return scheduleList.find(item =>
+                    item.day === today &&
+                    isNowInRange(item.start, item.end)
+                );
+            }
         }
 
         // --- Elemen DOM ---
         const userIdInput = document.getElementById('userId');
-        const roleSelect = document.getElementById('role'); // Tetap ambil elemen ini untuk diatur nilainya
+        const roleSelect = document.getElementById('role'); // Still needed to set internal value
         const subjectSpan = document.getElementById('subject');
         const scheduleSpan = document.getElementById('schedule');
-        const detectedRoleBox = document.getElementById('detectedRoleBox'); // New element for role display
+        const detectedRoleBox = document.getElementById('detectedRoleBox');
+        const detectedClassBox = document.getElementById('detectedClassBox'); // New element for class display
         const btnStartCamera = document.getElementById('btnStartCamera');
         const btnAbsen = document.getElementById('btnAbsen');
         const video = document.getElementById('video');
@@ -404,13 +460,14 @@
         const statusP = document.getElementById('status');
 
         let stream;
+        let currentUserData = null; // Store detected user data (role, class/subject)
 
         // Tampilkan jadwal saat halaman dibuka dan juga setiap input id berubah
-        function updateSchedule() {
-            const active = getActiveSchedule();
-            if (active) {
-                subjectSpan.textContent = active.subject;
-                scheduleSpan.textContent = active.start + ' - ' + active.end;
+        function updateScheduleDisplay() {
+            const activeSchedule = getActiveSchedule(currentUserData ? currentUserData.class : null);
+            if (activeSchedule) {
+                subjectSpan.textContent = activeSchedule.subject;
+                scheduleSpan.textContent = activeSchedule.start + ' - ' + activeSchedule.end;
                 btnAbsen.disabled = false;
                 statusP.textContent = '';
             } else {
@@ -421,33 +478,70 @@
             }
         }
 
-        updateSchedule();
-        setInterval(updateSchedule, 60000); // cek jadwal tiap 1 menit
+        // Initial schedule display
+        updateScheduleDisplay();
+        setInterval(updateScheduleDisplay, 60000); // cek jadwal tiap 1 menit
 
-        // --- Deteksi peran saat input ID berubah ---
+        // --- Deteksi peran dan kelas saat input ID berubah ---
         userIdInput.addEventListener('input', () => {
             const inputId = userIdInput.value.trim();
             const inputIdNormalized = inputId.toUpperCase(); // Normalisasi input
 
-            const daftarSiswaNormalized = daftarSiswa.map(nama => nama.toUpperCase());
-            const daftarGuruNormalized = daftarGuru.map(nama => nama.toUpperCase());
+            currentUserData = userList.find(user => user.id.toUpperCase() === inputIdNormalized);
 
-            if (daftarSiswaNormalized.includes(inputIdNormalized)) {
-                roleSelect.value = 'siswa';
-                detectedRoleBox.textContent = 'Peran: Siswa'; // Update the new box
-                statusP.textContent = ''; // Clear status message if role is detected
-            } else if (daftarGuruNormalized.includes(inputIdNormalized)) {
-                roleSelect.value = 'guru';
-                detectedRoleBox.textContent = 'Peran: Guru'; // Update the new box
-                statusP.textContent = ''; // Clear status message if role is detected
+            if (currentUserData) {
+                roleSelect.value = currentUserData.role;
+                detectedRoleBox.textContent = `Peran: ${currentUserData.role === 'siswa' ? 'Siswa' : 'Guru'}`;
+
+                if (currentUserData.role === 'siswa') {
+                    detectedClassBox.textContent = `Kelas: ${currentUserData.class}`;
+                    // Update schedule based on student's class
+                    const active = getActiveSchedule(currentUserData.class);
+                    if (active) {
+                        subjectSpan.textContent = active.subject;
+                        scheduleSpan.textContent = `${active.start} - ${active.end}`;
+                        statusP.textContent = '';
+                        btnAbsen.disabled = false;
+                    } else {
+                        subjectSpan.textContent = '-';
+                        scheduleSpan.textContent = '-';
+                        statusP.textContent = 'Tidak ada jadwal aktif untuk kelas Anda saat ini.';
+                        btnAbsen.disabled = true;
+                    }
+                } else if (currentUserData.role === 'guru') {
+                    // For teachers, find the class they are teaching based on their subject and the current schedule
+                    const activeGuruSchedule = scheduleList.find(item =>
+                        item.day === getCurrentDay() &&
+                        isNowInRange(item.start, item.end) &&
+                        item.subject === currentUserData.subjectTeaching
+                    );
+
+                    if (activeGuruSchedule) {
+                        detectedClassBox.textContent = `Mengajar di Kelas: ${activeGuruSchedule.class}`;
+                        subjectSpan.textContent = activeGuruSchedule.subject;
+                        scheduleSpan.textContent = `${activeGuruSchedule.start} - ${activeGuruSchedule.end}`;
+                        statusP.textContent = '';
+                        btnAbsen.disabled = false;
+                    } else {
+                        detectedClassBox.textContent = 'Tidak ada kelas yang terdeteksi untuk Anda saat ini.';
+                        subjectSpan.textContent = '-';
+                        scheduleSpan.textContent = '-';
+                        statusP.textContent = 'Anda tidak memiliki jadwal mengajar yang aktif saat ini.';
+                        btnAbsen.disabled = true;
+                    }
+                }
             } else {
                 roleSelect.value = 'siswa'; // Default if not found
-                detectedRoleBox.textContent = 'Peran: - (ID/Nama tidak dikenal)'; // Update the new box
-                if (inputId.length > 0) { // Only show message if there's input
-                    statusP.textContent = 'ID/Nama tidak dikenal. Peran default: Siswa.';
+                detectedRoleBox.textContent = 'Peran: - (ID/Nama tidak dikenal)';
+                detectedClassBox.textContent = 'Kelas: -';
+                subjectSpan.textContent = '-';
+                scheduleSpan.textContent = '-';
+                if (inputId.length > 0) {
+                    statusP.textContent = 'ID/Nama tidak dikenal. Anda tidak diizinkan untuk absensi.';
+                    btnAbsen.disabled = true;
                 } else {
                     statusP.textContent = ''; // Clear if input is empty
-                    detectedRoleBox.textContent = 'Peran: -'; // Reset box if input is empty
+                    btnAbsen.disabled = true;
                 }
             }
         });
@@ -493,30 +587,35 @@
         // --- Proses absensi ---
         btnAbsen.addEventListener('click', async () => {
             const inputId = userIdInput.value.trim();
-            const inputIdNormalized = inputId.toUpperCase(); // Normalisasi input
+            const inputIdNormalized = inputId.toUpperCase();
 
-            const daftarSiswaNormalized = daftarSiswa.map(nama => nama.toUpperCase());
-            const daftarGuruNormalized = daftarGuru.map(nama => nama.toUpperCase());
-
-            let detectedRole = ''; // Variabel untuk menyimpan peran yang terdeteksi
-            let isValidName = false;
-
-            if (daftarSiswaNormalized.includes(inputIdNormalized)) {
-                detectedRole = 'siswa';
-                isValidName = true;
-            } else if (daftarGuruNormalized.includes(inputIdNormalized)) {
-                detectedRole = 'guru';
-                isValidName = true;
-            }
-
-            if (!inputId) {
-                statusP.textContent = 'Error: Masukkan ID/Nama dengan benar.';
+            if (!currentUserData || currentUserData.id.toUpperCase() !== inputIdNormalized) {
+                statusP.textContent = 'Error: ID/Nama tidak dikenal atau belum dideteksi. Harap masukkan ID dengan benar.';
                 return;
             }
 
-            if (!isValidName) {
-                statusP.textContent = 'Error: ID/Nama tidak terdaftar. Anda tidak diizinkan untuk absensi.';
-                return; // Hentikan proses jika nama tidak valid
+            // Ensure there's an active schedule for the detected class/teacher's subject
+            let activeScheduleForAbsence = null;
+            let classForAbsence = null;
+            let subjectForAbsence = null;
+
+            if (currentUserData.role === 'siswa') {
+                classForAbsence = currentUserData.class;
+                activeScheduleForAbsence = getActiveSchedule(classForAbsence);
+                subjectForAbsence = activeScheduleForAbsence ? activeScheduleForAbsence.subject : '-';
+            } else if (currentUserData.role === 'guru') {
+                activeScheduleForAbsence = scheduleList.find(item =>
+                    item.day === getCurrentDay() &&
+                    isNowInRange(item.start, item.end) &&
+                    item.subject === currentUserData.subjectTeaching
+                );
+                classForAbsence = activeScheduleForAbsence ? activeScheduleForAbsence.class : '-';
+                subjectForAbsence = activeScheduleForAbsence ? activeScheduleForAbsence.subject : '-';
+            }
+
+            if (!activeScheduleForAbsence) {
+                statusP.textContent = 'Gagal absensi: Tidak ada jadwal aktif yang cocok saat ini.';
+                return;
             }
 
             // Ambil foto dari video stream
@@ -532,7 +631,6 @@
             let lokasi = { latitude: 0, longitude: 0 };
             try {
                 const posisi = await new Promise((resolve, reject) => {
-                    // Set timeout untuk geolocation jika terlalu lama
                     const geoTimeout = setTimeout(() => reject(new Error('Geolocation timeout')), 10000); // 10 detik
                     navigator.geolocation.getCurrentPosition(
                         (pos) => {
@@ -543,7 +641,7 @@
                             clearTimeout(geoTimeout);
                             reject(error);
                         },
-                        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 } // Opsi geolocation
+                        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
                     );
                 });
                 lokasi.latitude = posisi.coords.latitude;
@@ -554,37 +652,35 @@
                 } else {
                     statusP.textContent = 'Tidak dapat mengakses lokasi: ' + error.message;
                 }
+                return; // Stop if location is critical
             }
-
-            // Ambil jadwal aktif utk disimpan
-            const aktif = getActiveSchedule();
 
             // Siapkan data absensi
             const dataAbsensi = {
-                id: inputId, // Simpan ID/Nama sesuai input asli
-                nama: inputId, // Gunakan inputId sebagai nama
-                role: detectedRole, // Gunakan peran yang terdeteksi secara otomatis
+                id: inputId,
+                nama: inputId,
+                role: currentUserData.role,
+                class: classForAbsence, // Store the detected class
                 waktu: new Date().toISOString(),
-                mapel: aktif ? aktif.subject : '-',
-                jam: aktif ? aktif.start + ' - ' + aktif.end : '-',
+                mapel: subjectForAbsence, // Use the subject from the active schedule
+                jam: `${activeScheduleForAbsence.start} - ${activeScheduleForAbsence.end}`,
                 foto: photoData,
                 lokasi,
                 materi: '' // Default materi kosong
             };
 
             // Jika peran adalah guru, minta materi
-            if (detectedRole === 'guru') {
+            if (currentUserData.role === 'guru') {
                 const materiInput = prompt("Anda adalah guru. Masukkan materi pelajaran hari ini:");
-                dataAbsensi.materi = materiInput || '-'; // Jika user membatalkan atau mengosongkan
+                dataAbsensi.materi = materiInput || '-';
             }
 
-            // Simpan data ke Firebase (path: absensi/{id}/{waktu})
-            const path = `absensi/${dataAbsensi.id}/${Date.now()}`;
+            // Simpan data ke Firebase (path: absensi/{role}/{id}/{class}/{waktu})
+            const path = `absensi/${dataAbsensi.role}/${dataAbsensi.id}/${dataAbsensi.class}/${Date.now()}`;
             try {
                 await db.ref(path).set(dataAbsensi);
                 statusP.textContent = "Absensi berhasil disimpan.";
                 btnAbsen.disabled = true;
-                // Opsional: Hentikan kamera dan hapus preview setelah absensi berhasil
                 if (stream) {
                     stream.getTracks().forEach(track => track.stop());
                     video.style.display = 'none';
