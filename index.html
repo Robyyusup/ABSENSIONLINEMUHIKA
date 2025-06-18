@@ -437,20 +437,41 @@
 
 
         // --- Kamera dan ambil foto ---
-        btnStartCamera.addEventListener('click', async () => {
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                try {
-                    stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                    video.srcObject = stream;
-                    video.style.display = 'block';
-                    statusP.textContent = 'Kamera aktif. Siapkan wajah Anda.';
-                } catch (error) {
-                    statusP.textContent = 'Gagal mengakses kamera: ' + error.message;
+       btnStartCamera.addEventListener('click', async () => {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({
+                video: {
+                    facingMode: 'user' // Prefer kamera depan (di HP)
                 }
+            });
+
+            video.srcObject = stream;
+            video.style.display = 'block';
+            photoPreview.src = ''; // Reset preview sebelumnya
+            statusP.style.color = '#28a745'; // Hijau
+            statusP.textContent = '✅ Kamera aktif. Pastikan wajah terlihat jelas.';
+
+            console.log("✅ Kamera berhasil diaktifkan.");
+        } catch (error) {
+            console.error("❌ Kamera error:", error);
+
+            if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+                statusP.style.color = '#d9534f';
+                statusP.textContent = '❌ Akses kamera ditolak. Mohon izinkan kamera di browser.';
+            } else if (error.name === 'NotFoundError') {
+                statusP.style.color = '#d9534f';
+                statusP.textContent = '❌ Kamera tidak ditemukan. Periksa perangkat Anda.';
             } else {
-                statusP.textContent = 'Browser Anda tidak mendukung akses kamera.';
+                statusP.style.color = '#d9534f';
+                statusP.textContent = '❌ Gagal mengakses kamera: ' + error.message;
             }
-        });
+        }
+    } else {
+        statusP.style.color = '#d9534f';
+        statusP.textContent = '❌ Browser Anda tidak mendukung akses kamera.';
+    }
+});
 
         // --- Proses absensi ---
         btnAbsen.addEventListener('click', async () => {
