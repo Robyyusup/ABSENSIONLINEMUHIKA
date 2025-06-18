@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Panel Admin Rekap Absensi</title>
+
+    <!-- Google Font Poppins untuk tampilan modern -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Mendefinisikan variabel CSS untuk warna dan styling yang konsisten */
+        :root {
+            --primary-color: #4CAF50; /* Hijau yang lebih menarik */
+            --secondary-color: #2196F3; /* Biru */
+            --text-color: #333;
+            --background-light: #f9fbfb; /* Latar belakang terang */
+            --background-dark: #edf2f7; /* Latar belakang gelap untuk header tabel */
+            --card-background: #ffffff; /* Latar belakang kartu/kontainer utama */
+            --shadow-light: rgba(0, 0, 0, 0.05); /* Bayangan ringan */
+            --border-color: #e0e0e0; /* Warna border */
+
+            /* Warna Status */
+            --status-green: #d4edda; /* Hijau untuk status "Hadir" */
+            --status-yellow: #fff3cd; /* Kuning untuk status "Kurang" */
+            --status-red: #f8d7da; /* Merah untuk status "Tidak Hadir" */
+            --status-text-green: #155724; /* Warna teks untuk status hijau */
+            --status-text-yellow: #856404; /* Warna teks untuk status kuning */
+            --status-text-red: #721c24; /* Warna teks untuk status merah */
+        }
+
+        /* Styling dasar untuk body halaman */
+        body {
+            font-family: 'Poppins', Arial, sans-serif; /* Menggunakan font Poppins */
+            max-width: 1200px; /* Lebar maksimum halaman */
+            margin: auto; /* Pusatkan konten */
+            padding: 20px; /* Padding di sekitar konten */
+            background-color: var(--background-light); /* Warna latar belakang body */
+            color: var(--text-color); /* Warna teks default */
+            line-height: 1.6; /* Tinggi baris untuk keterbacaan */
+        }
+
+        /* Styling untuk container utama aplikasi */
+        .container {
+            background-color: var(--card-background); /* Latar belakang putih */
+            border-radius: 12px; /* Sudut membulat */
+            box-shadow: 0 8px 20px var(--shadow-light); /* Bayangan lembut */
+            padding: 30px; /* Padding internal */
+            margin-top: 30px; /* Margin atas */
+            position: relative; /* Diperlukan untuk posisi elemen shape */
+            overflow: hidden; /* Pastikan elemen shape tidak keluar dari container */
+        }
+
+        /* Styling dasar untuk elemen shape latar belakang */
+        .shape {
+            position: absolute; /* Posisi absolut */
+            opacity: 0.05; /* Transparansi agar tidak terlalu dominan */
+            z-index: 0; /* Pastikan di belakang konten utama */
+        }
+
+        /* Styling untuk shape lingkaran di kiri atas */
+        .shape.circle-top-left {
+            width: 150px;
+            height: 150px;
+            background-color: var(--primary-color);
+            border-radius: 50%; /* Membuat lingkaran */
+            top: -75px;
+            left: -75px;
+        }
+
+        /* Styling untuk shape kotak yang diputar di kanan bawah */
+        .shape.square-bottom-right {
+            width: 100px;
+            height: 100px;
+            background-color: var(--secondary-color);
+            transform: rotate(30deg); /* Memutar kotak */
+            bottom: -50px;
+            right: -50px;
+        }
+
+        /* Styling untuk area header dengan logo dan judul */
+        .header-content {
+            display: flex; /* Menggunakan flexbox untuk penataan sejajar */
+            align-items: center; /* Pusatkan item secara vertikal */
+            justify-content: center; /* Pusatkan item secara horizontal */
+            flex-wrap: wrap; /* Izinkan wrap pada layar kecil */
+            text-align: center; /* Untuk teks di bawah jika wrap */
+            margin-bottom: 25px; /* Margin bawah */
+        }
+
+        .header-content img {
+            max-width: 80px; /* Lebar maksimum logo */
+            height: auto; /* Tinggi otomatis */
+            margin-right: 15px; /* Jarak antara logo dan teks */
+            border-radius: 8px; /* Sudut membulat pada logo */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Bayangan pada logo */
+        }
+
+        .header-text {
+            display: flex;
+            flex-direction: column; /* Teks bertumpuk secara vertikal */
+            align-items: center; /* Pusatkan teks */
+        }
+
+        h2 {
+            color: var(--primary-color); /* Warna hijau */
+            margin: 0; /* Hapus margin default h2 */
+            font-weight: 600; /* Ketebalan font */
+            font-size: 2em; /* Ukuran font */
+        }
+        
+        .school-name {
+            color: #555; /* Warna teks nama sekolah */
+            font-size: 1.1em; /* Ukuran font nama sekolah */
+            font-weight: 400; /* Ketebalan font */
+            margin-top: 5px; /* Sedikit jarak dari judul */
+        }
+
+        .subtitle {
+            text-align: center; /* Pusatkan teks */
+            color: #777; /* Warna abu-abu */
+            margin-top: 15px; /* Margin atas untuk subtitle */
+            margin-bottom: 30px; /* Margin bawah */
+            font-size: 0.95em; /* Ukuran font sedikit lebih kecil */
+        }
+
+        .controls {
+            text-align: center; /* Pusatkan konten */
+            margin-bottom: 25px; /* Margin bawah */
+        }
+
+        .refresh-btn {
+            background-color: var(--secondary-color); /* Warna biru */
+            color: white; /* Warna teks putih */
+            padding: 10px 20px; /* Padding internal */
+            border: none; /* Tanpa border */
+            border-radius: 8px; /* Sudut membulat */
+            cursor: pointer; /* Kursor pointer saat dihover */
+            font-size: 1em; /* Ukuran font */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Transisi untuk efek hover */
+            box-shadow: 0 4px 10px rgba(33, 150, 243, 0.2); /* Bayangan tombol */
+        }
+
+        /* Efek hover untuk tombol refresh */
+        .refresh-btn:hover {
+            background-color: #1976D2; /* Warna biru lebih gelap saat hover */
+            transform: translateY(-2px); /* Sedikit naik saat hover */
+        }
+
+        /* Styling untuk tabel data */
+        table {
+            width: 100%; /* Lebar penuh */
+            border-collapse: collapse; /* Hilangkan jarak antar border sel */
+            margin-top: 20px; /* Margin atas */
+            border-radius: 8px; /* Sudut membulat tabel */
+            overflow: hidden; /* Penting untuk agar border-radius tabel berfungsi */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Bayangan tabel */
+        }
+
+        /* Styling untuk header tabel dan sel data */
+        th, td {
+            border: 1px solid var(--border-color); /* Border sel */
+            padding: 12px 15px; /* Padding internal sel */
+            text-align: left; /* Teks rata kiri */
+            font-size: 0.9em; /* Ukuran font sel */
+        }
+
+        /* Styling khusus untuk header tabel */
+        th {
+            background-color: var(--background-dark); /* Latar belakang gelap */
+            color: var(--text-color); /* Warna teks */
+            font-weight: 600; /* Ketebalan font */
+            text-transform: uppercase; /* Teks menjadi huruf besar */
+        }
+
+        /* Styling untuk baris genap (zebra striping) */
+        tr:nth-child(even) {
+            background-color: #f6f8f9;
+        }
+
+        /* Efek hover untuk baris tabel */
+        tr:hover {
+            background-color: #e9f0f4;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Styling untuk sel status (lingkaran warna) */
+        .status-cell {
+            font-weight: 600; /* Ketebalan font */
+            padding: 8px 12px; /* Padding internal */
+            border-radius: 6px; /* Sudut membulat */
+            display: inline-block; /* Agar background hanya membungkus teks */
+            min-width: 80px; /* Lebar minimum */
+            text-align: center; /* Pusatkan teks */
+        }
+
+        /* Warna spesifik untuk status hijau */
+        .status-cell.status-hijau {
+            background-color: var(--status-green);
+            color: var(--status-text-green);
+        }
+        /* Warna spesifik untuk status kuning */
+        .status-cell.status-kuning {
+            background-color: var(--status-yellow);
+            color: var(--status-text-yellow);
+        }
+        /* Warna spesifik untuk status merah */
+        .status-cell.status-merah {
+            background-color: var(--status-red);
+            color: var(--status-text-red);
+        }
+
+        /* Styling untuk pesan loading */
+        #loadingMessage {
+            text-align: center; /* Pusatkan teks */
+            font-style: italic; /* Teks miring */
+            color: #777; /* Warna abu-abu */
+            margin-top: 20px; /* Margin atas */
+        }
+
+        /* Penyesuaian responsif untuk layar kecil (maks 768px) */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px; /* Padding lebih kecil */
+            }
+            .container {
+                padding: 20px; /* Padding lebih kecil */
+            }
+            .header-content {
+                flex-direction: column; /* Tata letak kolom di layar kecil */
+                margin-bottom: 20px;
+            }
+            .header-content img {
+                margin-right: 0; /* Hapus margin kanan */
+                margin-bottom: 10px; /* Tambah margin bawah */
+            }
+            /* Mengubah tabel menjadi layout "kartu" */
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            thead tr {
+                position: absolute; /* Sembunyikan header tabel asli */
+                top: -9999px;
+                left: -9999px;
+            }
+            tr {
+                border: 1px solid var(--border-color); /* Border untuk setiap "kartu" baris */
+                margin-bottom: 15px; /* Jarak antar "kartu" */
+                border-radius: 8px; /* Sudut membulat */
+            }
+            td {
+                border: none; /* Hilangkan border sel */
+                border-bottom: 1px solid var(--border-color); /* Tambahkan border bawah */
+                position: relative;
+                padding-left: 50%; /* Sisakan ruang untuk label */
+                text-align: right; /* Teks data di kanan */
+            }
+            td:before {
+                position: absolute;
+                top: 0;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                content: attr(data-label); /* Menggunakan atribut data-label sebagai judul kolom */
+                font-weight: 600;
+                text-align: left; /* Teks label di kiri */
+                color: #555;
+            }
+            td:last-child {
+                border-bottom: 0; /* Hilangkan border bawah pada sel terakhir */
+            }
+        }
+    </style>
+
+    <!-- Memuat Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+</head>
+<body>
+
+    <!-- Kontainer utama dengan elemen-elemen geometris latar belakang -->
+    <div class="container">
+        <div class="shape circle-top-left"></div>
+        <div class="shape square-bottom-right"></div>
+
+        <!-- Bagian header dengan logo dan judul -->
+        <div class="header-content">
+            <!-- Logo dari Google Drive. Ganti 'YOUR_GOOGLE_DRIVE_FILE_ID' dengan ID file asli Anda. -->
+            <!-- Pastikan file di Google Drive diatur ke "Anyone with the link can view" -->
+            <img src="https://https://drive.google.com/uc?export=view&id=1sbdJkQUYJBu5Mig0l9kDMd6EJE0ziPCL" alt="Logo SMK Muhammadiyah Campaka" onerror="this.onerror=null;this.src='https://placehold.co/80x80/cccccc/333333?text=Logo';" />
+            <div class="header-text">
+                <h2>Panel Admin Rekap Absensi</h2>
+                <p class="school-name">SMK MUHAMMADIYH CAMPAKA KABUPATEN PURWAKARTA</p>
+            </div>
+        </div>
+        
+        <p class="subtitle">Data kehadiran siswa dan guru diupdate secara realtime.</p>
+
+        <!-- Bagian kontrol (misalnya tombol) -->
+        <div class="controls">
+            <button class="refresh-btn" onclick="loadRekap()">Refresh Data</button>
+        </div>
+
+        <!-- Pesan loading data -->
+        <p id="loadingMessage">Memuat data...</p>
+
+        <!-- Tabel rekap absensi -->
+        <table id="rekapTable">
+            <thead>
+                <tr>
+                    <th>ID User</th>
+                    <th>Nama</th>
+                    <th>Peran</th>
+                    <th>Hadir Minggu Ini</th>
+                    <th>Status Mingguan</th>
+                    <th>Hadir Bulan Ini</th>
+                    <th>Status Bulanan</th>
+                </tr>
+            </thead>
+            <tbody id="rekapBody">
+                <!-- Data akan dimuat di sini oleh JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // --- Konfigurasi Firebase Anda ---
+        // Ini adalah objek konfigurasi yang Anda dapatkan dari Firebase Console
+        const firebaseConfig = {
+            apiKey: "AIzaSyDrt5MHhs-Wjoye8swLwLb068HC4kme-rg",
+            authDomain: "absensionlinemuhika.firebaseapp.com",
+            databaseURL: "https://absensionlinemuhika-default-rtdb.firebaseio.com",
+            projectId: "absensionlinemuhika",
+            storageBucket: "absensionlinemuhika.firebasestorage.app",
+            messagingSenderId: "109622927610",
+            appId: "1:109622927610:web:0b5a6ab7e5bc3104f4e943",
+            measurementId: "G-VYJ320SDRM" // Ini opsional, terkait Google Analytics
+        };
+        // Menginisialisasi Firebase aplikasi
+        firebase.initializeApp(firebaseConfig);
+        // Mendapatkan referensi ke Firebase Realtime Database
+        const db = firebase.database();
+
+        // --- Utilitas Tanggal ---
+        /**
+         * Menghitung tanggal awal minggu (Senin) dari tanggal yang diberikan.
+         * @param {Date} date - Objek tanggal.
+         * @returns {Date} Objek tanggal awal minggu.
+         */
+        function startOfWeek(date) {
+            const d = new Date(date);
+            d.setHours(0, 0, 0, 0); // Atur waktu ke 00:00:00
+            const day = d.getDay(); // Dapatkan hari dalam seminggu (0 = Minggu, 1 = Senin, ..., 6 = Sabtu)
+            // Hitung selisih untuk kembali ke hari Senin.
+            // Jika hari ini Minggu (day === 0), kurangi 6 hari (untuk Senin minggu sebelumnya).
+            // Jika hari lain, kurangi (day - 1) hari.
+            const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+            return new Date(d.setDate(diff));
+        }
+
+        /**
+         * Menghitung tanggal awal bulan dari tanggal yang diberikan.
+         * @param {Date} date - Objek tanggal.
+         * @returns {Date} Objek tanggal awal bulan.
+         */
+        function startOfMonth(date) {
+            const d = new Date(date);
+            d.setDate(1); // Atur tanggal ke hari pertama bulan
+            d.setHours(0, 0, 0, 0); // Atur waktu ke 00:00:00
+            return d;
+        }
+
+        // --- Hitung Kehadiran ---
+        /**
+         * Menghitung jumlah kehadiran dalam rentang tanggal tertentu.
+         * @param {object} records - Objek catatan absensi untuk satu user.
+         * @param {Date} start - Tanggal mulai rentang (inklusif).
+         * @param {Date} end - Tanggal akhir rentang (inklusif).
+         * @returns {number} Jumlah kehadiran dalam rentang.
+         */
+        function countAttendanceInRange(records, start, end) {
+            let count = 0;
+            // Iterasi melalui semua catatan absensi untuk user tertentu
+            Object.values(records).forEach(record => {
+                // Konversi string waktu ISO ke timestamp (milidetik)
+                const timestamp = new Date(record.waktu).getTime();
+                // Bandingkan timestamp dengan rentang awal dan akhir
+                if (timestamp >= start.getTime() && timestamp <= end.getTime()) {
+                    count++;
+                }
+            });
+            return count;
+        }
+
+        // --- Tentukan Status Warna (Hijau/Kuning/Merah) ---
+        /**
+         * Menentukan kelas CSS status (hijau, kuning, merah) berdasarkan jumlah kehadiran.
+         * @param {number} count - Jumlah kehadiran.
+         * @param {string} type - Tipe perhitungan ('minggu' atau 'bulan').
+         * @returns {string} Kelas CSS status.
+         */
+        function getStatusColor(count, type) {
+            if (type === 'minggu') {
+                if (count >= 5) return 'hijau'; // 5 kehadiran atau lebih = hijau (ideal)
+                if (count >= 3) return 'kuning'; // 3-4 kehadiran = kuning (cukup)
+                return 'merah'; // Kurang dari 3 kehadiran = merah (kurang)
+            } else if (type === 'bulan') {
+                if (count >= 20) return 'hijau'; // 20 kehadiran atau lebih = hijau (ideal)
+                if (count >= 12) return 'kuning'; // 12-19 kehadiran = kuning (cukup)
+                return 'merah'; // Kurang dari 12 kehadiran = merah (kurang)
+            }
+            return ''; // Default kosong
+        }
+
+        // --- Muat dan Tampilkan Data ---
+        /**
+         * Fungsi utama untuk memuat data absensi dari Firebase dan menampilkannya di tabel.
+         */
+        async function loadRekap() {
+            const rekapBody = document.getElementById('rekapBody');
+            const loadingMessage = document.getElementById('loadingMessage');
+            rekapBody.innerHTML = ""; // Bersihkan isi tabel sebelum memuat data baru
+            loadingMessage.style.display = 'block'; // Tampilkan pesan loading
+
+            try {
+                // Ambil snapshot data dari path 'absensi' di Firebase Realtime Database
+                const snapshot = await db.ref('absensi').once('value');
+                const data = snapshot.val(); // Dapatkan objek data
+
+                // Jika tidak ada data, tampilkan pesan dan keluar
+                if (!data) {
+                    rekapBody.innerHTML = "<tr><td colspan='7'>Belum ada data absensi.</td></tr>";
+                    loadingMessage.style.display = 'none';
+                    return;
+                }
+
+                const now = new Date(); // Waktu saat ini
+                const weekStart = startOfWeek(now); // Awal minggu ini
+                const monthStart = startOfMonth(now); // Awal bulan ini
+
+                // Iterasi melalui setiap userId dalam data absensi
+                for (let userId in data) {
+                    const userRecords = data[userId]; // Catatan absensi untuk user ini
+                    // Temukan record terbaru untuk mendapatkan nama dan peran yang paling update
+                    // Ini penting jika nama atau peran bisa berubah seiring waktu
+                    const latestRecordKey = Object.keys(userRecords).sort().pop();
+                    const latestRecord = userRecords[latestRecordKey];
+
+                    const nama = latestRecord.nama || userId; // Gunakan nama dari record atau userId jika nama tidak ada
+                    const role = latestRecord.role || "-"; // Gunakan peran dari record
+
+                    // Hitung kehadiran mingguan dan bulanan
+                    const hadirMinggu = countAttendanceInRange(userRecords, weekStart, now);
+                    const hadirBulan = countAttendanceInRange(userRecords, monthStart, now);
+
+                    // Dapatkan kelas warna status
+                    const statusMinggu = getStatusColor(hadirMinggu, 'minggu');
+                    const statusBulan = getStatusColor(hadirBulan, 'bulan');
+
+                    // Buat elemen baris tabel baru
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td data-label="ID User">${userId}</td>
+                        <td data-label="Nama">${nama}</td>
+                        <td data-label="Peran">${role}</td>
+                        <td data-label="Hadir Minggu Ini">${hadirMinggu}</td>
+                        <td data-label="Status Mingguan"><span class="status-cell status-${statusMinggu}"></span></td>
+                        <td data-label="Hadir Bulan Ini">${hadirBulan}</td>
+                        <td data-label="Status Bulanan"><span class="status-cell status-${statusBulan}"></span></td>
+                    `;
+                    rekapBody.appendChild(tr); // Tambahkan baris ke tabel
+                }
+            } catch (error) {
+                // Tangani error saat fetching data
+                console.error("Error fetching data:", error);
+                rekapBody.innerHTML = `<tr><td colspan='7'>Gagal memuat data: ${error.message}</td></tr>`;
+            } finally {
+                loadingMessage.style.display = 'none'; // Sembunyikan pesan loading setelah selesai (berhasil/gagal)
+            }
+        }
+
+        // --- Jalankan Fungsi Saat Halaman Dimuat ---
+        // Memastikan DOM sepenuhnya dimuat sebelum menjalankan skrip
+        window.onload = loadRekap;
+    </script>
+
+</body>
+</html>
