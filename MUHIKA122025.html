@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Panel Admin Rekap Absensi</title>
 
-    <!-- Google Font Poppins untuk tampilan modern -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
@@ -283,21 +282,16 @@
         }
     </style>
 
-    <!-- Memuat Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 </head>
 <body>
 
-    <!-- Kontainer utama dengan elemen-elemen geometris latar belakang -->
     <div class="container">
         <div class="shape circle-top-left"></div>
         <div class="shape square-bottom-right"></div>
 
-        <!-- Bagian header dengan logo dan judul -->
         <div class="header-content">
-            <!-- Logo yang diunggah langsung ke GitHub -->
-            <!-- Pastikan nama file dan path sesuai dengan lokasi di repositori GitHub Anda -->
             <img src="./logo_muhika-removebg-preview.png" onerror="this.onerror=null;this.src='https://placehold.co/80x80/cccccc/333333?text=Logo';" />
             <div class="header-text">
                 <h2>Panel Admin Rekap Absensi</h2>
@@ -307,22 +301,19 @@
         
         <p class="subtitle">Data kehadiran siswa dan guru diupdate secara realtime.</p>
 
-        <!-- Bagian kontrol (misalnya tombol) -->
         <div class="controls">
             <button class="refresh-btn" onclick="loadRekap()">Refresh Data</button>
         </div>
 
-        <!-- Pesan loading data -->
         <p id="loadingMessage">Memuat data...</p>
 
-        <!-- Table for Students -->
         <h3>Rekap Absensi Siswa</h3>
         <table id="siswaRekapTable">
             <thead>
                 <tr>
                     <th>ID User</th>
                     <th>Nama</th>
-                    <th>Hadir Minggu Ini</th>
+                    <th>Kelas</th> <th>Hadir Minggu Ini</th>
                     <th>Status Mingguan</th>
                     <th>Hadir Bulan Ini</th>
                     <th>Status Bulanan</th>
@@ -331,20 +322,16 @@
                 </tr>
             </thead>
             <tbody id="siswaRekapBody">
-                <!-- Data siswa akan dimuat di sini -->
-            </tbody>
+                </tbody>
         </table>
 
-        <br> <!-- Tambahkan sedikit spasi antar tabel -->
-
-        <!-- Table for Teachers -->
-        <h3>Rekap Absensi Guru</h3>
+        <br> <h3>Rekap Absensi Guru</h3>
         <table id="guruRekapTable">
             <thead>
                 <tr>
                     <th>ID User</th>
                     <th>Nama</th>
-                    <th>Hadir Minggu Ini</th>
+                    <th>Mengajar di Kelas</th> <th>Mata Pelajaran</th> <th>Hadir Minggu Ini</th>
                     <th>Status Mingguan</th>
                     <th>Hadir Bulan Ini</th>
                     <th>Status Bulanan</th>
@@ -354,14 +341,12 @@
                 </tr>
             </thead>
             <tbody id="guruRekapBody">
-                <!-- Data guru akan dimuat di sini -->
-            </tbody>
+                </tbody>
         </table>
     </div>
 
     <script>
         // --- Konfigurasi Firebase Anda ---
-        // Ini adalah objek konfigurasi yang Anda dapatkan dari Firebase Console
         const firebaseConfig = {
             apiKey: "AIzaSyDrt5MHhs-Wjoye8swLwLb068HC4kme-rg",
             authDomain: "absensionlinemuhika.firebaseapp.com",
@@ -372,55 +357,32 @@
             appId: "1:109622927610:web:0b5a6ab7e5bc3104f4e943",
             measurementId: "G-VYJ320SDRM" // Ini opsional, terkait Google Analytics
         };
-        // Menginisialisasi Firebase aplikasi
         firebase.initializeApp(firebaseConfig);
-        // Mendapatkan referensi ke Firebase Realtime Database
         const db = firebase.database();
 
         // --- Utilitas Tanggal ---
-        /**
-         * Menghitung tanggal awal minggu (Senin) dari tanggal yang diberikan.
-         * @param {Date} date - Objek tanggal.
-         * @returns {Date} Objek tanggal awal minggu.
-         */
         function startOfWeek(date) {
             const d = new Date(date);
-            d.setHours(0, 0, 0, 0); // Atur waktu ke 00:00:00
-            const day = d.getDay(); // Dapatkan hari dalam seminggu (0 = Minggu, 1 = Senin, ..., 6 = Sabtu)
-            // Hitung selisih untuk kembali ke hari Senin.
-            // Jika hari ini Minggu (day === 0), kurangi 6 hari (untuk Senin minggu sebelumnya).
-            // Jika hari lain, kurangi (day - 1) hari.
+            d.setHours(0, 0, 0, 0);
+            const day = d.getDay();
             const diff = d.getDate() - day + (day === 0 ? -6 : 1);
             return new Date(d.setDate(diff));
         }
 
-        /**
-         * Menghitung tanggal awal bulan dari tanggal yang diberikan.
-         * @param {Date} date - Objek tanggal.
-         * @returns {Date} Objek tanggal awal bulan.
-         */
         function startOfMonth(date) {
             const d = new Date(date);
-            d.setDate(1); // Atur tanggal ke hari pertama bulan
-            d.setHours(0, 0, 0, 0); // Atur waktu ke 00:00:00
+            d.setDate(1);
+            d.setHours(0, 0, 0, 0);
             return d;
         }
 
         // --- Hitung Kehadiran ---
-        /**
-         * Menghitung jumlah kehadiran dalam rentang tanggal tertentu.
-         * @param {object} records - Objek catatan absensi untuk satu user.
-         * @param {Date} start - Tanggal mulai rentang (inklusif).
-         * @param {Date} end - Tanggal akhir rentang (inklusif).
-         * @returns {number} Jumlah kehadiran dalam rentang.
-         */
         function countAttendanceInRange(records, start, end) {
             let count = 0;
-            // Iterasi melalui semua catatan absensi untuk user tertentu
+            // records di sini adalah object yang berisi timestamp absensi
+            // contoh: { "1718721312345": {...}, "1718721312346": {...} }
             Object.values(records).forEach(record => {
-                // Konversi string waktu ISO ke timestamp (milidetik)
                 const timestamp = new Date(record.waktu).getTime();
-                // Bandingkan timestamp dengan rentang awal dan akhir
                 if (timestamp >= start.getTime() && timestamp <= end.getTime()) {
                     count++;
                 }
@@ -429,140 +391,176 @@
         }
 
         // --- Tentukan Status Warna (Hijau/Kuning/Merah) ---
-        /**
-         * Menentukan kelas CSS status (hijau, kuning, merah) berdasarkan jumlah kehadiran.
-         * @param {number} count - Jumlah kehadiran.
-         * @param {string} type - Tipe perhitungan ('minggu' atau 'bulan').
-         * @returns {string} Kelas CSS status.
-         */
         function getStatusColor(count, type) {
             if (type === 'minggu') {
-                if (count >= 5) return 'hijau'; // 5 kehadiran atau lebih = hijau (ideal)
-                if (count >= 3) return 'kuning'; // 3-4 kehadiran = kuning (cukup)
-                return 'merah'; // Kurang dari 3 kehadiran = merah (kurang)
+                if (count >= 5) return 'hijau';
+                if (count >= 3) return 'kuning';
+                return 'merah';
             } else if (type === 'bulan') {
-                if (count >= 20) return 'hijau'; // 20 kehadiran atau lebih = hijau (ideal)
-                if (count >= 12) return 'kuning'; // 12-19 kehadiran = kuning (cukup)
-                return 'merah'; // Kurang dari 12 kehadiran = merah (kurang)
+                if (count >= 20) return 'hijau';
+                if (count >= 12) return 'kuning';
+                return 'merah';
             }
-            return ''; // Default kosong
+            return '';
         }
 
         // --- Muat dan Tampilkan Data ---
-        /**
-         * Fungsi utama untuk memuat data absensi dari Firebase dan menampilkannya di tabel.
-         */
         async function loadRekap() {
-            // Dapatkan referensi ke tbody tabel siswa dan guru
             const siswaRekapBody = document.getElementById('siswaRekapBody');
             const guruRekapBody = document.getElementById('guruRekapBody');
             const loadingMessage = document.getElementById('loadingMessage');
 
-            siswaRekapBody.innerHTML = ""; // Bersihkan tabel siswa
-            guruRekapBody.innerHTML = ""; // Bersihkan tabel guru
-            loadingMessage.style.display = 'block'; // Tampilkan pesan loading
+            siswaRekapBody.innerHTML = "";
+            guruRekapBody.innerHTML = "";
+            loadingMessage.style.display = 'block';
 
             try {
-                // Ambil snapshot data dari path 'absensi' di Firebase Realtime Database
+                // Ambil snapshot data dari path 'absensi'
+                // Ini akan mendapatkan { "siswa": { ... }, "guru": { ... } }
                 const snapshot = await db.ref('absensi').once('value');
-                const data = snapshot.val(); // Dapatkan objek data
+                const dataAbsensiRoot = snapshot.val();
 
-                // Jika tidak ada data sama sekali
-                if (!data) {
-                    siswaRekapBody.innerHTML = "<tr><td colspan='8'>Belum ada data absensi siswa.</td></tr>";
-                    guruRekapBody.innerHTML = "<tr><td colspan='9'>Belum ada data absensi guru.</td></tr>";
+                if (!dataAbsensiRoot) {
+                    siswaRekapBody.innerHTML = "<tr><td colspan='9'>Belum ada data absensi siswa.</td></tr>";
+                    guruRekapBody.innerHTML = "<tr><td colspan='10'>Belum ada data absensi guru.</td></tr>";
                     loadingMessage.style.display = 'none';
                     return;
                 }
 
-                const now = new Date(); // Waktu saat ini
-                const weekStart = startOfWeek(now); // Awal minggu ini
-                const monthStart = startOfMonth(now); // Awal bulan ini
+                const now = new Date();
+                const weekStart = startOfWeek(now);
+                const monthStart = startOfMonth(now);
 
                 let siswaCount = 0;
                 let guruCount = 0;
 
-                // Iterasi melalui setiap userId dalam data absensi
-                for (let userId in data) {
-                    const userRecords = data[userId]; // Catatan absensi untuk user ini
-                    // Temukan record terbaru untuk mendapatkan nama dan peran yang paling update
-                    // Ini penting jika nama atau peran bisa berubah seiring waktu
-                    const latestRecordKey = Object.keys(userRecords).sort().pop();
-                    const latestRecord = userRecords[latestRecordKey];
+                // --- Proses Data Siswa ---
+                const siswaData = dataAbsensiRoot.siswa || {};
+                for (let userId in siswaData) {
+                    const userClassesData = siswaData[userId]; // Ini adalah objek { "X RPL A": { timestamp: {...} }, "X TKJ B": { timestamp: {...} } }
 
-                    const nama = latestRecord.nama || userId; // Gunakan nama dari record atau userId jika nama tidak ada
-                    const role = latestRecord.role || "-"; // Gunakan peran dari record
-                    const materi = latestRecord.materi || "-"; // Materi untuk guru
-                    const lokasi = latestRecord.lokasi || { latitude: 0, longitude: 0 }; // Default jika tidak ada lokasi
-                    const fotoData = latestRecord.foto || ''; // String Base64 foto
+                    // Kumpulkan semua absensi dari semua kelas untuk satu siswa
+                    let allUserAbsences = {};
+                    let latestAbsen = null; // Untuk mendapatkan data terbaru (nama, role, dll)
+                    let userClassName = 'Tidak Diketahui'; // Default, akan diupdate dari absen terbaru
+                    
+                    for (let className in userClassesData) {
+                        const classAbsences = userClassesData[className]; // Ini adalah objek timestamp absensi untuk kelas tersebut
+                        Object.assign(allUserAbsences, classAbsences); // Gabungkan semua absensi dari kelas ini
+                        
+                        // Temukan absensi terbaru untuk mendapatkan kelas yang relevan
+                        for (let ts in classAbsences) {
+                            const currentAbsen = classAbsences[ts];
+                            if (!latestAbsen || new Date(currentAbsen.waktu).getTime() > new Date(latestAbsen.waktu).getTime()) {
+                                latestAbsen = currentAbsen;
+                                userClassName = className; // Update kelas dengan yang terbaru
+                            }
+                        }
+                    }
 
-                    // Hitung kehadiran mingguan dan bulanan
-                    const hadirMinggu = countAttendanceInRange(userRecords, weekStart, now);
-                    const hadirBulan = countAttendanceInRange(userRecords, monthStart, now);
+                    if (!latestAbsen) continue; // Skip jika tidak ada data absensi sama sekali
 
-                    // Dapatkan kelas warna status
+                    const nama = latestAbsen.nama || userId;
+                    const role = latestAbsen.role || "siswa"; // Asumsi role siswa
+                    const lokasi = latestAbsen.lokasi || { latitude: 0, longitude: 0 };
+                    const fotoData = latestAbsen.foto || '';
+
+                    const hadirMinggu = countAttendanceInRange(allUserAbsences, weekStart, now);
+                    const hadirBulan = countAttendanceInRange(allUserAbsences, monthStart, now);
+
                     const statusMinggu = getStatusColor(hadirMinggu, 'minggu');
                     const statusBulan = getStatusColor(hadirBulan, 'bulan');
 
-                    // Buat link lokasi dan foto
                     const lokasiLink = (lokasi.latitude !== 0 || lokasi.longitude !== 0) ?
-                        `<a href="https://www.google.com/maps?q=${lokasi.latitude},${lokasi.longitude}" target="_blank" rel="noopener noreferrer">Lihat Lokasi</a>` : 'Tidak Tersedia';
+                        `<a href="https://maps.google.com/maps?q=${lokasi.latitude},${lokasi.longitude}" target="_blank" rel="noopener noreferrer">Lihat Lokasi</a>` : 'Tidak Tersedia';
                     const fotoLink = fotoData ?
                         `<a href="${fotoData}" target="_blank" rel="noopener noreferrer">Lihat Foto</a>` : 'Tidak Ada Foto';
 
-                    // Pisahkan data ke tabel masing-masing berdasarkan peran
-                    if (role === 'siswa') {
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td data-label="ID User">${userId}</td>
-                            <td data-label="Nama">${nama}</td>
-                            <td data-label="Hadir Minggu Ini">${hadirMinggu}</td>
-                            <td data-label="Status Mingguan"><span class="status-cell status-${statusMinggu}"></span></td>
-                            <td data-label="Hadir Bulan Ini">${hadirBulan}</td>
-                            <td data-label="Status Bulanan"><span class="status-cell status-${statusBulan}"></span></td>
-                            <td data-label="Lokasi Absensi">${lokasiLink}</td>
-                            <td data-label="Foto">${fotoLink}</td>
-                        `;
-                        siswaRekapBody.appendChild(tr);
-                        siswaCount++;
-                    } else if (role === 'guru') {
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td data-label="ID User">${userId}</td>
-                            <td data-label="Nama">${nama}</td>
-                            <td data-label="Hadir Minggu Ini">${hadirMinggu}</td>
-                            <td data-label="Status Mingguan"><span class="status-cell status-${statusMinggu}"></span></td>
-                            <td data-label="Hadir Bulan Ini">${hadirBulan}</td>
-                            <td data-label="Status Bulanan"><span class="status-cell status-${statusBulan}"></span></td>
-                            <td data-label="Materi">${materi}</td>
-                            <td data-label="Lokasi Absensi">${lokasiLink}</td>
-                            <td data-label="Foto">${fotoLink}</td>
-                        `;
-                        guruRekapBody.appendChild(tr);
-                        guruCount++;
-                    }
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td data-label="ID User">${userId}</td>
+                        <td data-label="Nama">${nama}</td>
+                        <td data-label="Kelas">${userClassName}</td>
+                        <td data-label="Hadir Minggu Ini">${hadirMinggu}</td>
+                        <td data-label="Status Mingguan"><span class="status-cell status-${statusMinggu}"></span></td>
+                        <td data-label="Hadir Bulan Ini">${hadirBulan}</td>
+                        <td data-label="Status Bulanan"><span class="status-cell status-${statusBulan}"></span></td>
+                        <td data-label="Lokasi Absensi">${lokasiLink}</td>
+                        <td data-label="Foto">${fotoLink}</td>
+                    `;
+                    siswaRekapBody.appendChild(tr);
+                    siswaCount++;
                 }
 
-                // Tampilkan pesan "Belum ada data" jika tabel kosong setelah filter
+                // --- Proses Data Guru ---
+                const guruData = dataAbsensiRoot.guru || {};
+                for (let userId in guruData) {
+                    const userAbsences = guruData[userId]; // Ini adalah objek { "timestamp": {...} }
+
+                    // Untuk guru, kita juga perlu mendapatkan absensi terbaru untuk informasi mapel dan kelas
+                    let latestAbsen = null;
+                    for (let ts in userAbsences) {
+                        const currentAbsen = userAbsences[ts];
+                        if (!latestAbsen || new Date(currentAbsen.waktu).getTime() > new Date(latestAbsen.waktu).getTime()) {
+                            latestAbsen = currentAbsen;
+                        }
+                    }
+
+                    if (!latestAbsen) continue; // Skip jika tidak ada data absensi sama sekali
+
+                    const nama = latestAbsen.nama || userId;
+                    const role = latestAbsen.role || "guru"; // Asumsi role guru
+                    const materi = latestAbsen.materi || "-";
+                    const mapel = latestAbsen.mapel || "-"; // Ambil mata pelajaran
+                    const assignedClass = latestAbsen.class || "-"; // Ambil kelas yang diajar
+                    const lokasi = latestAbsen.lokasi || { latitude: 0, longitude: 0 };
+                    const fotoData = latestAbsen.foto || '';
+
+                    const hadirMinggu = countAttendanceInRange(userAbsences, weekStart, now);
+                    const hadirBulan = countAttendanceInRange(userAbsences, monthStart, now);
+
+                    const statusMinggu = getStatusColor(hadirMinggu, 'minggu');
+                    const statusBulan = getStatusColor(hadirBulan, 'bulan');
+
+                    const lokasiLink = (lokasi.latitude !== 0 || lokasi.longitude !== 0) ?
+                        `<a href="https://maps.google.com/maps?q=${lokasi.latitude},${lokasi.longitude}" target="_blank" rel="noopener noreferrer">Lihat Lokasi</a>` : 'Tidak Tersedia';
+                    const fotoLink = fotoData ?
+                        `<a href="${fotoData}" target="_blank" rel="noopener noreferrer">Lihat Foto</a>` : 'Tidak Ada Foto';
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td data-label="ID User">${userId}</td>
+                        <td data-label="Nama">${nama}</td>
+                        <td data-label="Mengajar di Kelas">${assignedClass}</td>
+                        <td data-label="Mata Pelajaran">${mapel}</td>
+                        <td data-label="Hadir Minggu Ini">${hadirMinggu}</td>
+                        <td data-label="Status Mingguan"><span class="status-cell status-${statusMinggu}"></span></td>
+                        <td data-label="Hadir Bulan Ini">${hadirBulan}</td>
+                        <td data-label="Status Bulanan"><span class="status-cell status-${statusBulan}"></span></td>
+                        <td data-label="Materi">${materi}</td>
+                        <td data-label="Lokasi Absensi">${lokasiLink}</td>
+                        <td data-label="Foto">${fotoLink}</td>
+                    `;
+                    guruRekapBody.appendChild(tr);
+                    guruCount++;
+                }
+
                 if (siswaCount === 0) {
-                    siswaRekapBody.innerHTML = "<tr><td colspan='8'>Belum ada data absensi siswa.</td></tr>";
+                    siswaRekapBody.innerHTML = "<tr><td colspan='9'>Belum ada data absensi siswa.</td></tr>";
                 }
                 if (guruCount === 0) {
-                    guruRekapBody.innerHTML = "<tr><td colspan='9'>Belum ada data absensi guru.</td></tr>";
+                    guruRekapBody.innerHTML = "<tr><td colspan='10'>Belum ada data absensi guru.</td></tr>";
                 }
 
             } catch (error) {
-                // Tangani error saat fetching data
                 console.error("Error fetching data:", error);
-                siswaRekapBody.innerHTML = `<tr><td colspan='8'>Gagal memuat data siswa: ${error.message}</td></tr>`;
-                guruRekapBody.innerHTML = `<tr><td colspan='9'>Gagal memuat data guru: ${error.message}</td></tr>`;
+                siswaRekapBody.innerHTML = `<tr><td colspan='9'>Gagal memuat data siswa: ${error.message}</td></tr>`;
+                guruRekapBody.innerHTML = `<tr><td colspan='10'>Gagal memuat data guru: ${error.message}</td></tr>`;
             } finally {
-                loadingMessage.style.display = 'none'; // Sembunyikan pesan loading setelah selesai (berhasil/gagal)
+                loadingMessage.style.display = 'none';
             }
         }
 
-        // --- Jalankan Fungsi Saat Halaman Dimuat ---
-        // Memastikan DOM sepenuhnya dimuat sebelum menjalankan skrip
         window.onload = loadRekap;
     </script>
 
