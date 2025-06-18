@@ -4,29 +4,55 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Absensi Online</title>
+    <!-- Google Font Poppins untuk tampilan modern -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            background-color: #f4f7f6; /* Light background for contrast */
-            color: #333;
-            position: relative;
-            overflow: hidden; /* Hide overflowing shapes */
+        /* Mendefinisikan variabel CSS untuk warna dan styling yang konsisten */
+        :root {
+            --primary-color: #4CAF50; /* Hijau */
+            --secondary-color: #2196F3; /* Biru */
+            --accent-color-orange: #FFC107; /* Amber */
+            --accent-color-red: #f44336; /* Merah */
+            --text-color: #333;
+            --background-light: #f4f7f6; /* Latar belakang terang */
+            --card-background: #ffffff; /* Latar belakang kartu/form */
+            --shadow-light: rgba(0, 0, 0, 0.1); /* Bayangan lembut */
+            --border-color: #ddd; /* Warna border */
         }
 
-        /* Geometric Shapes */
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            max-width: 600px; /* Batasi lebar maksimum untuk desktop/tablet besar */
+            margin: auto; /* Pusatkan konten di tengah halaman */
+            padding: 20px; /* Padding di sekitar konten */
+            background-color: var(--background-light);
+            color: var(--text-color);
+            position: relative;
+            overflow: hidden; /* Sembunyikan shapes yang meluap dari body */
+        }
+
+        /* Styling untuk container utama form yang berfungsi sebagai "kartu" */
+        .form-container {
+            background-color: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px var(--shadow-light);
+            padding: 30px; /* Padding internal */
+            margin-top: 30px;
+            position: relative;
+            z-index: 1; /* Pastikan konten form di atas shapes latar belakang */
+        }
+
+        /* Geometric Shapes (elemen dekoratif latar belakang) */
         .shape {
             position: absolute;
-            opacity: 0.1;
-            z-index: -1;
+            opacity: 0.08; /* Transparansi agar tidak terlalu dominan */
+            z-index: 0; /* Pastikan di belakang konten utama */
         }
 
         .circle1 {
             width: 150px;
             height: 150px;
-            background-color: #4CAF50; /* Green */
+            background-color: var(--primary-color);
             border-radius: 50%;
             top: -50px;
             left: -50px;
@@ -35,7 +61,7 @@
         .circle2 {
             width: 100px;
             height: 100px;
-            background-color: #2196F3; /* Blue */
+            background-color: var(--secondary-color);
             border-radius: 50%;
             bottom: -30px;
             right: -30px;
@@ -44,7 +70,7 @@
         .square1 {
             width: 120px;
             height: 120px;
-            background-color: #FFC107; /* Amber */
+            background-color: var(--accent-color-orange);
             transform: rotate(45deg);
             top: 100px;
             right: -60px;
@@ -55,23 +81,56 @@
             height: 0;
             border-left: 75px solid transparent;
             border-right: 75px solid transparent;
-            border-bottom: 150px solid #f44336; /* Red */
+            border-bottom: 150px solid var(--accent-color-red);
             bottom: 80px;
             left: -40px;
             transform: rotate(20deg);
         }
 
-        h2 {
-            text-align: center;
-            color: #2c3e50;
+        /* Styling untuk area header dengan logo dan judul */
+        .header-content {
+            display: flex; /* Menggunakan flexbox untuk penataan sejajar */
+            align-items: center; /* Pusatkan item secara vertikal */
+            justify-content: center; /* Pusatkan item secara horizontal */
+            flex-wrap: wrap; /* Izinkan wrap pada layar kecil untuk tata letak kolom */
+            text-align: center; /* Untuk teks di bawah jika wrap terjadi */
             margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color); /* Garis bawah pemisah */
+        }
+
+        .header-content img {
+            max-width: 80px; /* Lebar maksimum logo */
+            height: auto; /* Tinggi otomatis menjaga rasio aspek */
+            margin-right: 15px; /* Jarak antara logo dan teks */
+            border-radius: 8px; /* Sudut membulat pada logo */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Bayangan pada logo */
+        }
+
+        .header-text {
+            display: flex;
+            flex-direction: column; /* Teks bertumpuk secara vertikal */
+            align-items: center; /* Pusatkan teks */
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin: 0;
+            font-weight: 600;
+            font-size: 2em; /* Ukuran font relatif terhadap ukuran font dasar */
+        }
+        
+        .school-name {
+            color: #555;
+            font-size: 1.1em;
+            font-weight: 400;
+            margin-top: 5px;
         }
 
         label {
             display: block;
             margin: 15px 0 5px;
             width: 100%;
-            max-width: 400px;
             font-weight: bold;
             color: #555;
         }
@@ -80,19 +139,18 @@
         select {
             display: block;
             margin-bottom: 20px;
-            width: 100%;
-            max-width: 400px;
+            width: 100%; /* Lebar penuh dalam container */
             padding: 12px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            box-sizing: border-box;
+            box-sizing: border-box; /* Pastikan padding tidak menambah lebar */
             font-size: 16px;
             transition: border-color 0.3s;
         }
 
         input[type="text"]:focus,
         select:focus {
-            border-color: #007bff;
+            border-color: var(--secondary-color);
             outline: none;
         }
 
@@ -112,26 +170,31 @@
             margin: 20px auto;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%; /* Video akan selalu memenuhi lebar yang tersedia */
+            height: auto; /* Menjaga rasio aspek */
+            /* max-width: 320px; -- Dihapus agar video dapat diskalakan lebih besar pada perangkat yang lebih lebar */
         }
 
         canvas {
-            display: none; /* Keep canvas hidden */
+            display: none; /* Canvas tetap tersembunyi, hanya digunakan untuk mengambil foto */
         }
 
         #photoPreview {
             display: block;
             margin: 20px auto;
-            max-width: 320px;
+            /* max-width: 320px; -- Dihapus agar preview foto dapat diskalakan lebih besar */
+            width: 100%; /* Preview foto akan selalu memenuhi lebar yang tersedia */
+            height: auto; /* Menjaga rasio aspek */
             border: 1px solid #ccc;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: #e9ecef;
-            min-height: 100px; /* Placeholder height */
-            object-fit: contain;
+            min-height: 100px; /* Tinggi placeholder */
+            object-fit: contain; /* Memastikan gambar pas dalam area tanpa terpotong */
         }
 
         button {
-            background-color: #007bff;
+            background-color: var(--secondary-color);
             color: white;
             padding: 12px 20px;
             border: none;
@@ -139,14 +202,13 @@
             cursor: pointer;
             font-size: 18px;
             margin-top: 15px;
-            width: 100%;
-            max-width: 400px;
+            width: 100%; /* Lebar penuh dalam container */
             transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+            box-shadow: 0 4px 8px rgba(33, 150, 243, 0.2);
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #1976D2; /* Biru lebih gelap saat hover */
             transform: translateY(-2px);
         }
 
@@ -161,11 +223,46 @@
             margin-top: 20px;
             text-align: center;
             font-weight: bold;
-            color: #d9534f; /* Error/status color */
+            color: #d9534f; /* Warna untuk pesan status/error */
         }
-        /* --- Perubahan Baru: Sembunyikan label dan select peran --- */
-        #roleContainer { /* Tambahkan div pembungkus ini di HTML */
+
+        /* Menyembunyikan elemen select peran yang tidak digunakan secara langsung */
+        #roleContainer {
             display: none;
+        }
+
+        /* Media Query untuk penyesuaian pada layar yang lebih kecil (misalnya ponsel) */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px; /* Padding lebih kecil pada layar sangat kecil */
+            }
+            .form-container {
+                padding: 20px; /* Padding internal form lebih kecil */
+            }
+            .header-content {
+                flex-direction: column; /* Tata letak kolom untuk logo dan teks judul */
+                margin-bottom: 15px;
+            }
+            .header-content img {
+                margin-right: 0; /* Hapus margin kanan */
+                margin-bottom: 10px; /* Tambah margin bawah */
+                max-width: 60px; /* Logo sedikit lebih kecil di HP */
+            }
+            h2 {
+                font-size: 1.5em; /* Ukuran judul lebih kecil di HP */
+            }
+            .school-name {
+                font-size: 0.9em; /* Ukuran nama sekolah lebih kecil di HP */
+            }
+            button {
+                font-size: 16px;
+                padding: 10px 15px;
+            }
+            input[type="text"],
+            select {
+                padding: 10px;
+                font-size: 14px;
+            }
         }
     </style>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
@@ -173,35 +270,49 @@
 </head>
 <body>
 
+    <!-- Elemen dekoratif latar belakang -->
     <div class="shape circle1"></div>
     <div class="shape circle2"></div>
     <div class="shape square1"></div>
     <div class="shape triangle1"></div>
 
-    <h2>Absensi Online</h2>
+    <!-- Kontainer utama form absensi -->
+    <div class="form-container">
+        <!-- Bagian header dengan logo dan judul -->
+        <div class="header-content">
+            <!-- Logo yang diunggah langsung ke GitHub (contoh path relatif) -->
+            <!-- Pastikan nama file dan path sesuai dengan lokasi di repositori GitHub Anda -->
+            <img src="./logo_muhika-removebg-preview.png" alt="Logo SMK Muhammadiyah Campaka" onerror="this.onerror=null;this.src='https://placehold.co/80x80/cccccc/333333?text=Logo';" />
+            <div class="header-text">
+                <h2>ABSENSI DIGITAL</h2>
+                <p class="school-name">SMK MUHAMMADIYAH CAMPAKA PURWAKARTA</p>
+            </div>
+        </div>
 
-    <label for="userId">Masukkan ID Siswa/Guru (Scan QR Code Bisa menggunakan aplikasi pemindai QR di HP)</label>
-    <input type="text" id="userId" placeholder="Masukkan ID unik" autofocus />
+        <label for="userId">Masukkan ID Siswa/Guru (Scan QR Code Bisa menggunakan aplikasi pemindai QR di HP)</label>
+        <input type="text" id="userId" placeholder="Masukkan ID unik" autofocus />
 
-    <div id="roleContainer">
-        <label for="role">Pilih Peran</label>
-        <select id="role">
-            <option value="siswa">Siswa</option>
-            <option value="guru">Guru</option>
-        </select>
+        <!-- Bagian ini disembunyikan karena peran dideteksi otomatis -->
+        <div id="roleContainer">
+            <label for="role">Pilih Peran</label>
+            <select id="role">
+                <option value="siswa">Siswa</option>
+                <option value="guru">Guru</option>
+            </select>
+        </div>
+
+        <p>Mata Pelajaran Sekarang: <span id="subject">-</span></p>
+        <p>Jam Pelajaran Sekarang: <span id="schedule">-</span></p>
+
+        <video id="video" width="320" height="240" autoplay style="display:none;"></video>
+        <canvas id="canvas" width="320" height="240" style="display:none;"></canvas><br>
+        <img id="photoPreview" alt="Foto akan muncul di sini" />
+
+        <button id="btnStartCamera">Aktifkan Kamera</button>
+        <button id="btnAbsen" disabled>Konfirmasi Hadir</button>
+
+        <p id="status"></p>
     </div>
-
-    <p>Mata Pelajaran Sekarang: <span id="subject">-</span></p>
-    <p>Jam Pelajaran Sekarang: <span id="schedule">-</span></p>
-
-    <video id="video" width="320" height="240" autoplay style="display:none;"></video>
-    <canvas id="canvas" width="320" height="240" style="display:none;"></canvas><br>
-    <img id="photoPreview" alt="Foto akan muncul di sini" />
-
-    <button id="btnStartCamera">Aktifkan Kamera</button>
-    <button id="btnAbsen" disabled>Konfirmasi Hadir</button>
-
-    <p id="status"></p>
 
     <script>
         // --- Konfigurasi Firebase (Ganti sesuai project Anda) ---
@@ -234,7 +345,7 @@
 
         const daftarGuru = [
             "JIMMY", // Contoh nama guru
-            "SIGIT",   // Contoh nama guru
+            "SIGIT",    // Contoh nama guru
             "EGI",
             "NISA"
             // Tambahkan nama-nama guru di sini
@@ -319,7 +430,7 @@
             } else {
                 roleSelect.value = 'siswa'; // Default jika tidak ditemukan
                 if (inputId.length > 0) { // Hanya tampilkan pesan jika ada input
-                     statusP.textContent = 'ID/Nama tidak dikenal. Peran default: Siswa.';
+                    statusP.textContent = 'ID/Nama tidak dikenal. Peran default: Siswa.';
                 } else {
                     statusP.textContent = ''; // Kosongkan jika input kosong
                 }
@@ -363,13 +474,14 @@
             }
 
             if (!inputId) {
-                alert('Masukkan ID/Nama dengan benar.');
+                // Menggunakan statusP.textContent alih-alih alert
+                statusP.textContent = 'Error: Masukkan ID/Nama dengan benar.';
                 return;
             }
 
             if (!isValidName) {
-                alert('ID/Nama tidak terdaftar. Anda tidak diizinkan untuk absensi.');
-                statusP.textContent = 'Absensi Gagal: ID/Nama tidak valid.';
+                // Menggunakan statusP.textContent alih-alih alert
+                statusP.textContent = 'Error: ID/Nama tidak terdaftar. Anda tidak diizinkan untuk absensi.';
                 return; // Hentikan proses jika nama tidak valid
             }
 
@@ -386,12 +498,28 @@
             let lokasi = { latitude: 0, longitude: 0 };
             try {
                 const posisi = await new Promise((resolve, reject) => {
-                    navigator.geolocation.getCurrentPosition(resolve, reject);
+                    // Set timeout untuk geolocation jika terlalu lama
+                    const geoTimeout = setTimeout(() => reject(new Error('Geolocation timeout')), 10000); // 10 detik
+                    navigator.geolocation.getCurrentPosition(
+                        (pos) => {
+                            clearTimeout(geoTimeout);
+                            resolve(pos);
+                        },
+                        (error) => {
+                            clearTimeout(geoTimeout);
+                            reject(error);
+                        },
+                        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 } // Opsi geolocation
+                    );
                 });
                 lokasi.latitude = posisi.coords.latitude;
                 lokasi.longitude = posisi.coords.longitude;
-            } catch {
-                statusP.textContent = 'Tidak dapat mengakses lokasi.';
+            } catch (error) {
+                if (error.message === 'Geolocation timeout') {
+                    statusP.textContent = 'Tidak dapat mengakses lokasi (timeout).';
+                } else {
+                    statusP.textContent = 'Tidak dapat mengakses lokasi: ' + error.message;
+                }
             }
 
             // Ambil jadwal aktif utk disimpan
@@ -407,8 +535,14 @@
                 jam: aktif ? aktif.start + ' - ' + aktif.end : '-',
                 foto: photoData,
                 lokasi,
-                materi: detectedRole === 'guru' ? prompt("Masukkan materi pelajaran:") || '' : ''
+                materi: '' // Default materi kosong
             };
+
+            // Jika peran adalah guru, minta materi
+            if (detectedRole === 'guru') {
+                const materiInput = prompt("Anda adalah guru. Masukkan materi pelajaran hari ini:");
+                dataAbsensi.materi = materiInput || '-'; // Jika user membatalkan atau mengosongkan
+            }
 
             // Simpan data ke Firebase (path: absensi/{id}/{waktu})
             const path = `absensi/${dataAbsensi.id}/${Date.now()}`;
@@ -416,6 +550,12 @@
                 await db.ref(path).set(dataAbsensi);
                 statusP.textContent = "Absensi berhasil disimpan.";
                 btnAbsen.disabled = true;
+                // Opsional: Hentikan kamera dan hapus preview setelah absensi berhasil
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                    video.style.display = 'none';
+                    photoPreview.src = '';
+                }
             } catch (error) {
                 statusP.textContent = "Gagal menyimpan absensi: " + error.message;
             }
