@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Absensi Online</title>
-    <!-- Google Font Poppins untuk tampilan modern -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         /* Mendefinisikan variabel CSS untuk warna dan styling yang konsisten */
@@ -165,6 +164,20 @@
             color: #333;
         }
 
+        /* Style for the new role display box */
+        #detectedRoleBox {
+            background-color: #e0f2f7; /* Light blue background */
+            border: 1px solid #b3e5fc; /* Light blue border */
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #01579b; /* Darker blue text */
+            font-size: 1.2em;
+        }
+
         video {
             display: block;
             margin: 20px auto;
@@ -261,6 +274,9 @@
                 padding: 10px;
                 font-size: 14px;
             }
+            #detectedRoleBox {
+                font-size: 1em; /* Adjust font size for smaller screens */
+            }
         }
     </style>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
@@ -268,18 +284,13 @@
 </head>
 <body>
 
-    <!-- Elemen dekoratif latar belakang -->
     <div class="shape circle1"></div>
     <div class="shape circle2"></div>
     <div class="shape square1"></div>
     <div class="shape triangle1"></div>
 
-    <!-- Kontainer utama form absensi -->
     <div class="form-container">
-        <!-- Bagian header dengan logo dan judul -->
         <div class="header-content">
-            <!-- Logo yang diunggah langsung ke GitHub (contoh path relatif) -->
-            <!-- Pastikan nama file dan path sesuai dengan lokasi di repositori GitHub Anda -->
             <img src="./logo_muhika-removebg-preview.png" alt="Logo SMK Muhammadiyah Campaka" onerror="this.onerror=null;this.src='https://placehold.co/80x80/cccccc/333333?text=Logo';" />
             <div class="header-text">
                 <h2>ABSENSI DIGITAL</h2>
@@ -290,7 +301,6 @@
         <label for="userId">Masukkan ID Siswa/Guru (Scan QR Code Bisa menggunakan aplikasi pemindai QR di HP)</label>
         <input type="text" id="userId" placeholder="Masukkan ID unik" autofocus />
 
-        <!-- Bagian ini disembunyikan karena peran dideteksi otomatis -->
         <div id="roleContainer">
             <label for="role">Pilih Peran</label>
             <select id="role">
@@ -301,6 +311,8 @@
 
         <p>Mata Pelajaran Sekarang: <span id="subject">-</span></p>
         <p>Jam Pelajaran Sekarang: <span id="schedule">-</span></p>
+
+        <div id="detectedRoleBox">Peran: -</div>
 
         <video id="video" width="320" height="240" autoplay style="display:none;"></video>
         <canvas id="canvas" width="320" height="240" style="display:none;"></canvas><br>
@@ -383,6 +395,7 @@
         const roleSelect = document.getElementById('role'); // Tetap ambil elemen ini untuk diatur nilainya
         const subjectSpan = document.getElementById('subject');
         const scheduleSpan = document.getElementById('schedule');
+        const detectedRoleBox = document.getElementById('detectedRoleBox'); // New element for role display
         const btnStartCamera = document.getElementById('btnStartCamera');
         const btnAbsen = document.getElementById('btnAbsen');
         const video = document.getElementById('video');
@@ -421,57 +434,61 @@
 
             if (daftarSiswaNormalized.includes(inputIdNormalized)) {
                 roleSelect.value = 'siswa';
-                statusP.textContent = 'Peran terdeteksi: Siswa';
+                detectedRoleBox.textContent = 'Peran: Siswa'; // Update the new box
+                statusP.textContent = ''; // Clear status message if role is detected
             } else if (daftarGuruNormalized.includes(inputIdNormalized)) {
                 roleSelect.value = 'guru';
-                statusP.textContent = 'Peran terdeteksi: Guru';
+                detectedRoleBox.textContent = 'Peran: Guru'; // Update the new box
+                statusP.textContent = ''; // Clear status message if role is detected
             } else {
-                roleSelect.value = 'siswa'; // Default jika tidak ditemukan
-                if (inputId.length > 0) { // Hanya tampilkan pesan jika ada input
+                roleSelect.value = 'siswa'; // Default if not found
+                detectedRoleBox.textContent = 'Peran: - (ID/Nama tidak dikenal)'; // Update the new box
+                if (inputId.length > 0) { // Only show message if there's input
                     statusP.textContent = 'ID/Nama tidak dikenal. Peran default: Siswa.';
                 } else {
-                    statusP.textContent = ''; // Kosongkan jika input kosong
+                    statusP.textContent = ''; // Clear if input is empty
+                    detectedRoleBox.textContent = 'Peran: -'; // Reset box if input is empty
                 }
             }
         });
 
 
         // --- Kamera dan ambil foto ---
-       btnStartCamera.addEventListener('click', async () => {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        try {
-            stream = await navigator.mediaDevices.getUserMedia({
-                video: {
-                    facingMode: 'user' // Prefer kamera depan (di HP)
+        btnStartCamera.addEventListener('click', async () => {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia({
+                        video: {
+                            facingMode: 'user' // Prefer kamera depan (di HP)
+                        }
+                    });
+
+                    video.srcObject = stream;
+                    video.style.display = 'block';
+                    photoPreview.src = ''; // Reset preview sebelumnya
+                    statusP.style.color = '#28a745'; // Hijau
+                    statusP.textContent = '✅ Kamera aktif. Pastikan wajah terlihat jelas.';
+
+                    console.log("✅ Kamera berhasil diaktifkan.");
+                } catch (error) {
+                    console.error("❌ Kamera error:", error);
+
+                    if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+                        statusP.style.color = '#d9534f';
+                        statusP.textContent = '❌ Akses kamera ditolak. Mohon izinkan kamera di browser.';
+                    } else if (error.name === 'NotFoundError') {
+                        statusP.style.color = '#d9534f';
+                        statusP.textContent = '❌ Kamera tidak ditemukan. Periksa perangkat Anda.';
+                    } else {
+                        statusP.style.color = '#d9534f';
+                        statusP.textContent = '❌ Gagal mengakses kamera: ' + error.message;
+                    }
                 }
-            });
-
-            video.srcObject = stream;
-            video.style.display = 'block';
-            photoPreview.src = ''; // Reset preview sebelumnya
-            statusP.style.color = '#28a745'; // Hijau
-            statusP.textContent = '✅ Kamera aktif. Pastikan wajah terlihat jelas.';
-
-            console.log("✅ Kamera berhasil diaktifkan.");
-        } catch (error) {
-            console.error("❌ Kamera error:", error);
-
-            if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
-                statusP.style.color = '#d9534f';
-                statusP.textContent = '❌ Akses kamera ditolak. Mohon izinkan kamera di browser.';
-            } else if (error.name === 'NotFoundError') {
-                statusP.style.color = '#d9534f';
-                statusP.textContent = '❌ Kamera tidak ditemukan. Periksa perangkat Anda.';
             } else {
                 statusP.style.color = '#d9534f';
-                statusP.textContent = '❌ Gagal mengakses kamera: ' + error.message;
+                statusP.textContent = '❌ Browser Anda tidak mendukung akses kamera.';
             }
-        }
-    } else {
-        statusP.style.color = '#d9534f';
-        statusP.textContent = '❌ Browser Anda tidak mendukung akses kamera.';
-    }
-});
+        });
 
         // --- Proses absensi ---
         btnAbsen.addEventListener('click', async () => {
@@ -493,13 +510,11 @@
             }
 
             if (!inputId) {
-                // Menggunakan statusP.textContent alih-alih alert
                 statusP.textContent = 'Error: Masukkan ID/Nama dengan benar.';
                 return;
             }
 
             if (!isValidName) {
-                // Menggunakan statusP.textContent alih-alih alert
                 statusP.textContent = 'Error: ID/Nama tidak terdaftar. Anda tidak diizinkan untuk absensi.';
                 return; // Hentikan proses jika nama tidak valid
             }
