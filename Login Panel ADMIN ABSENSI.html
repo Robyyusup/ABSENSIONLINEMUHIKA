@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login 3D</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0f0f0f;
+      overflow: hidden;
+    }
+    .container {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #spaceCanvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
+    .content {
+      text-align: center;
+      color: white;
+      z-index: 1;
+    }
+    input, button {
+      margin-top: 10px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    input {
+      width: 250px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    #error-message {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <canvas id="spaceCanvas"></canvas>
+    <div class="content">
+      <h1>LOGIN ADMIN</h1>
+      <form id="login-form">
+        <input type="email" id="email" placeholder="Email" required><br>
+        <input type="password" id="password" placeholder="Password" required><br>
+        <button type="submit">Login</button>
+      </form>
+      <div id="error-message"></div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Autentikasi sederhana
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      if (email === '@admin' && password === '@admin') {
+        sessionStorage.setItem('isLoggedIn', true);
+        window.location.href = 'dashboard.html';
+      } else {
+        document.getElementById('error-message').innerText = 'Email atau Password salah.';
+      }
+    });
+
+    // Animasi bintang (Three.js)
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({canvas: document.getElementById('spaceCanvas'), antialias: true});
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const stars = [];
+    for (let i = 0; i < 2000; i++) {
+      const geometry = new THREE.SphereGeometry(0.5, 24, 24);
+      const material = new THREE.MeshBasicMaterial({color: 0xffffff});
+      const star = new THREE.Mesh(geometry, material);
+      star.position.set(THREE.MathUtils.randFloatSpread(1000), THREE.MathUtils.randFloatSpread(1000), THREE.MathUtils.randFloatSpread(1000));
+      scene.add(star);
+      stars.push(star);
+    }
+
+    const background = new THREE.Mesh(
+      new THREE.SphereGeometry(2000, 64, 64),
+      new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide })
+    );
+    scene.add(background);
+
+    const pointLight = new THREE.PointLight(0xffffff, 1, 1000);
+    scene.add(pointLight);
+
+    camera.position.z = 400;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      background.rotation.y += 0.001;
+      stars.forEach(star => {
+        star.position.z += 0.2;
+        if (star.position.z > 1000) {
+          star.position.z = -1000;
+          star.position.x = THREE.MathUtils.randFloatSpread(1000);
+          star.position.y = THREE.MathUtils.randFloatSpread(1000);
+        }
+      });
+      pointLight.position.copy(camera.position);
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
