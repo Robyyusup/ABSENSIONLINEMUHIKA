@@ -1,568 +1,183 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Panel Admin Rekap Absensi</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-    <style>
-        /* Mendefinisikan variabel CSS untuk warna dan styling yang konsisten */
-        :root {
-            --primary-color: #4CAF50; /* Hijau yang lebih menarik */
-            --secondary-color: #2196F3; /* Biru */
-            --text-color: #333;
-            --background-light: #f9fbfb; /* Latar belakang terang */
-            --background-dark: #edf2f7; /* Latar belakang gelap untuk header tabel */
-            --card-background: #ffffff; /* Latar belakang kartu/kontainer utama */
-            --shadow-light: rgba(0, 0, 0, 0.05); /* Bayangan ringan */
-            --border-color: #e0e0e0; /* Warna border */
-
-            /* Warna Status */
-            --status-green: #d4edda; /* Hijau untuk status "Hadir" */
-            --status-yellow: #fff3cd; /* Kuning untuk status "Kurang" */
-            --status-red: #f8d7da; /* Merah untuk status "Tidak Hadir" */
-            --status-text-green: #155724; /* Warna teks untuk status hijau */
-            --status-text-yellow: #856404; /* Warna teks untuk status kuning */
-            --status-text-red: #721c24; /* Warna teks untuk status merah */
-        }
-
-        /* Styling dasar untuk body halaman */
-        body {
-            font-family: 'Poppins', Arial, sans-serif; /* Menggunakan font Poppins */
-            max-width: 1200px; /* Lebar maksimum halaman */
-            margin: auto; /* Pusatkan konten */
-            padding: 20px; /* Padding di sekitar konten */
-            background-color: var(--background-light); /* Warna latar belakang body */
-            color: var(--text-color); /* Warna teks default */
-            line-height: 1.6; /* Tinggi baris untuk keterbacaan */
-        }
-
-        /* Styling untuk container utama aplikasi */
-        .container {
-            background-color: var(--card-background); /* Latar belakang putih */
-            border-radius: 12px; /* Sudut membulat */
-            box-shadow: 0 8px 20px var(--shadow-light); /* Bayangan lembut */
-            padding: 30px; /* Padding internal */
-            margin-top: 30px; /* Margin atas */
-            position: relative; /* Diperlukan untuk posisi elemen shape */
-            overflow: hidden; /* Pastikan elemen shape tidak keluar dari container */
-        }
-
-        /* Styling dasar untuk elemen shape latar belakang */
-        .shape {
-            position: absolute; /* Posisi absolut */
-            opacity: 0.05; /* Transparansi agar tidak terlalu dominan */
-            z-index: 0; /* Pastikan di belakang konten utama */
-        }
-
-        /* Styling untuk shape lingkaran di kiri atas */
-        .shape.circle-top-left {
-            width: 150px;
-            height: 150px;
-            background-color: var(--primary-color);
-            border-radius: 50%; /* Membuat lingkaran */
-            top: -75px;
-            left: -75px;
-        }
-
-        /* Styling untuk shape kotak yang diputar di kanan bawah */
-        .shape.square-bottom-right {
-            width: 100px;
-            height: 100px;
-            background-color: var(--secondary-color);
-            transform: rotate(30deg); /* Memutar kotak */
-            bottom: -50px;
-            right: -50px;
-        }
-
-        /* Styling untuk area header dengan logo dan judul */
-        .header-content {
-            display: flex; /* Menggunakan flexbox untuk penataan sejajar */
-            align-items: center; /* Pusatkan item secara vertikal */
-            justify-content: center; /* Pusatkan item secara horizontal */
-            flex-wrap: wrap; /* Izinkan wrap pada layar kecil */
-            text-align: center; /* Untuk teks di bawah jika wrap */
-            margin-bottom: 25px; /* Margin bawah */
-        }
-
-        .header-content img {
-            max-width: 80px; /* Lebar maksimum logo */
-            height: auto; /* Tinggi otomatis */
-            margin-right: 15px; /* Jarak antara logo dan teks */
-            border-radius: 8px; /* Sudut membulat pada logo */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Bayangan pada logo */
-        }
-
-        .header-text {
-            display: flex;
-            flex-direction: column; /* Teks bertumpuk secara vertikal */
-            align-items: center; /* Pusatkan teks */
-        }
-
-        h2 {
-            color: var(--primary-color); /* Warna hijau */
-            margin: 0; /* Hapus margin default h2 */
-            font-weight: 600; /* Ketebalan font */
-            font-size: 2em; /* Ukuran font */
-        }
-        
-        .school-name {
-            color: #555; /* Warna teks nama sekolah */
-            font-size: 1.1em; /* Ukuran font nama sekolah */
-            font-weight: 400; /* Ketebalan font */
-            margin-top: 5px; /* Sedikit jarak dari judul */
-        }
-
-        /* Styling untuk sub-judul tabel (Rekap Absensi Siswa/Guru) */
-        h3 {
-            color: #444;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 1.5em;
-            font-weight: 600;
-        }
-
-        .subtitle {
-            text-align: center; /* Pusatkan teks */
-            color: #777; /* Warna abu-abu */
-            margin-top: 15px; /* Margin atas untuk subtitle */
-            margin-bottom: 30px; /* Margin bawah */
-            font-size: 0.95em; /* Ukuran font sedikit lebih kecil */
-        }
-
-        .controls {
-            text-align: center; /* Pusatkan konten */
-            margin-bottom: 25px; /* Margin bawah */
-        }
-
-        .refresh-btn {
-            background-color: var(--secondary-color); /* Warna biru */
-            color: white; /* Warna teks putih */
-            padding: 10px 20px; /* Padding internal */
-            border: none; /* Tanpa border */
-            border-radius: 8px; /* Sudut membulat */
-            cursor: pointer; /* Kursor pointer saat dihover */
-            font-size: 1em; /* Ukuran font */
-            transition: background-color 0.3s ease, transform 0.2s ease; /* Transisi untuk efek hover */
-            box-shadow: 0 4px 10px rgba(33, 150, 243, 0.2); /* Bayangan tombol */
-        }
-
-        /* Efek hover untuk tombol refresh */
-        .refresh-btn:hover {
-            background-color: #1976D2; /* Darker blue */
-            transform: translateY(-2px); /* Sedikit naik saat hover */
-        }
-
-        /* Styling untuk tabel data */
-        table {
-            width: 100%; /* Lebar penuh */
-            border-collapse: collapse; /* Hilangkan jarak antar border sel */
-            margin-top: 20px; /* Margin atas */
-            border-radius: 8px; /* Sudut membulat tabel */
-            overflow: hidden; /* Penting untuk agar border-radius tabel berfungsi */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Bayangan tabel */
-        }
-
-        /* Styling untuk header tabel dan sel data */
-        th, td {
-            border: 1px solid var(--border-color); /* Border sel */
-            padding: 12px 15px; /* Padding internal sel */
-            text-align: left; /* Teks rata kiri */
-            font-size: 0.9em; /* Ukuran font sel */
-        }
-
-        /* Styling khusus untuk header tabel */
-        th {
-            background-color: var(--background-dark); /* Latar belakang gelap */
-            color: var(--text-color); /* Warna teks */
-            font-weight: 600; /* Ketebalan font */
-            text-transform: uppercase; /* Teks menjadi huruf besar */
-        }
-
-        /* Styling untuk baris genap (zebra striping) */
-        tr:nth-child(even) {
-            background-color: #f6f8f9;
-        }
-
-        /* Efek hover untuk baris tabel */
-        tr:hover {
-            background-color: #e9f0f4;
-            transition: background-color 0.3s ease;
-        }
-
-        /* Styling untuk sel status (lingkaran warna) */
-        .status-cell {
-            font-weight: 600; /* Ketebalan font */
-            padding: 8px 12px; /* Padding internal */
-            border-radius: 6px; /* Sudut membulat */
-            display: inline-block; /* Agar background hanya membungkus teks */
-            min-width: 80px; /* Lebar minimum */
-            text-align: center; /* Pusatkan teks */
-        }
-
-        /* Warna spesifik untuk status hijau */
-        .status-cell.status-hijau {
-            background-color: var(--status-green);
-            color: var(--status-text-green);
-        }
-        /* Warna spesifik untuk status kuning */
-        .status-cell.status-kuning {
-            background-color: var(--status-yellow);
-            color: var(--status-text-yellow);
-        }
-        /* Warna spesifik untuk status merah */
-        .status-cell.status-merah {
-            background-color: var(--status-red);
-            color: var(--status-text-red);
-        }
-
-        /* Styling untuk pesan loading */
-        #loadingMessage {
-            text-align: center; /* Pusatkan teks */
-            font-style: italic; /* Teks miring */
-            color: #777; /* Warna abu-abu */
-            margin-top: 20px; /* Margin atas */
-        }
-
-        /* Penyesuaian responsif untuk layar kecil (maks 768px) */
-        @media (max-width: 768px) {
-            body {
-                padding: 15px; /* Padding lebih kecil */
-            }
-            .container {
-                padding: 20px; /* Padding lebih kecil */
-            }
-            .header-content {
-                flex-direction: column; /* Tata letak kolom di layar kecil */
-                margin-bottom: 20px;
-            }
-            .header-content img {
-                margin-right: 0; /* Hapus margin kanan */
-                margin-bottom: 10px; /* Tambah margin bawah */
-            }
-            /* Mengubah tabel menjadi layout "kartu" */
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-            thead tr {
-                position: absolute; /* Sembunyikan header tabel asli */
-                top: -9999px;
-                left: -9999px;
-            }
-            tr {
-                border: 1px solid var(--border-color); /* Border untuk setiap "kartu" baris */
-                margin-bottom: 15px; /* Jarak antar "kartu" */
-                border-radius: 8px; /* Sudut membulat */
-            }
-            td {
-                border: none; /* Hilangkan border sel */
-                border-bottom: 1px solid var(--border-color); /* Tambahkan border bawah */
-                position: relative;
-                padding-left: 50%; /* Sisakan ruang untuk label */
-                text-align: right; /* Teks data di kanan */
-            }
-            td:before {
-                position: absolute;
-                top: 0;
-                left: 6px;
-                width: 45%;
-                padding-right: 10px;
-                white-space: nowrap;
-                content: attr(data-label); /* Menggunakan atribut data-label sebagai judul kolom */
-                font-weight: 600;
-                text-align: left; /* Teks label di kiri */
-                color: #555;
-            }
-            td:last-child {
-                border-bottom: 0; /* Hilangkan border bawah pada sel terakhir */
-            }
-        }
-    </style>
-
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login dan Panel Admin Absensi</title>
+  <style>
+    /* Style Umum Login */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0f0f0f;
+      overflow-x: hidden;
+    }
+    .container {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #spaceCanvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
+    .content {
+      text-align: center;
+      color: white;
+      z-index: 1;
+    }
+    input, button {
+      margin-top: 10px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    input {
+      width: 250px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    #error-message {
+      color: red;
+      margin-top: 10px;
+    }
+    #admin-panel {
+      display: none;
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 1000px;
+      overflow: auto;
+      max-height: 90vh;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+      background: #f5f5f5;
+    }
+    .status-cell.hijau { background: #d4edda; color: #155724; }
+    .status-cell.kuning { background: #fff3cd; color: #856404; }
+    .status-cell.merah { background: #f8d7da; color: #721c24; }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 </head>
 <body>
-
-    <div class="container">
-        <div class="shape circle-top-left"></div>
-        <div class="shape square-bottom-right"></div>
-
-        <div class="header-content">
-            <img src="./logo_muhika-removebg-preview.png" onerror="this.onerror=null;this.src='https://placehold.co/80x80/cccccc/333333?text=Logo';" />
-            <div class="header-text">
-                <h2>Panel Admin Rekap Absensi</h2>
-                <p class="school-name">SMK MUHAMMADIYH CAMPAKA KABUPATEN PURWAKARTA</p>
-            </div>
-        </div>
-        
-        <p class="subtitle">Data kehadiran siswa dan guru diupdate secara realtime.</p>
-
-        <div class="controls">
-            <button class="refresh-btn" onclick="loadRekap()">Refresh Data</button>
-        </div>
-
-        <p id="loadingMessage">Memuat data...</p>
-
-        <h3>Rekap Absensi Siswa</h3>
-        <table id="siswaRekapTable">
-            <thead>
-                <tr>
-                    <th>ID User</th>
-                    <th>Nama</th>
-                    <th>Kelas</th> <th>Hadir Minggu Ini</th>
-                    <th>Status Mingguan</th>
-                    <th>Hadir Bulan Ini</th>
-                    <th>Status Bulanan</th>
-                    <th>Lokasi Absensi</th>
-                    <th>Foto</th>
-                </tr>
-            </thead>
-            <tbody id="siswaRekapBody">
-                </tbody>
-        </table>
-
-        <br> <h3>Rekap Absensi Guru</h3>
-        <table id="guruRekapTable">
-            <thead>
-                <tr>
-                    <th>ID User</th>
-                    <th>Nama</th>
-                    <th>Mengajar di Kelas</th> <th>Mata Pelajaran</th> <th>Hadir Minggu Ini</th>
-                    <th>Status Mingguan</th>
-                    <th>Hadir Bulan Ini</th>
-                    <th>Status Bulanan</th>
-                    <th>Materi</th>
-                    <th>Lokasi Absensi</th>
-                    <th>Foto</th>
-                </tr>
-            </thead>
-            <tbody id="guruRekapBody">
-                </tbody>
-        </table>
+  <div class="container">
+    <canvas id="spaceCanvas"></canvas>
+    <div class="content" id="login-area">
+      <h1>LOGIN ADMIN</h1>
+      <form id="login-form">
+        <input type="email" id="email" placeholder="Email" required><br>
+        <input type="password" id="password" placeholder="Password" required><br>
+        <button type="submit">Login</button>
+      </form>
+      <div id="error-message"></div>
     </div>
+    <div id="admin-panel">
+      <h2>Panel Admin Rekap Absensi</h2>
+      <button onclick="logout()">Logout</button>
+      <p id="loading">Memuat data...</p>
+      <table>
+        <thead><tr><th>Nama</th><th>Hadir Minggu Ini</th><th>Status</th></tr></thead>
+        <tbody id="rekapBody"></tbody>
+      </table>
+    </div>
+  </div>
 
-    <script>
-        // --- Konfigurasi Firebase Anda ---
-        const firebaseConfig = {
-            apiKey: "AIzaSyDrt5MHhs-Wjoye8swLwLb068HC4kme-rg",
-            authDomain: "absensionlinemuhika.firebaseapp.com",
-            databaseURL: "https://absensionlinemuhika-default-rtdb.firebaseio.com",
-            projectId: "absensionlinemuhika",
-            storageBucket: "absensionlinemuhika.firebasestorage.app",
-            messagingSenderId: "109622927610",
-            appId: "1:109622927610:web:0b5a6ab7e5bc3104f4e943",
-            measurementId: "G-VYJ320SDRM" // Ini opsional, terkait Google Analytics
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+  <script>
+    // Firebase Setup
+    const firebaseConfig = {
+      apiKey: "AIzaSyDrt5MHhs-Wjoye8swLwLb068HC4kme-rg",
+      authDomain: "absensionlinemuhika.firebaseapp.com",
+      databaseURL: "https://absensionlinemuhika-default-rtdb.firebaseio.com",
+      projectId: "absensionlinemuhika",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-        // --- Utilitas Tanggal ---
-        function startOfWeek(date) {
-            const d = new Date(date);
-            d.setHours(0, 0, 0, 0);
-            const day = d.getDay();
-            const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-            return new Date(d.setDate(diff));
+    // Three.js Stars
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({canvas: document.getElementById('spaceCanvas'), antialias: true});
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.position.z = 400;
+    const stars = [];
+    for (let i = 0; i < 2000; i++) {
+      const geometry = new THREE.SphereGeometry(0.5, 24, 24);
+      const material = new THREE.MeshBasicMaterial({color: 0xffffff});
+      const star = new THREE.Mesh(geometry, material);
+      star.position.set(THREE.MathUtils.randFloatSpread(1000), THREE.MathUtils.randFloatSpread(1000), THREE.MathUtils.randFloatSpread(1000));
+      scene.add(star);
+      stars.push(star);
+    }
+    function animate() {
+      requestAnimationFrame(animate);
+      stars.forEach(star => {
+        star.position.z += 0.2;
+        if (star.position.z > 1000) star.position.z = -1000;
+      });
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Login Logic
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      if (email === 'smkmuhika@12' && password === '@muhika12') {
+        document.getElementById('login-area').style.display = 'none';
+        document.getElementById('admin-panel').style.display = 'block';
+        loadRekap();
+      } else {
+        document.getElementById('error-message').innerText = 'Email atau Password salah.';
+      }
+    });
+
+    function logout() {
+      document.getElementById('admin-panel').style.display = 'none';
+      document.getElementById('login-area').style.display = 'block';
+      document.getElementById('login-form').reset();
+    }
+
+    function loadRekap() {
+      const rekapBody = document.getElementById('rekapBody');
+      const loading = document.getElementById('loading');
+      rekapBody.innerHTML = '';
+      db.ref('absensi/siswa').once('value').then(snapshot => {
+        const data = snapshot.val();
+        if (!data) return loading.innerText = 'Tidak ada data.';
+        for (const user in data) {
+          const absensi = Object.values(Object.values(data[user])[0] || {});
+          const hadirMinggu = absensi.length;
+          const status = hadirMinggu >= 5 ? 'hijau' : hadirMinggu >= 3 ? 'kuning' : 'merah';
+          const nama = absensi[0]?.nama || user;
+          const tr = `<tr><td>${nama}</td><td>${hadirMinggu}</td><td class='status-cell ${status}'>${status}</td></tr>`;
+          rekapBody.innerHTML += tr;
         }
-
-        function startOfMonth(date) {
-            const d = new Date(date);
-            d.setDate(1);
-            d.setHours(0, 0, 0, 0);
-            return d;
-        }
-
-        // --- Hitung Kehadiran ---
-        function countAttendanceInRange(records, start, end) {
-            let count = 0;
-            // records di sini adalah object yang berisi timestamp absensi
-            // contoh: { "1718721312345": {...}, "1718721312346": {...} }
-            Object.values(records).forEach(record => {
-                const timestamp = new Date(record.waktu).getTime();
-                if (timestamp >= start.getTime() && timestamp <= end.getTime()) {
-                    count++;
-                }
-            });
-            return count;
-        }
-
-        // --- Tentukan Status Warna (Hijau/Kuning/Merah) ---
-        function getStatusColor(count, type) {
-            if (type === 'minggu') {
-                if (count >= 5) return 'hijau';
-                if (count >= 3) return 'kuning';
-                return 'merah';
-            } else if (type === 'bulan') {
-                if (count >= 20) return 'hijau';
-                if (count >= 12) return 'kuning';
-                return 'merah';
-            }
-            return '';
-        }
-
-        // --- Muat dan Tampilkan Data ---
-        async function loadRekap() {
-            const siswaRekapBody = document.getElementById('siswaRekapBody');
-            const guruRekapBody = document.getElementById('guruRekapBody');
-            const loadingMessage = document.getElementById('loadingMessage');
-
-            siswaRekapBody.innerHTML = "";
-            guruRekapBody.innerHTML = "";
-            loadingMessage.style.display = 'block';
-
-            try {
-                // Ambil snapshot data dari path 'absensi'
-                // Ini akan mendapatkan { "siswa": { ... }, "guru": { ... } }
-                const snapshot = await db.ref('absensi').once('value');
-                const dataAbsensiRoot = snapshot.val();
-
-                if (!dataAbsensiRoot) {
-                    siswaRekapBody.innerHTML = "<tr><td colspan='9'>Belum ada data absensi siswa.</td></tr>";
-                    guruRekapBody.innerHTML = "<tr><td colspan='10'>Belum ada data absensi guru.</td></tr>";
-                    loadingMessage.style.display = 'none';
-                    return;
-                }
-
-                const now = new Date();
-                const weekStart = startOfWeek(now);
-                const monthStart = startOfMonth(now);
-
-                let siswaCount = 0;
-                let guruCount = 0;
-
-                // --- Proses Data Siswa ---
-                const siswaData = dataAbsensiRoot.siswa || {};
-                for (let userId in siswaData) {
-                    const userClassesData = siswaData[userId]; // Ini adalah objek { "X RPL A": { timestamp: {...} }, "X TKJ B": { timestamp: {...} } }
-
-                    // Kumpulkan semua absensi dari semua kelas untuk satu siswa
-                    let allUserAbsences = {};
-                    let latestAbsen = null; // Untuk mendapatkan data terbaru (nama, role, dll)
-                    let userClassName = 'Tidak Diketahui'; // Default, akan diupdate dari absen terbaru
-                    
-                    for (let className in userClassesData) {
-                        const classAbsences = userClassesData[className]; // Ini adalah objek timestamp absensi untuk kelas tersebut
-                        Object.assign(allUserAbsences, classAbsences); // Gabungkan semua absensi dari kelas ini
-                        
-                        // Temukan absensi terbaru untuk mendapatkan kelas yang relevan
-                        for (let ts in classAbsences) {
-                            const currentAbsen = classAbsences[ts];
-                            if (!latestAbsen || new Date(currentAbsen.waktu).getTime() > new Date(latestAbsen.waktu).getTime()) {
-                                latestAbsen = currentAbsen;
-                                userClassName = className; // Update kelas dengan yang terbaru
-                            }
-                        }
-                    }
-
-                    if (!latestAbsen) continue; // Skip jika tidak ada data absensi sama sekali
-
-                    const nama = latestAbsen.nama || userId;
-                    const role = latestAbsen.role || "siswa"; // Asumsi role siswa
-                    const lokasi = latestAbsen.lokasi || { latitude: 0, longitude: 0 };
-                    const fotoData = latestAbsen.foto || '';
-
-                    const hadirMinggu = countAttendanceInRange(allUserAbsences, weekStart, now);
-                    const hadirBulan = countAttendanceInRange(allUserAbsences, monthStart, now);
-
-                    const statusMinggu = getStatusColor(hadirMinggu, 'minggu');
-                    const statusBulan = getStatusColor(hadirBulan, 'bulan');
-
-                    const lokasiLink = (lokasi.latitude !== 0 || lokasi.longitude !== 0) ?
-                        `<a href="https://maps.google.com/maps?q=${lokasi.latitude},${lokasi.longitude}" target="_blank" rel="noopener noreferrer">Lihat Lokasi</a>` : 'Tidak Tersedia';
-                    const fotoLink = fotoData ?
-                        `<a href="${fotoData}" target="_blank" rel="noopener noreferrer">Lihat Foto</a>` : 'Tidak Ada Foto';
-
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td data-label="ID User">${userId}</td>
-                        <td data-label="Nama">${nama}</td>
-                        <td data-label="Kelas">${userClassName}</td>
-                        <td data-label="Hadir Minggu Ini">${hadirMinggu}</td>
-                        <td data-label="Status Mingguan"><span class="status-cell status-${statusMinggu}"></span></td>
-                        <td data-label="Hadir Bulan Ini">${hadirBulan}</td>
-                        <td data-label="Status Bulanan"><span class="status-cell status-${statusBulan}"></span></td>
-                        <td data-label="Lokasi Absensi">${lokasiLink}</td>
-                        <td data-label="Foto">${fotoLink}</td>
-                    `;
-                    siswaRekapBody.appendChild(tr);
-                    siswaCount++;
-                }
-
-                // --- Proses Data Guru ---
-                const guruData = dataAbsensiRoot.guru || {};
-                for (let userId in guruData) {
-                    const userAbsences = guruData[userId]; // Ini adalah objek { "timestamp": {...} }
-
-                    // Untuk guru, kita juga perlu mendapatkan absensi terbaru untuk informasi mapel dan kelas
-                    let latestAbsen = null;
-                    for (let ts in userAbsences) {
-                        const currentAbsen = userAbsences[ts];
-                        if (!latestAbsen || new Date(currentAbsen.waktu).getTime() > new Date(latestAbsen.waktu).getTime()) {
-                            latestAbsen = currentAbsen;
-                        }
-                    }
-
-                    if (!latestAbsen) continue; // Skip jika tidak ada data absensi sama sekali
-
-                    const nama = latestAbsen.nama || userId;
-                    const role = latestAbsen.role || "guru"; // Asumsi role guru
-                    const materi = latestAbsen.materi || "-";
-                    const mapel = latestAbsen.mapel || "-"; // Ambil mata pelajaran
-                    const assignedClass = latestAbsen.class || "-"; // Ambil kelas yang diajar
-                    const lokasi = latestAbsen.lokasi || { latitude: 0, longitude: 0 };
-                    const fotoData = latestAbsen.foto || '';
-
-                    const hadirMinggu = countAttendanceInRange(userAbsences, weekStart, now);
-                    const hadirBulan = countAttendanceInRange(userAbsences, monthStart, now);
-
-                    const statusMinggu = getStatusColor(hadirMinggu, 'minggu');
-                    const statusBulan = getStatusColor(hadirBulan, 'bulan');
-
-                    const lokasiLink = (lokasi.latitude !== 0 || lokasi.longitude !== 0) ?
-                        `<a href="https://maps.google.com/maps?q=${lokasi.latitude},${lokasi.longitude}" target="_blank" rel="noopener noreferrer">Lihat Lokasi</a>` : 'Tidak Tersedia';
-                    const fotoLink = fotoData ?
-                        `<a href="${fotoData}" target="_blank" rel="noopener noreferrer">Lihat Foto</a>` : 'Tidak Ada Foto';
-
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td data-label="ID User">${userId}</td>
-                        <td data-label="Nama">${nama}</td>
-                        <td data-label="Mengajar di Kelas">${assignedClass}</td>
-                        <td data-label="Mata Pelajaran">${mapel}</td>
-                        <td data-label="Hadir Minggu Ini">${hadirMinggu}</td>
-                        <td data-label="Status Mingguan"><span class="status-cell status-${statusMinggu}"></span></td>
-                        <td data-label="Hadir Bulan Ini">${hadirBulan}</td>
-                        <td data-label="Status Bulanan"><span class="status-cell status-${statusBulan}"></span></td>
-                        <td data-label="Materi">${materi}</td>
-                        <td data-label="Lokasi Absensi">${lokasiLink}</td>
-                        <td data-label="Foto">${fotoLink}</td>
-                    `;
-                    guruRekapBody.appendChild(tr);
-                    guruCount++;
-                }
-
-                if (siswaCount === 0) {
-                    siswaRekapBody.innerHTML = "<tr><td colspan='9'>Belum ada data absensi siswa.</td></tr>";
-                }
-                if (guruCount === 0) {
-                    guruRekapBody.innerHTML = "<tr><td colspan='10'>Belum ada data absensi guru.</td></tr>";
-                }
-
-            } catch (error) {
-                console.error("Error fetching data:", error);
-                siswaRekapBody.innerHTML = `<tr><td colspan='9'>Gagal memuat data siswa: ${error.message}</td></tr>`;
-                guruRekapBody.innerHTML = `<tr><td colspan='10'>Gagal memuat data guru: ${error.message}</td></tr>`;
-            } finally {
-                loadingMessage.style.display = 'none';
-            }
-        }
-
-        window.onload = loadRekap;
-    </script>
-
+        loading.innerText = '';
+      });
+    }
+  </script>
 </body>
 </html>
