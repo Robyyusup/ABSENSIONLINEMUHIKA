@@ -1,181 +1,127 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <title>Login Admin & Panel Absensi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login dan Panel Admin Absensi</title>
   <style>
-    /* Style Umum Login */
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #0f0f0f;
-      overflow-x: hidden;
-    }
-    .container {
-      position: relative;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #spaceCanvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -1;
-    }
-    .content {
-      text-align: center;
-      color: white;
-      z-index: 1;
-    }
+    body { margin: 0; font-family: Arial, sans-serif; background: #111; color: #fff; }
+    .container { padding: 30px; max-width: 1000px; margin: auto; }
+    h2 { text-align: center; color: #4CAF50; }
     input, button {
-      margin-top: 10px;
       padding: 10px;
+      margin: 5px 0;
       border: none;
       border-radius: 5px;
       font-size: 16px;
     }
-    input {
-      width: 250px;
-    }
-    button {
-      background-color: #007bff;
-      color: white;
-      cursor: pointer;
-    }
-    #error-message {
-      color: red;
-      margin-top: 10px;
-    }
-    #admin-panel {
-      display: none;
-      background: white;
-      color: black;
-      padding: 20px;
-      border-radius: 8px;
-      width: 90%;
-      max-width: 1000px;
-      overflow: auto;
-      max-height: 90vh;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      padding: 10px;
-      border: 1px solid #ccc;
-      text-align: left;
-    }
-    th {
-      background: #f5f5f5;
-    }
-    .status-cell.hijau { background: #d4edda; color: #155724; }
-    .status-cell.kuning { background: #fff3cd; color: #856404; }
-    .status-cell.merah { background: #f8d7da; color: #721c24; }
+    input { width: 100%; }
+    button { background: #4CAF50; color: white; cursor: pointer; }
+    .hidden { display: none; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; color: #000; }
+    th, td { padding: 10px; border: 1px solid #ccc; }
+    img { max-width: 100px; border-radius: 5px; }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 </head>
 <body>
   <div class="container">
-    <canvas id="spaceCanvas"></canvas>
-    <div class="content" id="login-area">
-      <h1>LOGIN ADMIN</h1>
-      <form id="login-form">
-        <input type="email" id="email" placeholder="Email" required><br>
-        <input type="password" id="password" placeholder="Password" required><br>
-        <button type="submit">Login</button>
-      </form>
-      <div id="error-message"></div>
+    <div id="login-area">
+      <h2>Login Admin</h2>
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="password" placeholder="Password">
+      <button onclick="login()">Login</button>
+      <p id="login-error" style="color:red;"></p>
     </div>
-    <div id="admin-panel">
-      <h2>Panel Admin Rekap Absensi</h2>
+
+    <div id="admin-panel" class="hidden">
+      <h2>Panel Admin Absensi</h2>
       <button onclick="logout()">Logout</button>
-      <p id="loading">Memuat data...</p>
       <table>
-        <thead><tr><th>Nama</th><th>Hadir Minggu Ini</th><th>Status</th></tr></thead>
-        <tbody id="rekapBody"></tbody>
+        <thead>
+          <tr>
+            <th>Nama</th>
+            <th>Mata Pelajaran</th>
+            <th>Waktu</th>
+            <th>Lokasi</th>
+            <th>Foto</th>
+          </tr>
+        </thead>
+        <tbody id="absenBody"></tbody>
       </table>
     </div>
   </div>
 
   <script>
-    // Firebase Setup
+    // 🔧 Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyDrt5MHhs-Wjoye8swLwLb068HC4kme-rg",
       authDomain: "absensionlinemuhika.firebaseapp.com",
       databaseURL: "https://absensionlinemuhika-default-rtdb.firebaseio.com",
-      projectId: "absensionlinemuhika",
+      projectId: "absensionlinemuhika"
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // Three.js Stars
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({canvas: document.getElementById('spaceCanvas'), antialias: true});
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.position.z = 400;
-    const stars = [];
-    for (let i = 0; i < 2000; i++) {
-      const geometry = new THREE.SphereGeometry(0.5, 24, 24);
-      const material = new THREE.MeshBasicMaterial({color: 0xffffff});
-      const star = new THREE.Mesh(geometry, material);
-      star.position.set(THREE.MathUtils.randFloatSpread(1000), THREE.MathUtils.randFloatSpread(1000), THREE.MathUtils.randFloatSpread(1000));
-      scene.add(star);
-      stars.push(star);
-    }
-    function animate() {
-      requestAnimationFrame(animate);
-      stars.forEach(star => {
-        star.position.z += 0.2;
-        if (star.position.z > 1000) star.position.z = -1000;
-      });
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    // Login Logic
-    document.getElementById('login-form').addEventListener('submit', function(e) {
-      e.preventDefault();
+    // ✅ Login Function
+    function login() {
       const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      if (email === 'smkmuhika@12' && password === '@muhika12') {
-        document.getElementById('login-area').style.display = 'none';
-        document.getElementById('admin-panel').style.display = 'block';
-        loadRekap();
+      const pass = document.getElementById('password').value;
+      if (email === "smkmuhika@12" && pass === "@muhika12") {
+        document.getElementById("login-area").classList.add("hidden");
+        document.getElementById("admin-panel").classList.remove("hidden");
+        loadData();
       } else {
-        document.getElementById('error-message').innerText = 'Email atau Password salah.';
+        document.getElementById("login-error").innerText = "Email atau Password salah.";
       }
-    });
+    }
 
     function logout() {
-      document.getElementById('admin-panel').style.display = 'none';
-      document.getElementById('login-area').style.display = 'block';
-      document.getElementById('login-form').reset();
+      document.getElementById("login-area").classList.remove("hidden");
+      document.getElementById("admin-panel").classList.add("hidden");
+      document.getElementById("absenBody").innerHTML = "";
+      document.getElementById("login-error").innerText = "";
     }
 
-    function loadRekap() {
-      const rekapBody = document.getElementById('rekapBody');
-      const loading = document.getElementById('loading');
-      rekapBody.innerHTML = '';
-      db.ref('absensi/siswa').once('value').then(snapshot => {
+    function loadData() {
+      const absenBody = document.getElementById("absenBody");
+      absenBody.innerHTML = "<tr><td colspan='5'>Memuat data...</td></tr>";
+
+      db.ref("absensi/siswa").once("value").then(snapshot => {
+        absenBody.innerHTML = "";
         const data = snapshot.val();
-        if (!data) return loading.innerText = 'Tidak ada data.';
-        for (const user in data) {
-          const absensi = Object.values(Object.values(data[user])[0] || {});
-          const hadirMinggu = absensi.length;
-          const status = hadirMinggu >= 5 ? 'hijau' : hadirMinggu >= 3 ? 'kuning' : 'merah';
-          const nama = absensi[0]?.nama || user;
-          const tr = `<tr><td>${nama}</td><td>${hadirMinggu}</td><td class='status-cell ${status}'>${status}</td></tr>`;
-          rekapBody.innerHTML += tr;
+
+        if (!data) {
+          absenBody.innerHTML = "<tr><td colspan='5'>Tidak ada data absensi.</td></tr>";
+          return;
         }
-        loading.innerText = '';
+
+        for (const userId in data) {
+          const mapelData = data[userId];
+          for (const mapelId in mapelData) {
+            const waktuData = mapelData[mapelId];
+            for (const waktuKey in waktuData) {
+              const entry = waktuData[waktuKey];
+              const row = `
+                <tr>
+                  <td>${entry.nama || '-'}</td>
+                  <td>${entry.mapel || '-'}</td>
+                  <td>${new Date(entry.waktu).toLocaleString('id-ID')}</td>
+                  <td>
+                    ${entry.lokasi && entry.lokasi.latitude ? 
+                      `<a href="https://maps.google.com/maps?q=${entry.lokasi.latitude},${entry.lokasi.longitude}" target="_blank">Lihat Peta</a>` 
+                      : 'Tidak Ada'}
+                  </td>
+                  <td>
+                    ${entry.foto ? `<img src="${entry.foto}" alt="Foto">` : 'Tidak Ada'}
+                  </td>
+                </tr>
+              `;
+              absenBody.innerHTML += row;
+            }
+          }
+        }
       });
     }
   </script>
