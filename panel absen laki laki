@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Login Absensi Online SMK Muhammadiyah Campaka</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Tailwind CSS configuration for custom styles
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#4CAF50', // Green
+                        secondary: '#2196F3', // Blue
+                        accentOrange: '#FFC107', // Amber
+                        accentRed: '#f44336', // Red
+                        textDark: '#333',
+                        bgLight: '#f4f7f6',
+                        cardBg: '#ffffff',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f2f5; /* Light grey background */
+            position: relative;
+            overflow: hidden; /* Hide overflowing background elements */
+        }
+
+        /* Background image and overlay */
+        .login-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://placehold.co/1920x1080/007bff/ffffff?text=Background+Image+Placeholder'); /* Placeholder background */
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.8); /* Slightly dim the background image */
+            z-index: 0;
+        }
+
+        .background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(29, 78, 216, 0.7), rgba(139, 92, 246, 0.7)); /* Blue-purple gradient */
+            z-index: 1;
+        }
+
+        /* Geometric shapes for decorative background */
+        .shape {
+            position: absolute;
+            opacity: 0.15;
+            z-index: 2; /* Above overlay, below content */
+        }
+
+        .shape-square-top {
+            width: 200px;
+            height: 200px;
+            background-color: theme('colors.secondary');
+            top: -50px;
+            left: -50px;
+            transform: rotate(45deg);
+        }
+
+        .shape-circle-bottom {
+            width: 180px;
+            height: 180px;
+            background-color: theme('colors.primary');
+            border-radius: 50%;
+            bottom: -70px;
+            right: -70px;
+        }
+
+        .shape-triangle-left {
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 200px solid theme('colors.accentOrange');
+            bottom: 100px;
+            left: -80px;
+            transform: rotate(30deg);
+        }
+
+        .shape-square-right {
+            width: 150px;
+            height: 150px;
+            background-color: theme('colors.accentRed');
+            top: 50px;
+            right: -70px;
+            transform: rotate(-30deg);
+        }
+
+        /* Login Card */
+        .login-card {
+            background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent white */
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px; /* Max width for the login form */
+            text-align: center;
+            position: relative;
+            z-index: 10; /* Ensure it's on top */
+            backdrop-filter: blur(5px); /* Frosted glass effect */
+        }
+
+        .logo-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .logo-header img {
+            max-width: 100px;
+            height: auto;
+            margin-right: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-text h1 {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700;
+            color: theme('colors.primary');
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .logo-text p {
+            font-size: 1.125rem; /* text-lg */
+            color: theme('colors.textDark');
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .input-field {
+            margin-bottom: 20px;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 14px 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 1.125rem; /* text-lg */
+            color: theme('colors.textDark');
+            background-color: #f9f9f9;
+            transition: all 0.3s ease;
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        .input-field input:focus {
+            outline: none;
+            border-color: theme('colors.secondary');
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.3);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 15px 20px;
+            background-color: theme('colors.secondary');
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .login-button:hover {
+            background-color: #1976D2; /* Darker blue */
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.4);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(33, 150, 243, 0.2);
+        }
+
+        .login-error {
+            color: theme('colors.accentRed');
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        /* Image and hand pointers */
+        .decoration-image {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            max-width: 300px; /* Adjust size as needed */
+            height: auto;
+            z-index: 10;
+            transform: translateX(30%) translateY(10%); /* Adjust position to show partially */
+            pointer-events: none; /* Make sure it doesn't block clicks */
+        }
+
+        .hand-pointer {
+            position: absolute;
+            width: 80px; /* Size of the hand icon */
+            height: auto;
+            transform-origin: bottom center;
+            z-index: 11; /* Above the decorative image */
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        .hand-pointer.left {
+            bottom: 120px; /* Adjust based on image position */
+            left: 50%;
+            margin-left: -120px; /* Offset from center to point to email */
+            transform: rotate(20deg);
+        }
+
+        .hand-pointer.right {
+            bottom: 120px; /* Adjust based on image position */
+            left: 50%;
+            margin-left: 50px; /* Offset from center to point to password */
+            transform: rotate(-20deg) scaleX(-1); /* Flip horizontally */
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .login-card {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            .logo-header img {
+                max-width: 80px;
+            }
+            .logo-text h1 {
+                font-size: 1.75rem; /* text-3xl */
+            }
+            .logo-text p {
+                font-size: 1rem; /* text-base */
+            }
+            .input-field input {
+                font-size: 1rem;
+                padding: 12px 15px;
+            }
+            .login-button {
+                font-size: 1.125rem; /* text-lg */
+                padding: 12px 18px;
+            }
+            .decoration-image {
+                max-width: 200px;
+                transform: translateX(20%) translateY(5%);
+            }
+            .hand-pointer {
+                width: 60px;
+            }
+            .hand-pointer.left {
+                bottom: 80px;
+                margin-left: -80px;
+            }
+            .hand-pointer.right {
+                bottom: 80px;
+                margin-left: 30px;
+            }
+            .shape {
+                opacity: 0.05;
+            }
+            .shape-square-top { width: 100px; height: 100px; top: -30px; left: -30px;}
+            .shape-circle-bottom { width: 80px; height: 80px; bottom: -20px; right: -20px;}
+            .shape-triangle-left { border-left: 50px solid transparent; border-right: 50px solid transparent; border-bottom: 100px solid theme('colors.accentOrange'); bottom: 50px; left: -30px;}
+            .shape-square-right { width: 70px; height: 70px; top: 30px; right: -30px;}
+        }
+    </style>
+    <!-- Firebase SDK (v9 compat untuk struktur Anda) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+</head>
+<body>
+
+    <!-- Background Image and Overlay -->
+    <div class="login-background" style="background-image: url('https://i.ibb.co/3s6Jz1J/PANEL-LOGIN-ABSENSI-ONLINE-SMK-MUHAMMADIYAH-CAMPAKA.jpg');"></div>
+    <div class="background-overlay"></div>
+
+    <!-- Geometric Shapes -->
+    <div class="shape shape-square-top"></div>
+    <div class="shape shape-circle-bottom"></div>
+    <div class="shape shape-triangle-left"></div>
+    <div class="shape shape-square-right"></div>
+
+    <div class="login-card">
+        <div class="logo-header">
+            <!-- Ganti dengan URL logo SMK Muhammadiyah Campaka Anda -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Lambang_Muhammadiyah.svg/1200px-Lambang_Muhammadiyah.svg.png" alt="Logo Muhammadiyah" onerror="this.onerror=null;this.src='https://placehold.co/80x80/cccccc/333333?text=Logo';" />
+            <div class="logo-text">
+                <h1>PANEL LOGIN</h1>
+                <p>ABSENSI ONLINE</p>
+                <p>SMK MUHAMMADIYAH CAMPAKA</p>
+            </div>
+        </div>
+
+        <div class="input-field">
+            <input type="email" id="email" placeholder="Email" class="rounded-lg" />
+        </div>
+        <div class="input-field">
+            <input type="password" id="password" placeholder="Password" class="rounded-lg" />
+        </div>
+
+        <button onclick="login()" class="login-button rounded-lg">Login yuk Sayang</button>
+        <p id="login-error" class="login-error"></p>
+
+        <!-- Decorative Image and Pointers -->
+        <img src="https://i.ibb.co/2d9fB2d/login-girl-cutout.png" alt="Girl pointing" class="decoration-image" />
+        <img src="https://i.ibb.co/zXq2v24/hand-pointer.png" alt="Hand pointer" class="hand-pointer left" style="width: 50px; bottom: 170px; left: 50%; margin-left: -110px; transform: rotate(20deg);" />
+        <img src="https://i.ibb.co/zXq2v24/hand-pointer.png" alt="Hand pointer" class="hand-pointer right" style="width: 50px; bottom: 170px; left: 50%; margin-left: 60px; transform: rotate(-20deg) scaleX(-1);" />
+    </div>
+
+    <!-- Audio element for login sound -->
+    <audio id="loginSound" src="https://www.soundjay.com/buttons/button-2.mp3" preload="auto"></audio>
+
+    <script>
+        // --- Konfigurasi Firebase ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyDrt5MHhs-Wjoye8swLwLb068HC4kme-rg",
+            authDomain: "absensionlinemuhika.firebaseapp.com",
+            databaseURL: "https://absensionlinemuhika-default-rtdb.firebaseio.com",
+            projectId: "absensionlinemuhika"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.database();
+
+        // --- Elemen DOM ---
+        const loginError = document.getElementById("login-error");
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const loginButton = document.querySelector('.login-button');
+        const loginSound = document.getElementById('loginSound'); // Get the audio element
+
+        // Firebase Auth State Listener (tetap ada untuk mengelola sesi)
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // Pengguna sudah login. Periksa peran di database.
+                db.ref('users/' + user.uid).once('value').then(snapshot => {
+                    const userData = snapshot.val();
+                    if (userData) {
+                        // Jika peran ditemukan, redirect ke panel admin
+                        // Catatan: Dalam lingkungan Canvas, tidak ada multi-halaman.
+                        // Anda perlu menyesuaikan ini jika ini adalah bagian dari aplikasi multi-halaman.
+                        // Untuk saat ini, kita akan mengasumsikan ini adalah halaman login saja.
+                        // Jika ingin simulasi redirect, bisa tampilkan pesan sukses atau langsung tampilkan UI admin.
+                        console.log("Login berhasil, pengguna:", userData.name, "dengan peran:", userData.role);
+                        loginError.style.color = '#28a745'; // Hijau
+                        loginError.textContent = `Login berhasil sebagai ${userData.name} (${userData.role}). Redirecting...`;
+                        // Di sini, dalam aplikasi nyata, Anda akan redirect ke panel admin:
+                        // window.location.href = 'admin_panel.html';
+                        // Karena kita hanya punya satu halaman, kita bisa simulasikan dengan menyembunyikan form
+                        // dan mungkin menampilkan pesan sukses, atau mengarahkan ke Immersive Document sebelumnya
+                        // jika ini adalah bagian dari alur.
+                        // Untuk tujuan demonstrasi di Canvas, biarkan saja pesan sukses dan tetap di halaman ini.
+                        // Jika Anda memiliki Immersive Document untuk panel admin, sistem Canvas akan menampilkannya.
+                    } else {
+                        loginError.textContent = "Informasi peran pengguna tidak ditemukan. Silakan hubungi admin.";
+                        auth.signOut(); // Logout jika tidak ada peran
+                    }
+                }).catch(error => {
+                    console.error("Kesalahan saat mengambil peran pengguna:", error);
+                    loginError.textContent = "Gagal memuat peran pengguna. Coba lagi.";
+                    auth.signOut(); // Logout jika ada masalah
+                });
+            } else {
+                // Pengguna belum login atau sudah logout.
+                console.log("Pengguna belum login.");
+                loginError.textContent = ""; // Bersihkan pesan error
+            }
+        });
+
+        // ✅ Fungsi Login
+        async function login() {
+            loginSound.play(); // Putar suara saat tombol login ditekan
+
+            const email = emailInput.value;
+            const pass = passwordInput.value;
+            loginError.textContent = ""; // Hapus error sebelumnya
+
+            try {
+                await auth.signInWithEmailAndPassword(email, pass);
+                // auth.onAuthStateChanged akan menangani tampilan panel setelah ini
+            } catch (error) {
+                console.error("Kesalahan Login:", error.code, error.message);
+                if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                    loginError.textContent = "Email atau Password salah.";
+                } else if (error.code === 'auth/invalid-email') {
+                    loginError.textContent = "Format email tidak valid.";
+                } else {
+                    loginError.textContent = "Terjadi kesalahan saat login: " + error.message;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
