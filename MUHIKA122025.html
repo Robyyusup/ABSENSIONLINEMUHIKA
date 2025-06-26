@@ -7,7 +7,7 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // Tailwind CSS configuration for custom styles (optional, but good for consistency)
+        // Konfigurasi Tailwind CSS untuk gaya kustom (opsional, tapi baik untuk konsistensi)
         tailwind.config = {
             theme: {
                 extend: {
@@ -15,7 +15,7 @@
                         inter: ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        primary: '#4CAF50', // Green
+                        primary: '#4CAF50', // Hijau
                         secondary: '#333',
                         background: '#1a1a1a',
                         card: '#2a2a2a',
@@ -35,7 +35,7 @@
             color: theme('colors.text');
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Align items to the top for content */
+            align-items: flex-start; /* Sejajarkan item ke atas untuk konten */
             min-height: 100vh;
             margin: 0;
             padding: 20px;
@@ -75,7 +75,7 @@
         input:focus {
             border-color: theme('colors.primary');
             outline: none;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5); /* primary-500 with alpha */
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5); /* primary-500 dengan alpha */
         }
         button {
             background: theme('colors.primary');
@@ -126,11 +126,11 @@
             background: theme('colors.background');
             color: theme('colors.text');
             border-radius: 8px;
-            overflow: hidden; /* For rounded corners on table */
+            overflow: hidden; /* Untuk sudut bulat pada tabel */
         }
         th, td {
             padding: 12px;
-            border: 1px solid #444; /* Darker border for contrast */
+            border: 1px solid #444; /* Border lebih gelap untuk kontras */
             text-align: left;
         }
         th {
@@ -143,11 +143,11 @@
         th:hover {
             background-color: #555;
         }
-        th.asc::after { content: ' "admin-panel-app"5B2'; /* Up arrow */ position: absolute; right: 8px; top: 50%; transform: translateY(-50%); }
-        th.desc::after { content: ' "admin-panel-app"5BC'; /* Down arrow */ position: absolute; right: 8px; top: 50%; transform: translateY(-50%); }
+        th.asc::after { content: ' \25B2'; /* Panah atas */ position: absolute; right: 8px; top: 50%; transform: translateY(-50%); }
+        th.desc::after { content: ' \25BC'; /* Panah bawah */ position: absolute; right: 8px; top: 50%; transform: translateY(-50%); }
 
         tbody tr:nth-child(even) {
-            background-color: #333; /* Slightly different background for even rows */
+            background-color: #333; /* Background sedikit berbeda untuk baris genap */
         }
         tbody tr:hover {
             background-color: #444;
@@ -157,11 +157,11 @@
             height: auto;
             border-radius: 8px;
             object-fit: cover;
-            display: block; /* Ensures no extra space below image */
+            display: block; /* Memastikan tidak ada ruang ekstra di bawah gambar */
             margin: auto;
         }
         .error-message {
-            color: #FF5252; /* Red */
+            color: #FF5252; /* Merah */
             margin-top: 10px;
             text-align: center;
             font-weight: 600;
@@ -191,7 +191,7 @@
             min-width: 150px;
         }
         .export-button {
-            background-color: #007BFF; /* Blue */
+            background-color: #007BFF; /* Biru */
             margin-top: 0;
         }
         .export-button:hover {
@@ -201,7 +201,7 @@
         .indicator-yellow { background-color: theme('colors.light_yellow'); color: #FFD600; font-weight: 600; }
         .indicator-green { background-color: theme('colors.light_green'); color: #388E3C; font-weight: 600; }
 
-        /* Responsive adjustments */
+        /* Penyesuaian responsif */
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -253,13 +253,28 @@
                 color: theme('colors.primary');
             }
         }
+        /* Gaya peta Leaflet */
+        #mapContainer {
+            height: 500px; /* Sesuaikan tinggi sesuai kebutuhan */
+            width: 100%;
+            border-radius: 8px; /* Pastikan konsisten dengan styling Tailwind */
+            overflow: hidden; /* Penting untuk Leaflet */
+        }
     </style>
-    <!-- Firebase SDK (v9 compat for your provided structure) -->
+    <!-- Firebase SDK (v9 kompatibel dengan struktur yang Anda berikan) -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-    <!-- SheetJS for Excel export -->
+    <!-- SheetJS untuk ekspor Excel -->
     <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAo9TchX5tqF/fS5xI5/r6e5c5V5n2h0o1J0L0e0="
+     crossorigin=""/>
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-200X0/s5zI5/r6e5c5V5n2h0o1J0L0e0="
+     crossorigin=""></script>
 </head>
 <body>
     <div class="container rounded-xl">
@@ -316,7 +331,7 @@
                                 <th data-column="lokasi" class="guru-col-specific">Lokasi</th>
                                 <th data-column="foto" class="guru-col-specific">Foto</th>
                                 <th data-column="materi" class="guru-col-specific">Materi</th>
-                                <!-- Dynamic daily headers will be inserted here -->
+                                <!-- Header harian dinamis akan dimasukkan di sini -->
                                 <th data-column="indikator">Indikator</th>
                                 <th data-column="totalMinggu">Keseluruhan (Minggu)</th>
                             </tr>
@@ -355,7 +370,7 @@
                                 <th data-column="lokasi" class="siswa-col-specific">Lokasi</th>
                                 <th data-column="foto" class="siswa-col-specific">Foto</th>
                                 <th data-column="namaGuru" class="siswa-col-specific">Nama Guru</th>
-                                <!-- Dynamic daily headers will be inserted here -->
+                                <!-- Header harian dinamis akan dimasukkan di sini -->
                                 <th data-column="indikator">Indikator</th>
                                 <th data-column="totalMinggu">Keseluruhan (Minggu)</th>
                             </tr>
@@ -370,9 +385,9 @@
             <!-- Peta Siswa Section -->
             <div id="map-siswa-section" class="content-section hidden">
                 <h3 class="text-primary text-xl font-bold mb-4 border-b pb-2 border-gray-600">Tampilan Peta Siswa</h3>
-                <div id="mapContainer" class="w-full h-96 bg-gray-700 rounded-lg flex items-center justify-center text-xl text-gray-400">
-                    <p>Integrasi peta akan ditampilkan di sini. Anda dapat menggunakan Google Maps API atau OpenStreetMap.</p>
-                    <p>Contoh: <a href="https://maps.google.com/maps?q=-6.2,107.2" target="_blank" class="text-blue-400 hover:underline">Lihat Contoh Lokasi</a></p>
+                <div id="mapContainer" class="w-full h-96 bg-gray-700 rounded-lg">
+                    <!-- Peta akan diinisialisasi di sini -->
+                    <p class="loading-message text-gray-400">Memuat peta...</p>
                 </div>
             </div>
 
@@ -381,7 +396,7 @@
                 <h3 class="text-primary text-xl font-bold mb-4 border-b pb-2 border-gray-600">Galeri Siswa</h3>
                 <div id="galleryContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     <p class="col-span-full text-center text-gray-400">Gambar galeri siswa akan ditampilkan di sini.</p>
-                    <!-- Example image placeholder -->
+                    <!-- Contoh placeholder gambar -->
                     <!-- <img src="https://placehold.co/200x200/cccccc/333333?text=Foto+Siswa+1" alt="Foto Siswa 1" class="w-full h-48 object-cover rounded-lg shadow-md"> -->
                 </div>
             </div>
@@ -389,7 +404,7 @@
     </div>
 
     <script>
-        // 🔧 Firebase Config (Provided by user)
+        // 🔧 Konfigurasi Firebase (Disediakan oleh pengguna)
         const firebaseConfig = {
             apiKey: "AIzaSyDrt5MHhs-Wjoye8swLwLb068HC4kme-rg",
             authDomain: "absensionlinemuhika.firebaseapp.com",
@@ -400,52 +415,81 @@
         const auth = firebase.auth();
         const db = firebase.database();
 
-        let currentUserRole = null; // Store the role of the logged-in user
-        let currentUserName = null; // Store the name of the logged-in user
-        let currentUserClass = null; // Store the class if a wali kelas
+        let currentUserRole = null; // Menyimpan peran pengguna yang login
+        let currentUserName = null; // Menyimpan nama pengguna yang login
+        let currentUserClass = null; // Menyimpan kelas jika peran adalah wali kelas
 
-        // Firebase Auth State Listener
+        // Variabel global untuk peta Leaflet
+        let map;
+        let markers = [];
+
+        // Fungsi inisialisasi peta OpenStreetMap (menggunakan Leaflet)
+        function initMap() {
+            // Lokasi default (misalnya, Purwakarta)
+            const defaultLocation = { lat: -6.5583, lng: 107.4589 }; // Koordinat Purwakarta
+
+            // Hapus peta yang sudah ada jika ada, untuk menghindari duplikasi
+            if (map && map.remove) {
+                map.remove();
+            }
+
+            // Inisialisasi peta Leaflet
+            map = L.map('mapContainer').setView([defaultLocation.lat, defaultLocation.lng], 12);
+
+            // Tambahkan layer tile OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            console.log('Peta OpenStreetMap (Leaflet) diinisialisasi.');
+            // Kosongkan pesan "Memuat peta..." setelah peta siap
+            document.querySelector('#mapContainer p.loading-message')?.remove();
+        }
+
+
+        // Pendengar Status Otentikasi Firebase
         auth.onAuthStateChanged(user => {
             if (user) {
-                // User is signed in. Get their role.
+                // Pengguna sudah login. Dapatkan perannya.
                 db.ref('users/' + user.uid).once('value').then(snapshot => {
                     const userData = snapshot.val();
                     if (userData) {
                         currentUserRole = userData.role;
                         currentUserName = userData.name;
-                        currentUserClass = userData.associatedClass || null; // For wali kelas
+                        currentUserClass = userData.associatedClass || null; // Untuk wali kelas
                         showAdminPanel(user.email);
-                        loadAbsensiData('guru'); // Load default tab data
+                        // Klik tab pertama secara default setelah login
+                        document.querySelector('.tab-button.active')?.click();
                     } else {
-                        // User exists in Auth but no role data in DB, logout or assign default role
+                        // Pengguna ada di Auth tapi tidak ada data peran di DB, logout atau tetapkan peran default
                         document.getElementById("login-error").innerText = "Informasi peran pengguna tidak ditemukan. Silakan hubungi admin.";
                         logout();
                     }
                 }).catch(error => {
-                    console.error("Error fetching user role:", error);
+                    console.error("Kesalahan saat mengambil peran pengguna:", error);
                     document.getElementById("login-error").innerText = "Gagal memuat peran pengguna. Coba lagi.";
                     logout();
                 });
             } else {
-                // User is signed out.
+                // Pengguna sudah logout.
                 showLoginArea();
             }
         });
 
-        // ✅ Login Function
+        // ✅ Fungsi Login
         async function login() {
             const email = document.getElementById('email').value;
             const pass = document.getElementById('password').value;
             const loginError = document.getElementById("login-error");
-            loginError.innerText = ""; // Clear previous errors
+            loginError.innerText = ""; // Hapus error sebelumnya
 
             try {
                 await auth.signInWithEmailAndPassword(email, pass);
-                // Auth state listener will handle showing the panel
+                // Pendengar status otentikasi akan menangani tampilan panel
             } catch (error) {
-                console.error("Login Error:", error.code, error.message);
+                console.error("Kesalahan Login:", error.code, error.message);
                 if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
-                    loginError.innerText = "Email atau Password salah.";
+                    loginError.innerText = "Email atau Kata Sandi salah.";
                 } else if (error.code === 'auth/invalid-email') {
                     loginError.innerText = "Format email tidak valid.";
                 } else {
@@ -454,26 +498,29 @@
             }
         }
 
-        // ✅ Logout Function
+        // ✅ Fungsi Logout
         async function logout() {
             try {
                 await auth.signOut();
                 currentUserRole = null;
                 currentUserName = null;
                 currentUserClass = null;
-                // Auth state listener will handle showing login area
+                // Bersihkan marker peta jika peta ada
+                markers.forEach(marker => marker.remove()); // Gunakan marker.remove() untuk Leaflet
+                markers = [];
+                // Pendengar status otentikasi akan menangani tampilan area login
             } catch (error) {
-                console.error("Logout Error:", error);
-                // Optionally show a message if logout fails
+                console.error("Kesalahan Logout:", error);
+                // Opsional tampilkan pesan jika logout gagal
             }
         }
 
-        // --- UI State Management ---
+        // --- Manajemen Status UI ---
         function showAdminPanel(userEmail) {
             document.getElementById("login-area").classList.add("hidden");
             document.getElementById("admin-panel").classList.remove("hidden");
             document.getElementById("loggedInUserInfo").innerText = `Login sebagai: ${currentUserName || userEmail} (${currentUserRole})`;
-            document.getElementById("login-error").innerText = ""; // Clear any lingering error
+            document.getElementById("login-error").innerText = ""; // Hapus error yang tersisa
         }
 
         function showLoginArea() {
@@ -481,12 +528,12 @@
             document.getElementById("admin-panel").classList.add("hidden");
             document.getElementById("guruAbsensiBody").innerHTML = "";
             document.getElementById("siswaAbsensiBody").innerHTML = "";
-            document.getElementById('email').value = ''; // Clear input fields
+            document.getElementById('email').value = ''; // Bersihkan kolom input
             document.getElementById('password').value = '';
             document.getElementById("login-error").innerText = "";
         }
 
-        // --- Tab Navigation ---
+        // --- Navigasi Tab ---
         document.querySelectorAll('.tab-button').forEach(button => {
             button.addEventListener('click', function() {
                 document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
@@ -496,23 +543,30 @@
                 const targetSectionId = this.dataset.tab;
                 document.getElementById(targetSectionId).classList.remove('hidden');
 
-                // Load data specific to the tab
+                // Muat data khusus untuk tab
                 if (targetSectionId === 'guru-absensi-section') {
                     loadAbsensiData('guru', document.getElementById('filterGuruHari').value);
                 } else if (targetSectionId === 'siswa-absensi-section') {
                     loadAbsensiData('siswa', document.getElementById('filterSiswaHari').value);
+                } else if (targetSectionId === 'map-siswa-section') {
+                    // Inisialisasi peta saat tab peta diaktifkan
+                    // Pastikan peta diinisialisasi hanya sekali
+                    if (!map) {
+                        initMap();
+                    }
+                    loadSiswaLocations(); // Panggil fungsi untuk memuat lokasi siswa
                 }
-                // Map and Gallery sections don't require specific data loading for this example,
-                // but you would add functions here if they did.
+                // Bagian Galeri tidak memerlukan pemuatan data khusus untuk contoh ini,
+                // tetapi Anda bisa menambahkan fungsi di sini jika diperlukan.
             });
         });
 
-        // --- Data Loading Functions ---
+        // --- Fungsi Pemuatan Data ---
 
         /**
-         * Fetches and displays attendance data based on user role and selected day.
-         * @param {string} type 'guru' or 'siswa'
-         * @param {string} filterDay 'all' or '1' through '7'
+         * Mengambil dan menampilkan data absensi berdasarkan peran pengguna dan hari yang dipilih.
+         * @param {string} type 'guru' atau 'siswa'
+         * @param {string} filterDay 'all' atau '1' hingga '7'
          */
         async function loadAbsensiData(type, filterDay = 'all') {
             const tbodyId = type === 'guru' ? 'guruAbsensiBody' : 'siswaAbsensiBody';
@@ -527,27 +581,27 @@
                 let filteredData = [];
 
                 if (rawData) {
-                    // Aggregate data by person (guru/siswa) and then by date
+                    // Agregasi data berdasarkan orang (guru/siswa) lalu berdasarkan tanggal
                     const aggregated = {};
 
                     if (type === 'guru') {
                         for (const guruId in rawData) {
                             if (currentUserRole === 'guru' && guruId !== auth.currentUser.uid) {
-                                continue; // Guru only sees their own data
+                                continue; // Guru hanya melihat datanya sendiri
                             }
                             const dailyEntries = rawData[guruId];
-                            const guruNameFromDB = await getDisplayName(guruId, 'guru'); // Get guru name from user profiles
+                            const guruNameFromDB = await getDisplayName(guruId, 'guru'); // Dapatkan nama guru dari profil pengguna
                             if (!aggregated[guruId]) {
                                 aggregated[guruId] = {
                                     id: guruId,
-                                    namaGuru: guruNameFromDB || 'N/A',
-                                    pelajaran: 'N/A', // Will be determined from latest entry
-                                    kelas: 'N/A', // Will be determined from latest entry
-                                    lokasi: 'N/A',
-                                    foto: 'N/A',
-                                    materi: 'N/A',
-                                    hari: {}, // Stores status for each day (e.g., '2024-06-25': 'Hadir')
-                                    dayStatuses: Array(7).fill('Belum Absen'), // Array for Day 1 to Day 7
+                                    namaGuru: guruNameFromDB || 'Tidak Dikenal',
+                                    pelajaran: 'Tidak Diketahui', // Akan ditentukan dari entri terbaru
+                                    kelas: 'Tidak Diketahui', // Akan ditentukan dari entri terbaru
+                                    lokasi: 'Tidak Diketahui',
+                                    foto: 'Tidak Diketahui',
+                                    materi: 'Tidak Diketahui',
+                                    hari: {}, // Menyimpan status untuk setiap hari (misalnya, '2024-06-25': 'Hadir')
+                                    dayStatuses: Array(7).fill('Belum Absen'), // Array untuk Hari 1 hingga Hari 7
                                     totalHadir: 0,
                                     totalAlfa: 0,
                                     totalIzin: 0,
@@ -557,19 +611,20 @@
                             }
                             for (const date in dailyEntries) {
                                 const entry = dailyEntries[date];
-                                const dayOfWeek = new Date(date).getDay(); // 0 for Sunday, 1 for Monday...
-                                const dayIndex = dayOfWeek === 0 ? 7 : dayOfWeek; // 1-7 for Mon-Sun
+                                const dayOfWeek = new Date(date).getDay(); // 0 untuk Minggu, 1 untuk Senin...
+                                const dayIndex = dayOfWeek === 0 ? 7 : dayOfWeek; // 1-7 untuk Sen-Ming
 
                                 aggregated[guruId].hari[date] = entry.status;
-                                aggregated[guruId].dayStatuses[dayIndex - 1] = entry.status; // Update specific day
-                                // Take latest info for pelajaran, kelas, etc.
+                                aggregated[guruId].dayStatuses[dayIndex - 1] = entry.status; // Perbarui hari tertentu
+                                // Ambil info terbaru untuk pelajaran, kelas, dll.
                                 aggregated[guruId].pelajaran = entry.pelajaran || aggregated[guruId].pelajaran;
                                 aggregated[guruId].kelas = entry.kelas || aggregated[guruId].kelas;
-                                aggregated[guruId].lokasi = entry.lokasi ? `<a href="https://maps.google.com/maps?q=${entry.lokasi.latitude},${entry.lokasi.longitude}" target="_blank" class="text-blue-400 hover:underline">Lihat Peta</a>` : 'Tidak Ada';
+                                // Perbarui tautan peta untuk OpenStreetMap
+                                aggregated[guruId].lokasi = entry.lokasi && entry.lokasi.latitude ? `<a href="https://www.openstreetmap.org/?mlat=${entry.lokasi.latitude}&mlon=${entry.lokasi.longitude}#map=15/${entry.lokasi.latitude}/${entry.lokasi.longitude}" target="_blank" class="text-blue-400 hover:underline">Lihat Peta</a>` : 'Tidak Ada';
                                 aggregated[guruId].foto = entry.foto || aggregated[guruId].foto;
                                 aggregated[guruId].materi = entry.materi || aggregated[guruId].materi;
                             }
-                            // Calculate weekly summary
+                            // Hitung ringkasan mingguan
                             aggregated[guruId].totalHadir = aggregated[guruId].dayStatuses.filter(s => s === 'Hadir').length;
                             aggregated[guruId].totalAlfa = aggregated[guruId].dayStatuses.filter(s => s === 'Alfa').length;
                             aggregated[guruId].totalIzin = aggregated[guruId].dayStatuses.filter(s => s === 'Izin').length;
@@ -577,26 +632,26 @@
                             aggregated[guruId].totalMinggu = `${aggregated[guruId].totalHadir} Hadir, ${aggregated[guruId].totalSakit} Sakit, ${aggregated[guruId].totalIzin} Izin, ${aggregated[guruId].totalAlfa} Alfa`;
                             filteredData.push(aggregated[guruId]);
                         }
-                    } else { // Siswa data processing (similar structure to original user data logic)
+                    } else { // Pemrosesan data siswa (struktur mirip dengan logika data pengguna asli)
                         for (const userId in rawData) {
-                             if (currentUserRole === 'guru' && !isTeacherOfStudent(userId, currentUserName)) {
-                                continue; // Guru only sees students they teach
+                             if (currentUserRole === 'guru' && !(await isTeacherOfStudent(userId, currentUserName))) {
+                                continue; // Guru hanya melihat siswa yang dia ajar
                             }
                             if (currentUserRole === 'waliKelas' && !(await isStudentInWaliKelasClass(userId, currentUserClass))) {
-                                continue; // Wali Kelas only sees students in their class
+                                continue; // Wali Kelas hanya melihat siswa di kelasnya
                             }
 
                             const mapelData = rawData[userId];
                             if (!aggregated[userId]) {
                                 aggregated[userId] = {
                                     id: userId,
-                                    namaSiswa: 'N/A', // Will be determined
-                                    pelajaran: 'N/A',
-                                    kelas: 'N/A',
-                                    lokasi: 'N/A',
-                                    foto: 'N/A',
-                                    namaGuru: 'N/A',
-                                    hari: {}, // Stores status for each day (e.g., '2024-06-25': 'Hadir')
+                                    namaSiswa: 'Tidak Dikenal', // Akan ditentukan
+                                    pelajaran: 'Tidak Diketahui',
+                                    kelas: 'Tidak Diketahui',
+                                    lokasi: 'Tidak Diketahui',
+                                    foto: 'Tidak Diketahui',
+                                    namaGuru: 'Tidak Diketahui',
+                                    hari: {}, // Menyimpan status untuk setiap hari (misalnya, '2024-06-25': 'Hadir')
                                     dayStatuses: Array(7).fill('Belum Absen'),
                                     totalHadir: 0,
                                     totalAlfa: 0,
@@ -605,28 +660,29 @@
                                     totalMinggu: '0 Hari Hadir'
                                 };
                             }
-                            // Iterate through mapel and then time entries
+                            // Iterasi melalui mapel lalu entri waktu
                             for (const mapelKey in mapelData) {
                                 const waktuData = mapelData[mapelKey];
                                 for (const waktuKey in waktuData) {
                                     const entry = waktuData[waktuKey];
-                                    const date = new Date(entry.waktu).toISOString().split('T')[0]; // YYYY-MM-DD format
+                                    const date = new Date(entry.waktu).toISOString().split('T')[0]; // Format ISO 8601 YYYY-MM-DD
                                     const dayOfWeek = new Date(date).getDay();
                                     const dayIndex = dayOfWeek === 0 ? 7 : dayOfWeek;
 
-                                    // For simplicity, take the last entry's status for the day
-                                    aggregated[userId].hari[date] = entry.status || 'Hadir'; // Assume Hadir if status missing
+                                    // Untuk kesederhanaan, ambil status entri terakhir untuk hari itu
+                                    aggregated[userId].hari[date] = entry.status || 'Hadir'; // Asumsikan Hadir jika status hilang
                                     aggregated[userId].dayStatuses[dayIndex - 1] = entry.status || 'Hadir';
 
                                     aggregated[userId].namaSiswa = entry.nama || aggregated[userId].namaSiswa;
                                     aggregated[userId].pelajaran = entry.mapel || aggregated[userId].pelajaran;
                                     aggregated[userId].kelas = entry.kelas || aggregated[userId].kelas;
                                     aggregated[userId].namaGuru = entry.namaGuru || aggregated[userId].namaGuru;
-                                    aggregated[userId].lokasi = entry.lokasi && entry.lokasi.latitude ? `<a href="https://maps.google.com/maps?q=${entry.lokasi.latitude},${entry.lokasi.longitude}" target="_blank" class="text-blue-400 hover:underline">Lihat Peta</a>` : 'Tidak Ada';
+                                    // Perbarui tautan peta untuk OpenStreetMap
+                                    aggregated[userId].lokasi = entry.lokasi && entry.lokasi.latitude ? `<a href="https://www.openstreetmap.org/?mlat=${entry.lokasi.latitude}&mlon=${entry.lokasi.longitude}#map=15/${entry.lokasi.latitude}/${entry.lokasi.longitude}" target="_blank" class="text-blue-400 hover:underline">Lihat Peta</a>` : 'Tidak Ada';
                                     aggregated[userId].foto = entry.foto || aggregated[userId].foto;
                                 }
                             }
-                             // Calculate weekly summary
+                             // Hitung ringkasan mingguan
                             aggregated[userId].totalHadir = aggregated[userId].dayStatuses.filter(s => s === 'Hadir').length;
                             aggregated[userId].totalAlfa = aggregated[userId].dayStatuses.filter(s => s === 'Alfa').length;
                             aggregated[userId].totalIzin = aggregated[userId].dayStatuses.filter(s => s === 'Izin').length;
@@ -637,26 +693,26 @@
                     }
                 }
 
-                // Render table
+                // Render tabel
                 renderTable(type, filteredData, filterDay);
             } catch (error) {
-                console.error("Error loading absensi data:", error);
+                console.error("Kesalahan saat memuat data absensi:", error);
                 tbody.innerHTML = `<tr><td colspan="9" class="error-message">Gagal memuat data. ${error.message}</td></tr>`;
             }
         }
 
-        // Helper to get display name from users node (assuming user IDs are Firebase UIDs or known IDs)
+        // Helper untuk mendapatkan nama tampilan dari node pengguna (asumsi ID pengguna adalah UID Firebase atau ID yang dikenal)
         async function getDisplayName(uid, type) {
             const userSnapshot = await db.ref(`users/${uid}`).once('value');
             const userData = userSnapshot.val();
             return userData ? userData.name : (type === 'guru' ? 'Guru Tidak Dikenal' : 'Siswa Tidak Dikenal');
         }
 
-        // Helper to check if a student is taught by the current teacher
-        // (This logic needs to be robust, perhaps a 'studentsTaught' array in user profile or a lookup table)
+        // Helper untuk memeriksa apakah seorang siswa diajar oleh guru saat ini
+        // (Logika ini perlu lebih kuat, mungkin array 'studentsTaught' di profil pengguna atau tabel pencarian)
         async function isTeacherOfStudent(studentId, teacherName) {
-            // For now, a very basic check. In reality, you'd need a more robust database structure
-            // to link students to teachers and subjects.
+            // Untuk saat ini, pemeriksaan yang sangat dasar. Pada kenyataannya, Anda memerlukan struktur database yang lebih kuat
+            // untuk menautkan siswa ke guru dan mata pelajaran.
             const studentAbsenceSnapshot = await db.ref(`absensi/siswa/${studentId}`).once('value');
             const studentData = studentAbsenceSnapshot.val();
             if (studentData) {
@@ -673,9 +729,9 @@
             return false;
         }
 
-        // Helper to check if a student is in the wali kelas's class
+        // Helper untuk memeriksa apakah seorang siswa berada di kelas wali kelas
         async function isStudentInWaliKelasClass(studentId, waliKelasClass) {
-            // Similar to isTeacherOfStudent, needs robust DB structure
+            // Mirip dengan isTeacherOfStudent, memerlukan struktur DB yang kuat
             const studentAbsenceSnapshot = await db.ref(`absensi/siswa/${studentId}`).once('value');
             const studentData = studentAbsenceSnapshot.val();
             if (studentData) {
@@ -694,39 +750,39 @@
 
 
         /**
-         * Renders the table with attendance data.
-         * @param {string} type 'guru' or 'siswa'
-         * @param {Array} data Aggregated attendance data.
-         * @param {string} filterDay 'all' or '1' through '7'
+         * Merender tabel dengan data absensi.
+         * @param {string} type 'guru' atau 'siswa'
+         * @param {Array} data Data absensi yang diagregasi.
+         * @param {string} filterDay 'all' atau '1' hingga '7'
          */
         function renderTable(type, data, filterDay) {
             const tbodyId = type === 'guru' ? 'guruAbsensiBody' : 'siswaAbsensiBody';
             const tableId = type === 'guru' ? 'guruAbsensiTable' : 'siswaAbsensiTable';
             const tbody = document.getElementById(tbodyId);
             const theadRow = document.querySelector(`#${tableId} thead tr`);
-            tbody.innerHTML = ''; // Clear existing data
+            tbody.innerHTML = ''; // Bersihkan data yang ada
 
-            // Dynamically adjust table headers for daily attendance
-            // Remove previous dynamic headers (Day 1-7) and "Keseluruhan"
+            // Sesuaikan header tabel secara dinamis untuk absensi harian
+            // Hapus header dinamis sebelumnya (Hari 1-7) dan "Keseluruhan"
             theadRow.querySelectorAll('.dynamic-day-header, [data-column="totalMinggu"]').forEach(header => header.remove());
 
             if (filterDay === 'all') {
-                // Add Day 1-7 headers if "Keseluruhan" is selected
+                // Tambahkan header Hari 1-7 jika "Keseluruhan" dipilih
                 for (let i = 1; i <= 7; i++) {
                     const th = document.createElement('th');
                     th.textContent = `Hari ke-${i}`;
                     th.classList.add('dynamic-day-header');
-                    th.setAttribute('data-column', `hari${i}`); // Add data-column for sorting
+                    th.setAttribute('data-column', `hari${i}`); // Tambahkan data-column untuk penyortiran
                     theadRow.insertBefore(th, theadRow.querySelector('[data-column="indikator"]'));
                 }
-                // Add "Keseluruhan" header
+                // Tambahkan header "Keseluruhan"
                 const totalTh = document.createElement('th');
                 totalTh.textContent = 'Keseluruhan (Minggu)';
                 totalTh.setAttribute('data-column', 'totalMinggu');
-                totalTh.classList.add('dynamic-day-header'); // Mark as dynamic
-                theadRow.appendChild(totalTh); // Append after indicator
+                totalTh.classList.add('dynamic-day-header'); // Tandai sebagai dinamis
+                theadRow.appendChild(totalTh); // Tambahkan setelah indikator
             } else {
-                // If a specific day is filtered, only show that day's header
+                // Jika hari tertentu difilter, hanya tampilkan header hari itu
                 const th = document.createElement('th');
                 th.textContent = `Hari ke-${filterDay}`;
                 th.classList.add('dynamic-day-header');
@@ -742,7 +798,7 @@
             data.forEach(entry => {
                 const row = tbody.insertRow();
 
-                // Add data cells based on type
+                // Tambahkan sel data berdasarkan jenis
                 if (type === 'guru') {
                     row.insertCell().setAttribute('data-label', 'Nama Guru'); row.cells[row.cells.length - 1].textContent = entry.namaGuru;
                     row.insertCell().setAttribute('data-label', 'Pelajaran'); row.cells[row.cells.length - 1].textContent = entry.pelajaran;
@@ -750,7 +806,7 @@
 
                     const lokasiCell = row.insertCell(); lokasiCell.setAttribute('data-label', 'Lokasi'); lokasiCell.innerHTML = entry.lokasi;
                     const fotoCell = row.insertCell(); fotoCell.setAttribute('data-label', 'Foto');
-                    if (entry.foto && entry.foto !== 'N/A') {
+                    if (entry.foto && entry.foto !== 'Tidak Diketahui') {
                         const img = document.createElement('img');
                         img.src = entry.foto;
                         img.alt = 'Foto Guru';
@@ -760,7 +816,7 @@
                     }
                     const materiCell = row.insertCell(); materiCell.setAttribute('data-label', 'Materi'); materiCell.textContent = entry.materi;
 
-                    // Hide/Show specific columns based on role
+                    // Sembunyikan/Tampilkan kolom tertentu berdasarkan peran
                     if (currentUserRole !== 'kepalaSekolah' && currentUserRole !== 'wakasek') {
                         lokasiCell.classList.add('hidden');
                         fotoCell.classList.add('hidden');
@@ -774,7 +830,7 @@
 
                     const lokasiCell = row.insertCell(); lokasiCell.setAttribute('data-label', 'Lokasi'); lokasiCell.innerHTML = entry.lokasi;
                     const fotoCell = row.insertCell(); fotoCell.setAttribute('data-label', 'Foto');
-                    if (entry.foto && entry.foto !== 'N/A') {
+                    if (entry.foto && entry.foto !== 'Tidak Diketahui') {
                         const img = document.createElement('img');
                         img.src = entry.foto;
                         img.alt = 'Foto Siswa';
@@ -784,7 +840,7 @@
                     }
                     const namaGuruCell = row.insertCell(); namaGuruCell.setAttribute('data-label', 'Nama Guru'); namaGuruCell.textContent = entry.namaGuru;
 
-                    // Hide/Show specific columns based on role
+                    // Sembunyikan/Tampilkan kolom tertentu berdasarkan peran
                     if (currentUserRole !== 'kepalaSekolah' && currentUserRole !== 'wakasek') {
                         lokasiCell.classList.add('hidden');
                         fotoCell.classList.add('hidden');
@@ -792,7 +848,7 @@
                     }
                 }
 
-                // Add daily status cells
+                // Tambahkan sel status harian
                 if (filterDay === 'all') {
                     entry.dayStatuses.forEach((status, index) => {
                         const cell = row.insertCell();
@@ -813,7 +869,7 @@
                     else if (status === 'Hadir') cell.classList.add('indicator-green');
                 }
 
-                // Add Indikator
+                // Tambahkan Indikator
                 const indicatorCell = row.insertCell();
                 indicatorCell.setAttribute('data-label', 'Indikator');
                 if (entry.totalAlfa > 0) {
@@ -827,16 +883,16 @@
                     indicatorCell.textContent = 'Baik';
                 }
 
-                // Add Keseluruhan (Minggu)
+                // Tambahkan Keseluruhan (Minggu)
                 const totalMingguCell = row.insertCell();
                 totalMingguCell.setAttribute('data-label', 'Keseluruhan (Minggu)');
                 totalMingguCell.textContent = entry.totalMinggu;
             });
-            attachSortingListeners(tableId); // Re-attach sorting after rendering
+            attachSortingListeners(tableId); // Pasang kembali pendengar penyortiran setelah merender
         }
 
 
-        // --- Filtering by Day ---
+        // --- Penyaringan berdasarkan Hari ---
         document.getElementById('filterGuruHari').addEventListener('change', function() {
             loadAbsensiData('guru', this.value);
         });
@@ -845,12 +901,12 @@
             loadAbsensiData('siswa', this.value);
         });
 
-        // --- Table Sorting ---
+        // --- Penyortiran Tabel ---
         function attachSortingListeners(tableId) {
             const table = document.getElementById(tableId);
             const headers = table.querySelectorAll('th');
             headers.forEach((header, index) => {
-                // Remove existing listeners to prevent duplicates
+                // Hapus pendengar yang ada untuk mencegah duplikasi
                 header.removeEventListener('click', header._sortHandler);
                 header._sortHandler = () => sortTable(tableId, index);
                 header.addEventListener('click', header._sortHandler);
@@ -866,12 +922,12 @@
             const rows = Array.from(tbody.rows);
             const headers = table.querySelectorAll('th');
 
-            // Reset sort indicators on other headers
+            // Setel ulang indikator penyortiran pada header lain
             headers.forEach(header => {
                 header.classList.remove('asc', 'desc');
             });
 
-            // Determine sort direction
+            // Tentukan arah penyortiran
             if (currentSortColumn === n) {
                 currentSortDirection = (currentSortDirection === 'asc') ? 'desc' : 'asc';
             } else {
@@ -879,14 +935,14 @@
                 currentSortDirection = 'asc';
             }
 
-            // Add indicator to current header
+            // Tambahkan indikator ke header saat ini
             headers[n].classList.add(currentSortDirection);
 
             rows.sort((rowA, rowB) => {
                 let x = rowA.cells[n].textContent.toLowerCase();
                 let y = rowB.cells[n].textContent.toLowerCase();
 
-                // Handle numbers if applicable (e.g., total days)
+                // Tangani angka jika berlaku (misalnya, total hari)
                 if (!isNaN(parseFloat(x)) && !isNaN(parseFloat(y))) {
                     x = parseFloat(x);
                     y = parseFloat(y);
@@ -901,25 +957,25 @@
                 return currentSortDirection === 'asc' ? comparison : -comparison;
             });
 
-            // Re-append sorted rows
+            // Tambahkan kembali baris yang sudah diurutkan
             rows.forEach(row => tbody.appendChild(row));
         }
 
-        // --- Export to Excel Functionality ---
+        // --- Fungsionalitas Ekspor ke Excel ---
         function exportTableToExcel(tableId, filename = '') {
             const table = document.getElementById(tableId);
             const ws = XLSX.utils.table_to_sheet(table);
 
-            // Create a new workbook and add the worksheet
+            // Buat workbook baru dan tambahkan worksheet
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
-            // Set default filename if not provided
+            // Tetapkan nama file default jika tidak disediakan
             if (!filename) {
                 filename = tableId + '.xlsx';
             }
 
-            // Write the workbook and trigger download
+            // Tulis workbook dan picu unduhan
             XLSX.writeFile(wb, filename);
         }
 
@@ -931,12 +987,107 @@
             exportTableToExcel('siswaAbsensiTable', 'Rekap_Absensi_Siswa.xlsx');
         });
 
-        // Initial render logic after DOM is ready and Firebase Auth state is known
+        // --- Fungsi untuk memuat dan menampilkan lokasi siswa di peta ---
+        async function loadSiswaLocations() {
+            if (!map) {
+                console.error("Peta belum diinisialisasi. Tidak dapat memuat lokasi siswa.");
+                document.getElementById('mapContainer').innerHTML = '<p class="error-message text-red-500">Gagal memuat peta. Pastikan Leaflet dimuat dan koneksi internet stabil.</p>';
+                return;
+            }
+
+            // Hapus semua marker yang ada sebelumnya
+            markers.forEach(marker => marker.remove()); // Gunakan marker.remove() untuk Leaflet
+            markers = [];
+
+            // Tampilkan pesan loading di peta
+            const mapContainer = document.getElementById('mapContainer');
+            if (!mapContainer.querySelector('.loading-message')) {
+                const loadingParagraph = document.createElement('p');
+                loadingParagraph.classList.add('loading-message', 'text-gray-400', 'absolute', 'inset-0', 'flex', 'items-center', 'justify-center');
+                loadingParagraph.textContent = 'Memuat lokasi siswa...';
+                mapContainer.appendChild(loadingParagraph);
+            }
+
+            try {
+                // Ambil data absensi siswa
+                const snapshot = await db.ref('absensi/siswa').once('value');
+                const rawData = snapshot.val();
+                let bounds = L.latLngBounds(); // Gunakan L.latLngBounds() untuk Leaflet
+                let locationsFound = false;
+
+                if (rawData) {
+                    for (const userId in rawData) {
+                        const mapelData = rawData[userId];
+                        for (const mapelKey in mapelData) {
+                            const waktuData = mapelData[mapelKey];
+                            for (const waktuKey in waktuData) {
+                                const entry = waktuData[waktuKey];
+                                if (entry.lokasi && entry.lokasi.latitude && entry.lokasi.longitude) {
+                                    const lat = parseFloat(entry.lokasi.latitude);
+                                    const lng = parseFloat(entry.lokasi.longitude);
+
+                                    if (!isNaN(lat) && !isNaN(lng)) {
+                                        const position = L.latLng(lat, lng); // Gunakan L.latLng untuk Leaflet
+                                        const marker = L.marker(position).addTo(map); // Buat marker Leaflet
+
+                                        // Tambahkan popup (info window)
+                                        const infoWindowContent = `
+                                            <div class="p-2 text-black">
+                                                <h4 class="font-bold">${entry.nama || 'Siswa Tidak Dikenal'}</h4>
+                                                <p>Kelas: ${entry.kelas || 'Tidak Diketahui'}</p>
+                                                <p>Pelajaran: ${entry.mapel || 'Tidak Diketahui'}</p>
+                                                <p>Waktu: ${new Date(entry.waktu).toLocaleString('id-ID')}</p>
+                                                ${entry.foto ? `<img src="${entry.foto}" alt="Foto Siswa" style="width:100px; height:auto; border-radius:4px; margin-top:8px;">` : ''}
+                                            </div>
+                                        `;
+                                        marker.bindPopup(infoWindowContent); // Ikat popup ke marker
+
+                                        markers.push(marker);
+                                        bounds.extend(position);
+                                        locationsFound = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Hapus pesan loading
+                mapContainer.querySelector('.loading-message')?.remove();
+
+                if (locationsFound) {
+                    map.fitBounds(bounds); // Zoom dan paskan peta ke semua marker
+                } else {
+                    // Jika tidak ada lokasi ditemukan, setel kembali ke lokasi default Purwakarta
+                    map.setView({ lat: -6.5583, lng: 107.4589 }, 12); // Gunakan setView untuk Leaflet
+                    if (!mapContainer.querySelector('.error-message')) {
+                        const noDataParagraph = document.createElement('p');
+                        noDataParagraph.classList.add('error-message', 'text-gray-400', 'absolute', 'inset-0', 'flex', 'items-center', 'justify-center');
+                        noDataParagraph.textContent = 'Tidak ada data lokasi siswa yang tersedia.';
+                        mapContainer.appendChild(noDataParagraph);
+                    }
+                }
+
+            } catch (error) {
+                console.error("Kesalahan saat memuat lokasi siswa untuk peta:", error);
+                mapContainer.querySelector('.loading-message')?.remove();
+                if (!mapContainer.querySelector('.error-message')) {
+                    const errorParagraph = document.createElement('p');
+                    errorParagraph.classList.add('error-message', 'text-red-500', 'absolute', 'inset-0', 'flex', 'items-center', 'justify-center');
+                    errorParagraph.textContent = `Gagal memuat lokasi peta: ${error.message}.`;
+                    mapContainer.appendChild(errorParagraph);
+                }
+            }
+        }
+
+
+        // Logika render awal setelah DOM siap dan status Otentikasi Firebase diketahui
         document.addEventListener('DOMContentLoaded', () => {
-            // No need to call showLoginArea() here; onAuthStateChanged handles initial state
-            // and calls showAdminPanel() or keeps login area if not authenticated.
-            // Ensure first tab is active by default
-            document.querySelector('.tab-button').click(); // Simulate click on first tab
+            // Tidak perlu memanggil showLoginArea() di sini; onAuthStateChanged menangani status awal
+            // dan memanggil showAdminPanel() atau menjaga area login jika tidak terautentikasi.
+            // Pastikan tab pertama aktif secara default
+            // Ini akan dipanggil setelah Pendengar Status Otentikasi menyelesaikan pekerjaannya
+            // document.querySelector('.tab-button').click(); // Simulasikan klik pada tab pertama
         });
     </script>
 </body>
