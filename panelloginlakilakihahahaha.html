@@ -41,27 +41,28 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center; /* Center vertically for login, flex-start for admin panel */
-            background-color: theme('colors.background'); /* Dark background for the overall app */
-            color: theme('colors.text'); /* Light text for overall app */
-            position: relative;
-            overflow: hidden; /* Hide overflowing background elements from login page */
+            /* body hanya sebagai kontainer utama untuk elemen posisi absolut */
+            position: relative; /* Untuk absolute children */
+            overflow: hidden; /* Sembunyikan elemen latar belakang login yang meluap */
+            background-color: theme('colors.background'); /* Latar belakang gelap untuk seluruh aplikasi */
+            color: theme('colors.text'); /* Teks terang untuk seluruh aplikasi */
+            display: flex; /* Tambahkan flex untuk mengatur konten utama (login/admin) */
+            justify-content: center; /* Pusatkan secara horizontal */
+            align-items: center; /* Pusatkan secara vertikal (akan ditimpa oleh admin-panel) */
         }
 
         /* --- Login Panel Specific Styles --- */
         #login-panel {
-            position: absolute; /* Allows background elements to be behind it */
+            position: absolute; /* Memungkinkan elemen latar belakang berada di belakangnya */
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            display: flex;
+            display: flex; /* Jadikan kontainer flex */
             justify-content: center;
             align-items: center;
-            flex-direction: column; /* Allows content to stack vertically */
-            z-index: 10; /* Ensure it's on top of background */
+            flex-direction: column; /* Memungkinkan konten menumpuk secara vertikal */
+            z-index: 10; /* Pastikan berada di atas latar belakang */
         }
 
         .login-background {
@@ -224,20 +225,21 @@
 
         /* --- Admin Panel Specific Styles (from paneladminmuhikaterbaru.html) --- */
         #admin-panel {
-            /* Override body's align-items from center to flex-start for admin content */
-            align-items: flex-start;
+            display: flex; /* Tambahkan ini: Jadikan kontainer flex */
+            flex-direction: column; /* Tambahkan ini: Tumpuk konten secara vertikal */
+            align-items: flex-start; /* Sejajarkan konten ke atas */
             padding: 20px;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif; /* Admin panel default font */
+            font-family: 'Inter', sans-serif; /* Font default panel admin */
             background-color: theme('colors.background');
             color: theme('colors.text');
-            /* Make it take full screen when active */
+            /* Jadikan mengambil seluruh layar saat aktif */
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            overflow-y: auto; /* Enable scrolling for admin content */
+            overflow-y: auto; /* Aktifkan scrolling untuk konten admin */
         }
 
         #admin-panel .container {
@@ -248,7 +250,7 @@
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
             box-sizing: border-box;
-            margin: auto; /* Center the admin container */
+            margin: auto; /* Pusatkan kontainer admin */
         }
         #admin-panel h2 {
             text-align: center;
@@ -260,10 +262,10 @@
         .input-group {
             margin-bottom: 20px;
         }
-        #admin-panel input, #admin-panel button { /* Specificity for admin panel inputs/buttons */
+        #admin-panel input, #admin-panel button { /* Spesifikasi untuk input/tombol panel admin */
             padding: 12px 15px;
             margin: 5px 0;
-            border: 1px solid theme('colors.secondary'); /* This secondary color is different from login's */
+            border: 1px solid theme('colors.secondary'); /* Warna sekunder ini berbeda dari login */
             border-radius: 8px;
             font-size: 1rem;
             color: theme('colors.text');
