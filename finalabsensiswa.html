@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Absensi Digital SMK Muhammadiyah Campaka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Primary Blue Palette */
+            --primary-50: #eff6ff;
+            --primary-100: #dbeafe;
+            --primary-200: #bfdbfe;
+            --primary-300: #93c5fd;
+            --primary-400: #60a5fa;
+            --primary-500: #3b82f6;
+            --primary-600: #2563eb;
+            --primary-700: #1d4ed8;
+            --primary-800: #1e40af;
+            --primary-900: #1e3a8a;
+
+            /* Secondary Colors */
+            --secondary-300: #7dd3fc;
+            --secondary-400: #38bdf8;
+            --secondary-500: #0ea5e9;
+
+            /* Status Colors */
+            --success-400: #4ade80;
+            --success-500: #22c55e;
+            --success-600: #16a34a;
+            
+            --warning-400: #facc15;
+            --warning-500: #eab308;
+            --warning-600: #ca8a04;
+            
+            --danger-400: #f87171;
+            --danger-500: #ef4444;
+            --danger-600: #dc2626;
+
+            --orange-400: #fb923c;
+            --orange-500: #f97316;
+            --orange-600: #ea580c;
+
+            /* Neutral Colors */
+            --neutral-50: #f8fafc;
+            --neutral-100: #f1f5f9;
+            --neutral-200: #e2e8f0;
+            --neutral-300: #cbd5e1;
+            --neutral-400: #94a3b8;
+            --neutral-500: #64748b;
+            --neutral-600: #475569;
+            --neutral-700: #334155;
+            --neutral-800: #1e293b;
+            --neutral-900: #0f172a;
+
+            /* Glass Effect */
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--primary-900) 0%, var(--primary-800) 50%, var(--primary-600) 100%);
+            min-height: 100vh;
+            color: var(--neutral-50);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background Shapes */
+        .bg-shape {
+            position: fixed;
+            opacity: 0.05;
+            z-index: 0;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .bg-shape:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            width: 100px;
+            height: 100px;
+            background: var(--primary-400);
+            border-radius: 50%;
+            animation-delay: 0s;
+        }
+
+        .bg-shape:nth-child(2) {
+            top: 20%;
+            right: 15%;
+            width: 80px;
+            height: 80px;
+            background: var(--secondary-400);
+            border-radius: 20px;
+            animation-delay: 2s;
+        }
+
+        .bg-shape:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            width: 120px;
+            height: 120px;
+            background: var(--success-400);
+            border-radius: 50%;
+            animation-delay: 4s;
+        }
+
+        .bg-shape:nth-child(4) {
+            bottom: 30%;
+            right: 10%;
+            width: 60px;
+            height: 60px;
+            background: var(--warning-400);
+            border-radius: 15px;
+            animation-delay: 1s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: var(--glass-shadow);
+            padding: 40px;
+            width: 100%;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .header-text h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-300), var(--secondary-300));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .header-text p {
+            font-size: 1.1rem;
+            color: var(--neutral-300);
+            font-weight: 500;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--neutral-200);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--neutral-50);
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-input::placeholder {
+            color: rgba(248, 250, 252, 0.6);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-400);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.3);
+            transform: translateY(-1px);
+        }
+
+        /* Info Cards */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .info-card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .info-card-label {
+            font-size: 0.85rem;
+            color: var(--neutral-400);
+            margin-bottom: 4px;
+        }
+
+        .info-card-value {
+            font-weight: 600;
+            color: var(--neutral-100);
+            font-size: 0.95rem;
+        }
+
+        /* Status Cards */
+        .status-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .status-card.role {
+            border-color: rgba(59, 130, 246, 0.3);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .status-card.class {
+            border-color: rgba(34, 197, 94, 0.3);
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .status-card-title {
+            font-size: 0.9rem;
+            color: var(--neutral-400);
+            margin-bottom: 8px;
+        }
+
+        .status-card-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--neutral-100);
+        }
+
+        /* Camera Section */
+        .camera-section {
+            margin: 24px 0;
+        }
+
+        .video-container {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            background: var(--neutral-800);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-element {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+        }
+
+        .photo-preview {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            border: 2px dashed var(--glass-border);
+            background: rgba(255, 255, 255, 0.05);
+            min-height: 200px;
+            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neutral-400);
+            font-size: 0.9rem;
+        }
+
+        /* Attendance Type Selection */
+        .attendance-type {
+            margin-bottom: 24px;
+        }
+
+        .attendance-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .attendance-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 16px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .attendance-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .attendance-option.selected {
+            border-color: var(--primary-400);
+            background: rgba(59, 130, 246, 0.2);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .attendance-option.hadir.selected {
+            border-color: var(--success-400);
+            background: rgba(34, 197, 94, 0.2);
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+        }
+
+        .attendance-option.sakit.selected {
+            border-color: var(--orange-400);
+            background: rgba(249, 115, 22, 0.2);
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
+        }
+
+        .attendance-option.izin.selected {
+            border-color: var(--warning-400);
+            background: rgba(234, 179, 8, 0.2);
+            box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.2);
+        }
+
+        .attendance-option-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .attendance-option-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--neutral-200);
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+            color: white;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-500), var(--success-600));
+            color: white;
+            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, var(--success-600), var(--success-700));
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn:disabled {
+            background: var(--neutral-600);
+            color: var(--neutral-400);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn:disabled::before {
+            display: none;
+        }
+
+        /* Status Messages */
+        .status-message {
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 16px;
+            text-align: center;
+            font-weight: 500;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .status-message.success {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: var(--success-300);
+        }
+
+        .status-message.error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--danger-300);
+        }
+
+        .status-message.warning {
+            background: rgba(234, 179, 8, 0.2);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            color: var(--warning-300);
+        }
+
+        .status-message.info {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: var(--primary-300);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-400);
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Hidden Elements */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 640px) {
+            .container {
+                padding: 16px;
+            }
+
+            .glass-card {
+                padding: 24px;
+                border-radius: 20px;
+            }
+
+            .header-text h1 {
+                font-size: 2rem;
+            }
+
+            .logo-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .logo {
+                width: 60px;
+                height: 60px;
+                font-size: 20px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .attendance-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .btn {
+                padding: 14px 20px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .attendance-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+</head>
+<body>
+    <!-- Animated Background Shapes -->
+    <div class="bg-shape"></div>
+    <div class="bg-shape"></div>
+    <div class="bg-shape"></div>
+    <div class="bg-shape"></div>
+
+    <div class="container">
+        <div class="glass-card">
+            <!-- Header -->
+            <div class="header">
+                <div class="logo-container">
+                    <div class="logo">SMK</div>
+                    <div class="header-text">
+                        <h1>ABSENSI DIGITAL</h1>
+                        <p>SMK Muhammadiyah Campaka Purwakarta</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User ID Input -->
+            <div class="form-group">
+                <label for="userId" class="form-label">
+                    🔍 Masukkan ID Siswa/Guru
+                </label>
+                <input 
+                    type="text" 
+                    id="userId" 
+                    class="form-input" 
+                    placeholder="Scan QR Code atau ketik ID unik Anda" 
+                    autofocus 
+                />
+            </div>
+
+            <!-- Schedule Info -->
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-card-icon">📚</div>
+                    <div class="info-card-label">Mata Pelajaran</div>
+                    <div class="info-card-value" id="subject">-</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-icon">⏰</div>
+                    <div class="info-card-label">Jam Pelajaran</div>
+                    <div class="info-card-value" id="schedule">-</div>
+                </div>
+            </div>
+
+            <!-- Status Cards -->
+            <div class="status-card role">
+                <div class="status-card-title">👤 Peran Anda</div>
+                <div class="status-card-value" id="detectedRole">Belum Terdeteksi</div>
+            </div>
+
+            <div class="status-card class">
+                <div class="status-card-title">🏫 Kelas/Mengajar</div>
+                <div class="status-card-value" id="detectedClass">-</div>
+            </div>
+
+            <!-- Attendance Type Selection -->
+            <div class="attendance-type">
+                <label class="form-label">📋 Pilih Status Kehadiran</label>
+                <div class="attendance-options">
+                    <div class="attendance-option hadir" data-type="Hadir">
+                        <div class="attendance-option-icon">✅</div>
+                        <div class="attendance-option-text">Hadir</div>
+                    </div>
+                    <div class="attendance-option sakit" data-type="Sakit">
+                        <div class="attendance-option-icon">🤒</div>
+                        <div class="attendance-option-text">Sakit</div>
+                    </div>
+                    <div class="attendance-option izin" data-type="Izin">
+                        <div class="attendance-option-icon">📝</div>
+                        <div class="attendance-option-text">Izin</div>
+                    </div>
+                    <div class="attendance-option alfa" data-type="Alfa">
+                        <div class="attendance-option-icon">❌</div>
+                        <div class="attendance-option-text">Alfa</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Camera Section -->
+            <div class="camera-section">
+                <div class="video-container">
+                    <video id="video" class="video-element hidden" autoplay></video>
+                    <img id="photoPreview" class="photo-preview" alt="📸 Foto akan muncul di sini setelah kamera diaktifkan" />
+                </div>
+                <canvas id="canvas" class="hidden"></canvas>
+            </div>
+
+            <!-- Action Buttons -->
+            <button id="btnStartCamera" class="btn btn-primary">
+                📷 Aktifkan Kamera
+            </button>
+            
+            <button id="btnAbsen" class="btn btn-success" disabled>
+                <span id="btnAbsenText">✅ Konfirmasi Absensi</span>
+                <span id="btnAbsenSpinner" class="loading-spinner hidden"></span>
+            </button>
+
+            <!-- Status Message -->
+            <div id="statusMessage" class="hidden"></div>
+
+            <!-- Hidden Elements -->
+            <div class="hidden">
+                <select id="role">
+                    <option value="siswa">Siswa</option>
+                    <option value="guru">Guru</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDrt5MHhs-Wjoye8swLwLb068HC4kme-rg",
+            authDomain: "absensionlinemuhika.firebaseapp.com",
+            databaseURL: "https://absensionlinemuhika-default-rtdb.firebaseio.com",
+            projectId: "absensionlinemuhika",
+            storageBucket: "absensionlinemuhika.firebasestorage.app",
+            messagingSenderId: "109622927610",
+            appId: "1:109622927610:web:0b5a6ab7e5bc3104f4e943",
+            measurementId: "G-VYJ320SDRM"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // User List Data
+        const userList = [
+            // Students X RPL A
+            { id: "AHMAD", role: "siswa", class: "X RPL A" },
+            { id: "AJI SETIAWAN", role: "siswa", class: "X RPL A" },
+            { id: "AKHDAN RAIHAN PUTRA", role: "siswa", class: "X RPL A" },
+            { id: "ALDI", role: "siswa", class: "X RPL A" },
+            { id: "ANANG SURYANA", role: "siswa", class: "X RPL A" },
+            { id: "SISWA_TKJ_B_01", role: "siswa", class: "X TKJ B" },
+            { id: "SISWA_TKJ_B_02", role: "siswa", class: "X TKJ B" },
+            { id: "Andra Septiana", role: "siswa", class: "X RPL A" },
+            { id: "Anggi Permadani", role: "siswa", class: "X RPL A" },
+            { id: "Anwar Musadad", role: "siswa", class: "X RPL A" },
+            { id: "Axelle Aulia", role: "siswa", class: "X RPL A" },
+            { id: "DANDA DERA AZAHRA", role: "siswa", class: "X RPL A" },
+            { id: "Fadillah Nurosobah", role: "siswa", class: "X RPL A" },
+            { id: "Fajar Ramadhan", role: "siswa", class: "X RPL A" },
+            { id: "Fazry Rizki Restiana", role: "siswa", class: "X RPL A" },
+            { id: "Hasim Ramdani", role: "siswa", class: "X RPL A" },
+            { id: "ILPAN SAMSUL ARIP", role: "siswa", class: "X RPL A" },
+            { id: "M. Rizqi Al Mubarok", role: "siswa", class: "X RPL A" },
+            { id: "MOHAMAD RAFLI RAMADAN", role: "siswa", class: "X RPL A" },
+            { id: "Muhamad Dzikry Ilham", role: "siswa", class: "X RPL A" },
+            { id: "Muhamad Rizki", role: "siswa", class: "X RPL A" },
+            { id: "Muhammad Ihsan Aroyan", role: "siswa", class: "X RPL A" },
+            { id: "Muhammad Rahmat Aldila", role: "siswa", class: "X RPL A" },
+            { id: "MUSTOPA", role: "siswa", class: "X RPL A" },
+            { id: "PARHAN SUHENDI", role: "siswa", class: "X RPL A" },
+            { id: "Raka Aditya", role: "siswa", class: "X RPL A" },
+            { id: "Ramdani", role: "siswa", class: "X RPL A" },
+            { id: "RIDWAN", role: "siswa", class: "X RPL A" },
+            { id: "RIKI", role: "siswa", class: "X RPL A" },
+            { id: "RISKI MULYANA", role: "siswa", class: "X RPL A" },
+            { id: "Siti Patimah", role: "siswa", class: "X RPL A" },
+            { id: "Sulaeman", role: "siswa", class: "X RPL A" },
+            { id: "Supriatna", role: "siswa", class: "X RPL A" },
+            { id: "Zulpikri Maulana", role: "siswa", class: "X RPL A" },
+
+            // Teachers
+            { id: "JIMMY", role: "guru", subjectTeaching: "Matematika" },
+            { id: "SIGIT", role: "guru", subjectTeaching: "Bahasa Indonesia" },
+            { id: "EGI", role: "guru", subjectTeaching: "Fisika" },
+            { id: "NISA", role: "guru", subjectTeaching: "Kimia" },
+        ];
+
+        // Schedule List
+        const scheduleList = [
+            { day: 'Rabu', start: '22:00', end: '23:40', class: 'X RPL A', subject: 'Matematika' },
+            { day: 'Sabtu', start: '23:00', end: '23:59', class: 'X RPL A', subject: 'Bahasa Indonesia' },
+            { day: 'Selasa', start: '08:00', end: '09:40', class: 'X RPL A', subject: 'Fisika' },
+            { day: 'Kamis', start: '20:00', end: '22:40', class: 'X RPL A', subject: 'Kimia' },
+            { day: 'Jumat', start: '20:00', end: '23:40', class: 'X TKJ B', subject: 'Dasar Pemrograman' },
+        ];
+
+        // DOM Elements
+        const userIdInput = document.getElementById('userId');
+        const roleSelect = document.getElementById('role');
+        const subjectSpan = document.getElementById('subject');
+        const scheduleSpan = document.getElementById('schedule');
+        const detectedRoleSpan = document.getElementById('detectedRole');
+        const detectedClassSpan = document.getElementById('detectedClass');
+        const btnStartCamera = document.getElementById('btnStartCamera');
+        const btnAbsen = document.getElementById('btnAbsen');
+        const btnAbsenText = document.getElementById('btnAbsenText');
+        const btnAbsenSpinner = document.getElementById('btnAbsenSpinner');
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const photoPreview = document.getElementById('photoPreview');
+        const statusMessage = document.getElementById('statusMessage');
+        const attendanceOptions = document.querySelectorAll('.attendance-option');
+
+        // Global Variables
+        let stream;
+        let currentUserData = null;
+        let selectedAttendanceType = 'Hadir'; // Default to 'Hadir'
+
+        // Helper Functions
+        function getCurrentDay() {
+            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            return days[new Date().getDay()];
+        }
+
+        function isNowInRange(start, end) {
+            const now = new Date();
+            const [sh, sm] = start.split(':').map(Number);
+            const [eh, em] = end.split(':').map(Number);
+            const startTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), sh, sm);
+            const endTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), eh, em);
+            return now >= startTime && now <= endTime;
+        }
+
+        function getActiveSchedule(className = null) {
+            const today = getCurrentDay();
+            if (className) {
+                return scheduleList.find(item =>
+                    item.day === today &&
+                    item.class === className &&
+                    isNowInRange(item.start, item.end)
+                );
+            } else {
+                return scheduleList.find(item =>
+                    item.day === today &&
+                    isNowInRange(item.start, item.end)
+                );
+            }
+        }
+
+        function showStatusMessage(message, type = 'info') {
+            statusMessage.className = `status-message ${type}`;
+            statusMessage.textContent = message;
+            statusMessage.classList.remove('hidden');
+            
+            // Auto hide after 5 seconds for success messages
+            if (type === 'success') {
+                setTimeout(() => {
+                    statusMessage.classList.add('hidden');
+                }, 5000);
+            }
+        }
+
+        function hideStatusMessage() {
+            statusMessage.classList.add('hidden');
+        }
+
+        function updateScheduleDisplay() {
+            const activeSchedule = getActiveSchedule(currentUserData ? currentUserData.class : null);
+            if (activeSchedule) {
+                subjectSpan.textContent = activeSchedule.subject;
+                scheduleSpan.textContent = `${activeSchedule.start} - ${activeSchedule.end}`;
+                btnAbsen.disabled = false;
+                hideStatusMessage();
+            } else {
+                subjectSpan.textContent = '-';
+                scheduleSpan.textContent = '-';
+                btnAbsen.disabled = true;
+                showStatusMessage('Belum waktu absensi, silakan coba saat jadwal aktif.', 'warning');
+            }
+        }
+
+        // Attendance Type Selection
+        attendanceOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove selected class from all options
+                attendanceOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // Add selected class to clicked option
+                option.classList.add('selected');
+                
+                // Update selected attendance type
+                selectedAttendanceType = option.dataset.type;
+                
+                // Update button text
+                const icons = {
+                    'Hadir': '✅',
+                    'Sakit': '🤒',
+                    'Izin': '📝',
+                    'Alfa': '❌'
+                };
+                btnAbsenText.textContent = `${icons[selectedAttendanceType]} Konfirmasi ${selectedAttendanceType}`;
+            });
+        });
+
+        // Set default selection
+        document.querySelector('.attendance-option[data-type="Hadir"]').classList.add('selected');
+
+        // User ID Input Handler
+        userIdInput.addEventListener('input', () => {
+            const inputId = userIdInput.value.trim();
+            const inputIdNormalized = inputId.toUpperCase();
+
+            currentUserData = userList.find(user => user.id.toUpperCase() === inputIdNormalized);
+
+            if (currentUserData) {
+                roleSelect.value = currentUserData.role;
+                detectedRoleSpan.textContent = currentUserData.role === 'siswa' ? 'Siswa' : 'Guru';
+
+                if (currentUserData.role === 'siswa') {
+                    detectedClassSpan.textContent = currentUserData.class;
+                    const active = getActiveSchedule(currentUserData.class);
+                    if (active) {
+                        subjectSpan.textContent = active.subject;
+                        scheduleSpan.textContent = `${active.start} - ${active.end}`;
+                        btnAbsen.disabled = false;
+                        hideStatusMessage();
+                    } else {
+                        subjectSpan.textContent = '-';
+                        scheduleSpan.textContent = '-';
+                        btnAbsen.disabled = true;
+                        showStatusMessage('Tidak ada jadwal aktif untuk kelas Anda saat ini.', 'warning');
+                    }
+                } else if (currentUserData.role === 'guru') {
+                    const activeGuruSchedule = scheduleList.find(item =>
+                        item.day === getCurrentDay() &&
+                        isNowInRange(item.start, item.end) &&
+                        item.subject === currentUserData.subjectTeaching
+                    );
+
+                    if (activeGuruSchedule) {
+                        detectedClassSpan.textContent = `Mengajar di ${activeGuruSchedule.class}`;
+                        subjectSpan.textContent = activeGuruSchedule.subject;
+                        scheduleSpan.textContent = `${activeGuruSchedule.start} - ${activeGuruSchedule.end}`;
+                        btnAbsen.disabled = false;
+                        hideStatusMessage();
+                    } else {
+                        detectedClassSpan.textContent = 'Tidak ada kelas aktif';
+                        subjectSpan.textContent = '-';
+                        scheduleSpan.textContent = '-';
+                        btnAbsen.disabled = true;
+                        showStatusMessage('Anda tidak memiliki jadwal mengajar yang aktif saat ini.', 'warning');
+                    }
+                }
+            } else {
+                roleSelect.value = 'siswa';
+                detectedRoleSpan.textContent = inputId.length > 0 ? 'ID/Nama tidak dikenal' : 'Belum Terdeteksi';
+                detectedClassSpan.textContent = '-';
+                subjectSpan.textContent = '-';
+                scheduleSpan.textContent = '-';
+                if (inputId.length > 0) {
+                    btnAbsen.disabled = true;
+                    showStatusMessage('ID/Nama tidak dikenal. Anda tidak diizinkan untuk absensi.', 'error');
+                } else {
+                    btnAbsen.disabled = true;
+                    hideStatusMessage();
+                }
+            }
+        });
+
+        // Camera Functions
+        btnStartCamera.addEventListener('click', async () => {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia({
+                        video: { facingMode: 'user' }
+                    });
+
+                    video.srcObject = stream;
+                    video.classList.remove('hidden');
+                    photoPreview.classList.add('hidden');
+                    
+                    showStatusMessage('✅ Kamera aktif. Pastikan wajah terlihat jelas.', 'success');
+                    btnStartCamera.textContent = '📷 Kamera Aktif';
+                    btnStartCamera.disabled = true;
+
+                } catch (error) {
+                    console.error("Camera error:", error);
+
+                    if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+                        showStatusMessage('❌ Akses kamera ditolak. Mohon izinkan kamera di browser.', 'error');
+                    } else if (error.name === 'NotFoundError') {
+                        showStatusMessage('❌ Kamera tidak ditemukan. Periksa perangkat Anda.', 'error');
+                    } else {
+                        showStatusMessage('❌ Gagal mengakses kamera: ' + error.message, 'error');
+                    }
+                }
+            } else {
+                showStatusMessage('❌ Browser Anda tidak mendukung akses kamera.', 'error');
+            }
+        });
+
+        // Attendance Process
+        btnAbsen.addEventListener('click', async () => {
+            const inputId = userIdInput.value.trim();
+            const inputIdNormalized = inputId.toUpperCase();
+
+            if (!currentUserData || currentUserData.id.toUpperCase() !== inputIdNormalized) {
+                showStatusMessage('Error: ID/Nama tidak dikenal atau belum dideteksi. Harap masukkan ID dengan benar.', 'error');
+                return;
+            }
+
+            // Show loading state
+            btnAbsenText.classList.add('hidden');
+            btnAbsenSpinner.classList.remove('hidden');
+            btnAbsen.disabled = true;
+
+            try {
+                // Determine active schedule
+                let activeScheduleForAbsence = null;
+                let classForAbsence = null;
+                let subjectForAbsence = null;
+
+                if (currentUserData.role === 'siswa') {
+                    classForAbsence = currentUserData.class;
+                    activeScheduleForAbsence = getActiveSchedule(classForAbsence);
+                    subjectForAbsence = activeScheduleForAbsence ? activeScheduleForAbsence.subject : '-';
+                } else if (currentUserData.role === 'guru') {
+                    activeScheduleForAbsence = scheduleList.find(item =>
+                        item.day === getCurrentDay() &&
+                        isNowInRange(item.start, item.end) &&
+                        item.subject === currentUserData.subjectTeaching
+                    );
+                    classForAbsence = activeScheduleForAbsence ? activeScheduleForAbsence.class : '-';
+                    subjectForAbsence = activeScheduleForAbsence ? activeScheduleForAbsence.subject : '-';
+                }
+
+                if (!activeScheduleForAbsence) {
+                    showStatusMessage('Gagal absensi: Tidak ada jadwal aktif yang cocok saat ini.', 'error');
+                    return;
+                }
+
+                // Capture photo if camera is active and attendance type is 'Hadir'
+                let photoData = '';
+                if (selectedAttendanceType === 'Hadir' && !video.classList.contains('hidden')) {
+                    canvas.width = video.videoWidth || 320;
+                    canvas.height = video.videoHeight || 240;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    photoData = canvas.toDataURL('image/png');
+                    
+                    // Show photo preview
+                    photoPreview.src = photoData;
+                    photoPreview.classList.remove('hidden');
+                    video.classList.add('hidden');
+                }
+
+                // Get location for 'Hadir' attendance
+                let lokasi = { latitude: 0, longitude: 0 };
+                if (selectedAttendanceType === 'Hadir') {
+                    showStatusMessage('Sedang mengakses lokasi...', 'info');
+                    try {
+                        const posisi = await new Promise((resolve, reject) => {
+                            const geoTimeout = setTimeout(() => reject(new Error('Geolocation timeout')), 10000);
+                            navigator.geolocation.getCurrentPosition(
+                                (pos) => {
+                                    clearTimeout(geoTimeout);
+                                    resolve(pos);
+                                },
+                                (error) => {
+                                    clearTimeout(geoTimeout);
+                                    reject(error);
+                                },
+                                { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+                            );
+                        });
+                        lokasi.latitude = posisi.coords.latitude;
+                        lokasi.longitude = posisi.coords.longitude;
+                    } catch (error) {
+                        showStatusMessage('Tidak dapat mengakses lokasi: ' + error.message, 'warning');
+                        // Continue without location for non-critical attendance types
+                    }
+                }
+
+                // Prepare attendance data
+                const dataAbsensi = {
+                    id: inputId,
+                    nama: inputId,
+                    role: currentUserData.role,
+                    kelas: classForAbsence,
+                    waktu: new Date().toISOString(),
+                    mapel: subjectForAbsence,
+                    jam: `${activeScheduleForAbsence.start} - ${activeScheduleForAbsence.end}`,
+                    foto: photoData,
+                    lokasi,
+                    status: selectedAttendanceType,
+                    materi: ''
+                };
+
+                // Add teacher material if applicable
+                if (currentUserData.role === 'guru') {
+                    const materiInput = prompt("Anda adalah guru. Masukkan materi pelajaran hari ini:");
+                    dataAbsensi.materi = materiInput || '-';
+                    dataAbsensi.namaGuru = inputId;
+                }
+
+                // Save to Firebase
+                const path = `absensi/${dataAbsensi.role}/${dataAbsensi.id}/${dataAbsensi.kelas}/${Date.now()}`;
+                await db.ref(path).set(dataAbsensi);
+
+                showStatusMessage(`✅ Absensi ${selectedAttendanceType} berhasil disimpan!`, 'success');
+                
+                // Reset form
+                btnAbsen.disabled = true;
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                    video.classList.add('hidden');
+                }
+
+            } catch (error) {
+                showStatusMessage("❌ Gagal menyimpan absensi: " + error.message, 'error');
+            } finally {
+                // Reset loading state
+                btnAbsenText.classList.remove('hidden');
+                btnAbsenSpinner.classList.add('hidden');
+            }
+        });
+
+        // Initialize
+        updateScheduleDisplay();
+        setInterval(updateScheduleDisplay, 60000); // Check schedule every minute
+
+        // Enter key support
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !btnAbsen.disabled) {
+                btnAbsen.click();
+            }
+        });
+    </script>
+</body>
+</html>
