@@ -340,7 +340,10 @@
     </div>
 
     <!-- Audio element for login sound -->
-    <audio id="loginSound" src="https://www.soundjay.com/buttons/button-2.mp3" preload="auto"></audio>
+    <audio id="loginSound" preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_51034c56e3.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
     <script>
         // --- Konfigurasi Firebase ---
@@ -401,7 +404,13 @@
 
         // ✅ Fungsi Login
         async function login() {
-            loginSound.play(); // Putar suara saat tombol login ditekan
+            // Coba memutar suara. Tangani error jika gagal (misalnya, karena kebijakan autoplay browser)
+            try {
+                await loginSound.play(); 
+            } catch (error) {
+                console.warn("Gagal memutar suara login:", error.message);
+                // Pesan ini tidak harus ditampilkan ke user jika hanya peringatan
+            }
 
             const email = emailInput.value;
             const pass = passwordInput.value;
