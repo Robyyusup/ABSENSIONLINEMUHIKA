@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Panel Login Absensi Online SMK Muhammadiyah Campaka</title>
+    <title>Absensi Online SMK Muhammadiyah Campaka</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -13,45 +13,67 @@
                 extend: {
                     fontFamily: {
                         poppins: ['Poppins', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'], // Keep Inter for admin panel consistency
                     },
                     colors: {
                         primary: '#4CAF50', // Green
-                        secondary: '#2196F3', // Blue
+                        secondary: '#2196F3', // Blue for login, but will use different dark/light for admin
                         accentOrange: '#FFC107', // Amber
                         accentRed: '#f44336', // Red
-                        textDark: '#333',
-                        bgLight: '#f4f7f6',
-                        cardBg: '#ffffff',
+
+                        // Admin Panel specific colors (from previous admin panel code)
+                        background: '#1a1a1a',
+                        card: '#2a2a2a',
+                        text: '#e0e0e0',
+                        light_green: '#8BC34A',
+                        light_red: '#FFCDD2',
+                        light_yellow: '#FFF9C4',
+                        textDark: '#333', // Used in login for contrast
                     }
                 }
             }
         }
     </script>
     <style>
+        /* --- General Body & Container for BOTH Login & Admin Panel --- */
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Poppins', sans-serif; /* Default font for the whole app */
             margin: 0;
             padding: 0;
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            background-color: #f0f2f5; /* Light grey background */
+            align-items: center; /* Center vertically for login, flex-start for admin panel */
+            background-color: theme('colors.background'); /* Dark background for the overall app */
+            color: theme('colors.text'); /* Light text for overall app */
             position: relative;
-            overflow: hidden; /* Hide overflowing background elements */
+            overflow: hidden; /* Hide overflowing background elements from login page */
         }
 
-        /* Background image and overlay */
+        /* --- Login Panel Specific Styles --- */
+        #login-panel {
+            position: absolute; /* Allows background elements to be behind it */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Allows content to stack vertically */
+            z-index: 10; /* Ensure it's on top of background */
+        }
+
         .login-background {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://placehold.co/1920x1080/007bff/ffffff?text=Background+Image+Placeholder'); /* Placeholder background */
+            background-image: url('https://i.ibb.co/3s6Jz1J/PANEL-LOGIN-ABSENSI-ONLINE-SMK-MUHAMMADIYAH-CAMPAKA.jpg'); /* Your login background image */
             background-size: cover;
             background-position: center;
-            filter: brightness(0.8); /* Slightly dim the background image */
+            filter: brightness(0.8);
             z-index: 0;
         }
 
@@ -61,67 +83,31 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to right, rgba(29, 78, 216, 0.7), rgba(139, 92, 246, 0.7)); /* Blue-purple gradient */
+            background: linear-gradient(to right, rgba(29, 78, 216, 0.7), rgba(139, 92, 246, 0.7));
             z-index: 1;
         }
 
-        /* Geometric shapes for decorative background */
         .shape {
             position: absolute;
             opacity: 0.15;
-            z-index: 2; /* Above overlay, below content */
+            z-index: 2;
         }
+        .shape-square-top { width: 200px; height: 200px; background-color: theme('colors.secondary'); top: -50px; left: -50px; transform: rotate(45deg); }
+        .shape-circle-bottom { width: 180px; height: 180px; background-color: theme('colors.primary'); border-radius: 50%; bottom: -70px; right: -70px; }
+        .shape-triangle-left { width: 0; height: 0; border-left: 100px solid transparent; border-right: 100px solid transparent; border-bottom: 200px solid theme('colors.accentOrange'); bottom: 100px; left: -80px; transform: rotate(30deg); }
+        .shape-square-right { width: 150px; height: 150px; background-color: theme('colors.accentRed'); top: 50px; right: -70px; transform: rotate(-30deg); }
 
-        .shape-square-top {
-            width: 200px;
-            height: 200px;
-            background-color: theme('colors.secondary');
-            top: -50px;
-            left: -50px;
-            transform: rotate(45deg);
-        }
-
-        .shape-circle-bottom {
-            width: 180px;
-            height: 180px;
-            background-color: theme('colors.primary');
-            border-radius: 50%;
-            bottom: -70px;
-            right: -70px;
-        }
-
-        .shape-triangle-left {
-            width: 0;
-            height: 0;
-            border-left: 100px solid transparent;
-            border-right: 100px solid transparent;
-            border-bottom: 200px solid theme('colors.accentOrange');
-            bottom: 100px;
-            left: -80px;
-            transform: rotate(30deg);
-        }
-
-        .shape-square-right {
-            width: 150px;
-            height: 150px;
-            background-color: theme('colors.accentRed');
-            top: 50px;
-            right: -70px;
-            transform: rotate(-30deg);
-        }
-
-        /* Login Card */
         .login-card {
-            background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent white */
+            background-color: rgba(255, 255, 255, 0.95);
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             padding: 40px;
             width: 100%;
-            max-width: 400px; /* Max width for the login form */
+            max-width: 400px;
             text-align: center;
             position: relative;
-            z-index: 10; /* Ensure it's on top */
-            backdrop-filter: blur(5px); /* Frosted glass effect */
+            z-index: 10;
+            backdrop-filter: blur(5px);
         }
 
         .logo-header {
@@ -141,7 +127,7 @@
         }
 
         .logo-text h1 {
-            font-size: 2.25rem; /* text-4xl */
+            font-size: 2.25rem;
             font-weight: 700;
             color: theme('colors.primary');
             margin: 0;
@@ -149,7 +135,7 @@
         }
 
         .logo-text p {
-            font-size: 1.125rem; /* text-lg */
+            font-size: 1.125rem;
             color: theme('colors.textDark');
             margin-top: 5px;
             font-weight: 400;
@@ -164,11 +150,11 @@
             padding: 14px 20px;
             border: 1px solid #ccc;
             border-radius: 10px;
-            font-size: 1.125rem; /* text-lg */
+            font-size: 1.125rem;
             color: theme('colors.textDark');
             background-color: #f9f9f9;
             transition: all 0.3s ease;
-            box-sizing: border-box; /* Include padding in width */
+            box-sizing: border-box;
         }
 
         .input-field input:focus {
@@ -184,7 +170,7 @@
             color: white;
             border: none;
             border-radius: 10px;
-            font-size: 1.25rem; /* text-xl */
+            font-size: 1.25rem;
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
@@ -192,7 +178,7 @@
         }
 
         .login-button:hover {
-            background-color: #1976D2; /* Darker blue */
+            background-color: #1976D2;
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(33, 150, 243, 0.4);
         }
@@ -208,48 +194,273 @@
             font-weight: 500;
         }
 
-        /* Image and hand pointers */
         .decoration-image {
             position: absolute;
             bottom: 0;
             right: 0;
-            max-width: 300px; /* Adjust size as needed */
+            max-width: 300px;
             height: auto;
             z-index: 10;
-            transform: translateX(30%) translateY(10%); /* Adjust position to show partially */
-            pointer-events: none; /* Make sure it doesn't block clicks */
+            transform: translateX(30%) translateY(10%);
+            pointer-events: none;
         }
 
         .hand-pointer {
             position: absolute;
-            width: 80px; /* Size of the hand icon */
+            width: 80px;
             height: auto;
             transform-origin: bottom center;
-            z-index: 11; /* Above the decorative image */
+            z-index: 11;
             animation: bounce 1.5s infinite ease-in-out;
         }
 
-        .hand-pointer.left {
-            bottom: 120px; /* Adjust based on image position */
-            left: 50%;
-            margin-left: -120px; /* Offset from center to point to email */
-            transform: rotate(20deg);
-        }
-
-        .hand-pointer.right {
-            bottom: 120px; /* Adjust based on image position */
-            left: 50%;
-            margin-left: 50px; /* Offset from center to point to password */
-            transform: rotate(-20deg) scaleX(-1); /* Flip horizontally */
-        }
+        .hand-pointer.left { bottom: 170px; left: 50%; margin-left: -110px; transform: rotate(20deg); width: 50px;}
+        .hand-pointer.right { bottom: 170px; left: 50%; margin-left: 60px; transform: rotate(-20deg) scaleX(-1); width: 50px;}
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
 
-        /* Responsive adjustments */
+        /* --- Admin Panel Specific Styles (from paneladminmuhikaterbaru.html) --- */
+        #admin-panel {
+            /* Override body's align-items from center to flex-start for admin content */
+            align-items: flex-start;
+            padding: 20px;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif; /* Admin panel default font */
+            background-color: theme('colors.background');
+            color: theme('colors.text');
+            /* Make it take full screen when active */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto; /* Enable scrolling for admin content */
+        }
+
+        #admin-panel .container {
+            max-width: 1200px;
+            width: 100%;
+            background-color: theme('colors.card');
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            box-sizing: border-box;
+            margin: auto; /* Center the admin container */
+        }
+        #admin-panel h2 {
+            text-align: center;
+            color: theme('colors.primary');
+            margin-bottom: 30px;
+            font-size: 2.25rem;
+            font-weight: 700;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        #admin-panel input, #admin-panel button { /* Specificity for admin panel inputs/buttons */
+            padding: 12px 15px;
+            margin: 5px 0;
+            border: 1px solid theme('colors.secondary'); /* This secondary color is different from login's */
+            border-radius: 8px;
+            font-size: 1rem;
+            color: theme('colors.text');
+            background-color: theme('colors.secondary');
+            width: 100%;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        #admin-panel input:focus {
+            border-color: theme('colors.primary');
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5);
+        }
+        #admin-panel button {
+            background: theme('colors.primary');
+            color: white;
+            cursor: pointer;
+            border: none;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        #admin-panel button:hover {
+            background-color: theme('colors.light_green');
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .hidden {
+            display: none;
+        }
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tab-button {
+            background-color: theme('colors.secondary');
+            color: theme('colors.text');
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border: 1px solid theme('colors.secondary');
+        }
+        .tab-button:hover {
+            background-color: #555;
+            border-color: #555;
+        }
+        .tab-button.active {
+            background-color: theme('colors.primary');
+            border-color: theme('colors.primary');
+            color: white;
+            box-shadow: 0 3px 10px rgba(76, 175, 80, 0.4);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: theme('colors.background');
+            color: theme('colors.text');
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #444;
+            text-align: left;
+        }
+        th {
+            background-color: theme('colors.secondary');
+            color: theme('colors.primary');
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
+        }
+        th:hover {
+            background-color: #555;
+        }
+        th.asc::after { content: ' \25B2'; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); }
+        th.desc::after { content: ' \25BC'; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); }
+
+        tbody tr:nth-child(even) {
+            background-color: #333;
+        }
+        tbody tr:hover {
+            background-color: #444;
+        }
+        #admin-panel img { /* Admin panel specific image style */
+            max-width: 80px;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+            display: block;
+            margin: auto;
+        }
+        .error-message {
+            color: #FF5252;
+            margin-top: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .loading-message {
+            text-align: center;
+            padding: 20px;
+            color: theme('colors.primary');
+        }
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .filter-controls label {
+            font-weight: 600;
+        }
+        .filter-controls select {
+            background-color: theme('colors.secondary');
+            border: 1px solid #555;
+            padding: 8px;
+            border-radius: 8px;
+            color: theme('colors.text');
+            width: auto;
+            min-width: 150px;
+        }
+        .export-button {
+            background-color: #007BFF;
+            margin-top: 0;
+        }
+        .export-button:hover {
+            background-color: #0056b3;
+        }
+        .indicator-red { background-color: theme('colors.light_red'); color: #C62828; font-weight: 600; }
+        .indicator-yellow { background-color: theme('colors.light_yellow'); color: #FFD600; font-weight: 600; }
+        .indicator-green { background-color: theme('colors.light_green'); color: #388E3C; font-weight: 600; }
+
+        /* Leaflet map styles */
+        #mapContainer {
+            height: 500px;
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Responsive adjustments for Admin Panel */
         @media (max-width: 768px) {
+            #admin-panel .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            #admin-panel h2 {
+                font-size: 1.75rem;
+            }
+            .tab-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .filter-controls {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .filter-controls select, .filter-controls button {
+                width: 100%;
+            }
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            tr {
+                border: 1px solid #555;
+                margin-bottom: 15px;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+            td {
+                border: none;
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+            }
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: 600;
+                color: theme('colors.primary');
+            }
+            /* Login Panel Responsive adjustments (copied from previous login code) */
             .login-card {
                 padding: 30px 20px;
                 margin: 20px;
@@ -258,17 +469,17 @@
                 max-width: 80px;
             }
             .logo-text h1 {
-                font-size: 1.75rem; /* text-3xl */
+                font-size: 1.75rem;
             }
             .logo-text p {
-                font-size: 1rem; /* text-base */
+                font-size: 1rem;
             }
             .input-field input {
                 font-size: 1rem;
                 padding: 12px 15px;
             }
             .login-button {
-                font-size: 1.125rem; /* text-lg */
+                font-size: 1.125rem;
                 padding: 12px 18px;
             }
             .decoration-image {
@@ -295,58 +506,184 @@
             .shape-square-right { width: 70px; height: 70px; top: 30px; right: -30px;}
         }
     </style>
-    <!-- Firebase SDK (v9 compat untuk struktur Anda) -->
+    <!-- Firebase SDK (v9 compat) -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <!-- SheetJS for Excel export -->
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAo9TchX5tqF/fS5xI5/r6e5c5V5n2h0o1J0L0e0="
+     crossorigin=""/>
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-200X0/s5zI5/r6e5c5V5n2h0o1J0L0e0="
+     crossorigin=""></script>
 </head>
 <body>
 
-    <!-- Background Image and Overlay -->
-    <div class="login-background" style="background-image: url('https://i.ibb.co/3s6Jz1J/PANEL-LOGIN-ABSENSI-ONLINE-SMK-MUHAMMADIYAH-CAMPAKA.jpg');"></div>
-    <div class="background-overlay"></div>
+    <!-- Login Panel Area -->
+    <div id="login-panel">
+        <!-- Background Image and Overlay -->
+        <div class="login-background" style="background-image: url('https://i.ibb.co/3s6Jz1J/PANEL-LOGIN-ABSENSI-ONLINE-SMK-MUHAMMADIYAH-CAMPAKA.jpg');"></div>
+        <div class="background-overlay"></div>
 
-    <!-- Geometric Shapes -->
-    <div class="shape shape-square-top"></div>
-    <div class="shape shape-circle-bottom"></div>
-    <div class="shape shape-triangle-left"></div>
-    <div class="shape shape-square-right"></div>
+        <!-- Geometric Shapes -->
+        <div class="shape shape-square-top"></div>
+        <div class="shape shape-circle-bottom"></div>
+        <div class="shape shape-triangle-left"></div>
+        <div class="shape shape-square-right"></div>
 
-    <div class="login-card">
-        <div class="logo-header">
-            <!-- Ganti dengan URL logo SMK Muhammadiyah Campaka Anda -->
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Lambang_Muhammadiyah.svg/1200px-Lambang_Muhammadiyah.svg.png" alt="Logo Muhammadiyah" onerror="this.onerror=null;this.src='https://placehold.co/80x80/cccccc/333333?text=Logo';" />
-            <div class="logo-text">
-                <h1>PANEL LOGIN</h1>
-                <p>ABSENSI ONLINE</p>
-                <p>SMK MUHAMMADIYAH CAMPAKA</p>
+        <div class="login-card">
+            <div class="logo-header">
+                <!-- Replace with your SMK Muhammadiyah Campaka logo URL -->
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Lambang_Muhammadiyah.svg/1200px-Lambang_Muhammadiyah.svg.png" alt="Logo Muhammadiyah" onerror="this.onerror=null;this.src='https://placehold.co/80x80/cccccc/333333?text=Logo';" />
+                <div class="logo-text">
+                    <h1>PANEL LOGIN</h1>
+                    <p>ABSENSI ONLINE</p>
+                    <p>SMK MUHAMMADIYAH CAMPAKA</p>
+                </div>
             </div>
+
+            <div class="input-field">
+                <input type="email" id="email" placeholder="Email" class="rounded-lg" />
+            </div>
+            <div class="input-field">
+                <input type="password" id="password" placeholder="Password" class="rounded-lg" />
+            </div>
+
+            <button onclick="login()" class="login-button rounded-lg">Login yuk Sayang</button>
+            <p id="login-error" class="login-error"></p>
+
+            <!-- Decorative Image and Pointers -->
+            <img src="https://i.ibb.co/2d9fB2d/login-girl-cutout.png" alt="Girl pointing" class="decoration-image" />
+            <img src="https://i.ibb.co/zXq2v24/hand-pointer.png" alt="Hand pointer" class="hand-pointer left" />
+            <img src="https://i.ibb.co/zXq2v24/hand-pointer.png" alt="Hand pointer" class="hand-pointer right" />
         </div>
 
-        <div class="input-field">
-            <input type="email" id="email" placeholder="Email" class="rounded-lg" />
-        </div>
-        <div class="input-field">
-            <input type="password" id="password" placeholder="Password" class="rounded-lg" />
-        </div>
-
-        <button onclick="login()" class="login-button rounded-lg">Login yuk Sayang</button>
-        <p id="login-error" class="login-error"></p>
-
-        <!-- Decorative Image and Pointers -->
-        <img src="https://i.ibb.co/2d9fB2d/login-girl-cutout.png" alt="Girl pointing" class="decoration-image" />
-        <img src="https://i.ibb.co/zXq2v24/hand-pointer.png" alt="Hand pointer" class="hand-pointer left" style="width: 50px; bottom: 170px; left: 50%; margin-left: -110px; transform: rotate(20deg);" />
-        <img src="https://i.ibb.co/zXq2v24/hand-pointer.png" alt="Hand pointer" class="hand-pointer right" style="width: 50px; bottom: 170px; left: 50%; margin-left: 60px; transform: rotate(-20deg) scaleX(-1);" />
+        <!-- Audio element for login sound -->
+        <audio id="loginSound" preload="auto">
+            <source src="https://robyyusup.github.io/ABSENSIONLINEMUHIKA/desah-made-with-Voicemod%20(mp3cut.net).mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
     </div>
 
-    <!-- Audio element for login sound -->
-    <audio id="loginSound" preload="auto">
-        <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_51034c56e3.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+    <!-- Admin Panel Area -->
+    <div id="admin-panel" class="hidden">
+        <div class="container rounded-xl">
+            <h2 class="text-primary text-center">PANEL ADMIN REKAP ABSENSI<br>SMK MUHAMMADIYAH CAMPAKA PURWAKARTA</h2>
+            <p id="loggedInUserInfo" class="text-center text-lg mb-5"></p>
+            <div class="flex justify-end mb-5">
+                <button onclick="logout()" class="rounded-lg bg-red-600 hover:bg-red-700">Logout</button>
+            </div>
+
+            <div class="tab-buttons">
+                <button class="tab-button active rounded-lg" data-tab="guru-absensi-section">Absensi Guru</button>
+                <button class="tab-button rounded-lg" data-tab="siswa-absensi-section">Absensi Siswa</button>
+                <button class="tab-button rounded-lg" data-tab="map-siswa-section">Peta Siswa</button>
+                <button class="tab-button rounded-lg" data-tab="gallery-siswa-section">Galeri Siswa</button>
+            </div>
+
+            <!-- Absensi Guru Section -->
+            <div id="guru-absensi-section" class="content-section">
+                <h3 class="text-primary text-xl font-bold mb-4 border-b pb-2 border-gray-600">(GURU) - Rekap Absensi</h3>
+                <div class="filter-controls">
+                    <label for="filterGuruHari">Hari:</label>
+                    <select id="filterGuruHari" class="rounded-lg">
+                        <option value="all">Keseluruhan dalam seminggu</option>
+                        <option value="1">Hari ke-1</option>
+                        <option value="2">Hari ke-2</option>
+                        <option value="3">Hari ke-3</option>
+                        <option value="4">Hari ke-4</option>
+                        <option value="5">Hari ke-5</option>
+                        <option value="6">Hari ke-6</option>
+                        <option value="7">Hari ke-7</option>
+                    </select>
+                    <button id="exportGuruExcel" class="export-button rounded-lg">Export ke Excel</button>
+                </div>
+                <div class="table-responsive">
+                    <table id="guruAbsensiTable" class="rounded-lg">
+                        <thead>
+                            <tr>
+                                <th data-column="namaGuru">Nama Guru</th>
+                                <th data-column="pelajaran">Pelajaran</th>
+                                <th data-column="kelas">Kelas</th>
+                                <th data-column="lokasi" class="guru-col-specific">Lokasi</th>
+                                <th data-column="foto" class="guru-col-specific">Foto</th>
+                                <th data-column="materi" class="guru-col-specific">Materi</th>
+                                <!-- Dynamic daily headers will be inserted here -->
+                                <th data-column="indikator">Indikator</th>
+                                <th data-column="totalMinggu">Keseluruhan (Minggu)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="guruAbsensiBody">
+                            <tr><td colspan="9" class="loading-message">Memuat data absensi guru...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Absensi Siswa Section -->
+            <div id="siswa-absensi-section" class="content-section hidden">
+                <h3 class="text-primary text-xl font-bold mb-4 border-b pb-2 border-gray-600">(SISWA) - Rekap Absensi</h3>
+                <div class="filter-controls">
+                    <label for="filterSiswaHari">Hari:</label>
+                    <select id="filterSiswaHari" class="rounded-lg">
+                        <option value="all">Keseluruhan dalam seminggu</option>
+                        <option value="1">Hari ke-1</option>
+                        <option value="2">Hari ke-2</option>
+                        <option value="3">Hari ke-3</option>
+                        <option value="4">Hari ke-4</option>
+                        <option value="5">Hari ke-5</option>
+                        <option value="6">Hari ke-6</option>
+                        <option value="7">Hari ke-7</option>
+                    </select>
+                    <button id="exportSiswaExcel" class="export-button rounded-lg">Export ke Excel</button>
+                </div>
+                <div class="table-responsive">
+                    <table id="siswaAbsensiTable" class="rounded-lg">
+                        <thead>
+                            <tr>
+                                <th data-column="namaSiswa">Nama</th>
+                                <th data-column="pelajaran">Pelajaran</th>
+                                <th data-column="kelas">Kelas</th>
+                                <th data-column="lokasi" class="siswa-col-specific">Lokasi</th>
+                                <th data-column="foto" class="siswa-col-specific">Foto</th>
+                                <th data-column="namaGuru" class="siswa-col-specific">Nama Guru</th>
+                                <!-- Dynamic daily headers will be inserted here -->
+                                <th data-column="indikator">Indikator</th>
+                                <th data-column="totalMinggu">Keseluruhan (Minggu)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="siswaAbsensiBody">
+                            <tr><td colspan="9" class="loading-message">Memuat data absensi siswa...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Peta Siswa Section -->
+            <div id="map-siswa-section" class="content-section hidden">
+                <h3 class="text-primary text-xl font-bold mb-4 border-b pb-2 border-gray-600">Tampilan Peta Siswa</h3>
+                <div id="mapContainer" class="w-full h-96 bg-gray-700 rounded-lg">
+                    <!-- Peta akan diinisialisasi di sini -->
+                    <p class="loading-message text-gray-400">Memuat peta...</p>
+                </div>
+            </div>
+
+            <!-- Galeri Siswa Section -->
+            <div id="gallery-siswa-section" class="content-section hidden">
+                <h3 class="text-primary text-xl font-bold mb-4 border-b pb-2 border-gray-600">Galeri Siswa</h3>
+                <div id="galleryContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <p class="col-span-full text-center text-gray-400">Gambar galeri siswa akan ditampilkan di sini.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // --- Konfigurasi Firebase ---
+        // --- Firebase Config ---
         const firebaseConfig = {
             apiKey: "AIzaSyDrt5MHhs-Wjoye8swLwLb068HC4kme-rg",
             authDomain: "absensionlinemuhika.firebaseapp.com",
@@ -357,76 +694,656 @@
         const auth = firebase.auth();
         const db = firebase.database();
 
-        // --- Elemen DOM ---
+        let currentUserRole = null; // Store the role of the logged-in user
+        let currentUserName = null; // Store the name of the logged-in user
+        let currentUserClass = null; // Store the class if a wali kelas
+
+        // Variabel global untuk peta Leaflet (admin panel)
+        let map;
+        let markers = [];
+
+        // --- DOM Elements ---
+        // Login Panel Elements
+        const loginPanel = document.getElementById('login-panel');
         const loginError = document.getElementById("login-error");
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const loginButton = document.querySelector('.login-button');
-        const loginSound = document.getElementById('loginSound'); // Get the audio element
+        const loginSound = document.getElementById('loginSound');
 
-        // Firebase Auth State Listener (tetap ada untuk mengelola sesi)
+        // Admin Panel Elements
+        const adminPanel = document.getElementById('admin-panel');
+        const loggedInUserInfo = document.getElementById('loggedInUserInfo');
+        const filterGuruHari = document.getElementById('filterGuruHari');
+        const filterSiswaHari = document.getElementById('filterSiswaHari');
+
+
+        // --- UI State Management Functions ---
+        function showAdminPanelUI(userEmail) {
+            loginPanel.classList.add("hidden");
+            adminPanel.classList.remove("hidden");
+            loggedInUserInfo.innerText = `Login sebagai: ${currentUserName || userEmail} (${currentUserRole})`;
+            loginError.textContent = ""; // Clear any lingering error
+
+            // Trigger click on the first tab after showing admin panel
+            document.querySelector('.tab-button.active')?.click();
+        }
+
+        function showLoginPanelUI() {
+            loginPanel.classList.remove("hidden");
+            adminPanel.classList.add("hidden");
+            // Clear inputs and error message on logout
+            emailInput.value = '';
+            passwordInput.value = '';
+            loginError.textContent = "";
+            // Clear any loaded data from admin panel for next login
+            document.getElementById("guruAbsensiBody").innerHTML = "";
+            document.getElementById("siswaAbsensiBody").innerHTML = "";
+            // Clear map markers if map exists
+            if (map) {
+                markers.forEach(marker => marker.remove());
+                markers = [];
+                map.remove(); // Dispose of the map instance
+                map = null;
+                 // Re-add loading message for map container
+                const mapContainer = document.getElementById('mapContainer');
+                if (!mapContainer.querySelector('.loading-message')) {
+                    const loadingParagraph = document.createElement('p');
+                    loadingParagraph.classList.add('loading-message', 'text-gray-400', 'absolute', 'inset-0', 'flex', 'items-center', 'justify-center');
+                    loadingParagraph.textContent = 'Memuat peta...';
+                    mapContainer.appendChild(loadingParagraph);
+                }
+            }
+        }
+
+
+        // --- Firebase Auth State Listener (handles initial load and login/logout) ---
         auth.onAuthStateChanged(user => {
             if (user) {
-                // Pengguna sudah login. Periksa peran di database.
+                // User is signed in. Get their role.
                 db.ref('users/' + user.uid).once('value').then(snapshot => {
                     const userData = snapshot.val();
                     if (userData) {
-                        // Jika peran ditemukan, redirect ke panel admin
-                        // Catatan: Dalam lingkungan Canvas, tidak ada multi-halaman.
-                        // Anda perlu menyesuaikan ini jika ini adalah bagian dari aplikasi multi-halaman.
-                        // Untuk saat ini, kita akan mengasumsikan ini adalah halaman login saja.
-                        // Jika ingin simulasi redirect, bisa tampilkan pesan sukses atau langsung tampilkan UI admin.
-                        console.log("Login berhasil, pengguna:", userData.name, "dengan peran:", userData.role);
-                        loginError.style.color = '#28a745'; // Hijau
-                        loginError.textContent = `Login berhasil sebagai ${userData.name} (${userData.role}). Redirecting...`;
-                        // Di sini, dalam aplikasi nyata, Anda akan redirect ke panel admin:
-                        // window.location.href = 'admin_panel.html';
-                        // Karena kita hanya punya satu halaman, kita bisa simulasikan dengan menyembunyikan form
-                        // dan mungkin menampilkan pesan sukses, atau mengarahkan ke Immersive Document sebelumnya
-                        // jika ini adalah bagian dari alur.
-                        // Untuk tujuan demonstrasi di Canvas, biarkan saja pesan sukses dan tetap di halaman ini.
-                        // Jika Anda memiliki Immersive Document untuk panel admin, sistem Canvas akan menampilkannya.
+                        currentUserRole = userData.role;
+                        currentUserName = userData.name;
+                        currentUserClass = userData.associatedClass || null; // For wali kelas
+                        showAdminPanelUI(user.email);
                     } else {
+                        // User exists in Auth but no role data in DB, logout
                         loginError.textContent = "Informasi peran pengguna tidak ditemukan. Silakan hubungi admin.";
-                        auth.signOut(); // Logout jika tidak ada peran
+                        auth.signOut();
                     }
                 }).catch(error => {
-                    console.error("Kesalahan saat mengambil peran pengguna:", error);
+                    console.error("Error fetching user role:", error);
                     loginError.textContent = "Gagal memuat peran pengguna. Coba lagi.";
-                    auth.signOut(); // Logout jika ada masalah
+                    auth.signOut();
                 });
             } else {
-                // Pengguna belum login atau sudah logout.
-                console.log("Pengguna belum login.");
-                loginError.textContent = ""; // Bersihkan pesan error
+                // User is signed out. Show login area.
+                showLoginPanelUI();
             }
         });
 
-        // ✅ Fungsi Login
+
+        // ✅ Login Function
         async function login() {
-            // Coba memutar suara. Tangani error jika gagal (misalnya, karena kebijakan autoplay browser)
+            // Play login sound
             try {
-                await loginSound.play(); 
+                await loginSound.play();
             } catch (error) {
                 console.warn("Gagal memutar suara login:", error.message);
-                // Pesan ini tidak harus ditampilkan ke user jika hanya peringatan
             }
 
             const email = emailInput.value;
             const pass = passwordInput.value;
-            loginError.textContent = ""; // Hapus error sebelumnya
+            loginError.textContent = ""; // Clear previous errors
 
             try {
                 await auth.signInWithEmailAndPassword(email, pass);
-                // auth.onAuthStateChanged akan menangani tampilan panel setelah ini
+                // auth.onAuthStateChanged will handle showing the admin panel
             } catch (error) {
-                console.error("Kesalahan Login:", error.code, error.message);
+                console.error("Login Error:", error.code, error.message);
                 if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
                     loginError.textContent = "Email atau Password salah.";
                 } else if (error.code === 'auth/invalid-email') {
                     loginError.textContent = "Format email tidak valid.";
                 } else {
                     loginError.textContent = "Terjadi kesalahan saat login: " + error.message;
+                }
+            }
+        }
+
+        // ✅ Logout Function
+        async function logout() {
+            try {
+                await auth.signOut();
+                currentUserRole = null;
+                currentUserName = null;
+                currentUserClass = null;
+                // showLoginPanelUI will be called by auth.onAuthStateChanged
+            } catch (error) {
+                console.error("Logout Error:", error);
+            }
+        }
+
+
+        // --- Tab Navigation for Admin Panel ---
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+
+                document.querySelectorAll('.content-section').forEach(section => section.classList.add('hidden'));
+                const targetSectionId = this.dataset.tab;
+                document.getElementById(targetSectionId).classList.remove('hidden');
+
+                // Load data specific to the tab
+                if (targetSectionId === 'guru-absensi-section') {
+                    loadAbsensiData('guru', filterGuruHari.value);
+                } else if (targetSectionId === 'siswa-absensi-section') {
+                    loadAbsensiData('siswa', filterSiswaHari.value);
+                } else if (targetSectionId === 'map-siswa-section') {
+                    // Initialize map when map tab is active
+                    if (!map) {
+                        initMap();
+                    }
+                    loadSiswaLocations();
+                }
+                // Gallery sections don't require specific data loading for this example.
+            });
+        });
+
+        // --- Map Initialization (OpenStreetMap with Leaflet) ---
+        function initMap() {
+            const defaultLocation = { lat: -6.5583, lng: 107.4589 }; // Purwakarta coordinates
+
+            if (map && map.remove) {
+                map.remove();
+            }
+
+            map = L.map('mapContainer').setView([defaultLocation.lat, defaultLocation.lng], 12);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            console.log('OpenStreetMap (Leaflet) map initialized.');
+            document.querySelector('#mapContainer p.loading-message')?.remove();
+        }
+
+        // --- Data Loading Functions for Admin Panel Tables ---
+
+        /**
+         * Fetches and displays attendance data based on user role and selected day.
+         * @param {string} type 'guru' or 'siswa'
+         * @param {string} filterDay 'all' or '1' through '7'
+         */
+        async function loadAbsensiData(type, filterDay = 'all') {
+            const tbodyId = type === 'guru' ? 'guruAbsensiBody' : 'siswaAbsensiBody';
+            const tableId = type === 'guru' ? 'guruAbsensiTable' : 'siswaAbsensiTable';
+            const tbody = document.getElementById(tbodyId);
+            tbody.innerHTML = `<tr><td colspan="9" class="loading-message">Memuat data absensi ${type === 'guru' ? 'guru' : 'siswa'}...</td></tr>`;
+
+            try {
+                let refPath = type === 'guru' ? 'absensi/guru' : 'absensi/siswa';
+                const snapshot = await db.ref(refPath).once('value');
+                const rawData = snapshot.val();
+                let filteredData = [];
+
+                if (rawData) {
+                    const aggregated = {};
+
+                    if (type === 'guru') {
+                        for (const guruId in rawData) {
+                            // Filter data based on user role (Guru can only see their own data)
+                            if (currentUserRole === 'guru' && guruId !== auth.currentUser.uid) {
+                                continue;
+                            }
+                            const dailyEntries = rawData[guruId];
+                            const guruNameFromDB = await getDisplayName(guruId, 'guru');
+                            if (!aggregated[guruId]) {
+                                aggregated[guruId] = {
+                                    id: guruId,
+                                    namaGuru: guruNameFromDB || 'Tidak Dikenal',
+                                    pelajaran: 'Tidak Diketahui',
+                                    kelas: 'Tidak Diketahui',
+                                    lokasi: 'Tidak Diketahui',
+                                    foto: 'Tidak Diketahui',
+                                    materi: 'Tidak Diketahui',
+                                    hari: {},
+                                    dayStatuses: Array(7).fill('Belum Absen'),
+                                    totalHadir: 0,
+                                    totalAlfa: 0,
+                                    totalIzin: 0,
+                                    totalSakit: 0,
+                                    totalMinggu: '0 Hari Hadir'
+                                };
+                            }
+                            for (const date in dailyEntries) {
+                                const entry = dailyEntries[date];
+                                const dayOfWeek = new Date(date).getDay();
+                                const dayIndex = dayOfWeek === 0 ? 7 : dayOfWeek;
+
+                                aggregated[guruId].hari[date] = entry.status;
+                                aggregated[guruId].dayStatuses[dayIndex - 1] = entry.status;
+                                aggregated[guruId].pelajaran = entry.pelajaran || aggregated[guruId].pelajaran;
+                                aggregated[guruId].kelas = entry.kelas || aggregated[guruId].kelas;
+                                aggregated[guruId].lokasi = entry.lokasi && entry.lokasi.latitude ? `<a href="https://www.openstreetmap.org/?mlat=${entry.lokasi.latitude}&mlon=${entry.lokasi.longitude}#map=15/${entry.lokasi.latitude}/${entry.lokasi.longitude}" target="_blank" class="text-blue-400 hover:underline">Lihat Peta</a>` : 'Tidak Ada';
+                                aggregated[guruId].foto = entry.foto || aggregated[guruId].foto;
+                                aggregated[guruId].materi = entry.materi || aggregated[guruId].materi;
+                            }
+                            aggregated[guruId].totalHadir = aggregated[guruId].dayStatuses.filter(s => s === 'Hadir').length;
+                            aggregated[guruId].totalAlfa = aggregated[guruId].dayStatuses.filter(s => s === 'Alfa').length;
+                            aggregated[guruId].totalIzin = aggregated[guruId].dayStatuses.filter(s => s === 'Izin').length;
+                            aggregated[guruId].totalSakit = aggregated[guruId].dayStatuses.filter(s => s === 'Sakit').length;
+                            aggregated[guruId].totalMinggu = `${aggregated[guruId].totalHadir} Hadir, ${aggregated[guruId].totalSakit} Sakit, ${aggregated[guruId].totalIzin} Izin, ${aggregated[guruId].totalAlfa} Alfa`;
+                            filteredData.push(aggregated[guruId]);
+                        }
+                    } else { // Siswa data processing
+                        for (const userId in rawData) {
+                            if (currentUserRole === 'guru' && !(await isTeacherOfStudent(userId, currentUserName))) {
+                                continue;
+                            }
+                            if (currentUserRole === 'waliKelas' && !(await isStudentInWaliKelasClass(userId, currentUserClass))) {
+                                continue;
+                            }
+
+                            const mapelData = rawData[userId];
+                            if (!aggregated[userId]) {
+                                aggregated[userId] = {
+                                    id: userId,
+                                    namaSiswa: 'Tidak Dikenal',
+                                    pelajaran: 'Tidak Diketahui',
+                                    kelas: 'Tidak Diketahui',
+                                    lokasi: 'Tidak Diketahui',
+                                    foto: 'Tidak Diketahui',
+                                    namaGuru: 'Tidak Diketahui',
+                                    hari: {},
+                                    dayStatuses: Array(7).fill('Belum Absen'),
+                                    totalHadir: 0,
+                                    totalAlfa: 0,
+                                    totalIzin: 0,
+                                    totalSakit: 0,
+                                    totalMinggu: '0 Hari Hadir'
+                                };
+                            }
+                            for (const mapelKey in mapelData) {
+                                const waktuData = mapelData[mapelKey];
+                                for (const waktuKey in waktuData) {
+                                    const entry = waktuData[waktuKey];
+                                    const date = new Date(entry.waktu).toISOString().split('T')[0];
+                                    const dayOfWeek = new Date(date).getDay();
+                                    const dayIndex = dayOfWeek === 0 ? 7 : dayOfWeek;
+
+                                    aggregated[userId].hari[date] = entry.status || 'Hadir';
+                                    aggregated[userId].dayStatuses[dayIndex - 1] = entry.status || 'Hadir';
+
+                                    aggregated[userId].namaSiswa = entry.nama || aggregated[userId].namaSiswa;
+                                    aggregated[userId].pelajaran = entry.mapel || aggregated[userId].pelajaran;
+                                    aggregated[userId].kelas = entry.kelas || aggregated[userId].kelas;
+                                    aggregated[userId].namaGuru = entry.namaGuru || aggregated[userId].namaGuru;
+                                    aggregated[userId].lokasi = entry.lokasi && entry.lokasi.latitude ? `<a href="https://www.openstreetmap.org/?mlat=${entry.lokasi.latitude}&mlon=${entry.lokasi.longitude}#map=15/${entry.lokasi.latitude}/${entry.lokasi.longitude}" target="_blank" class="text-blue-400 hover:underline">Lihat Peta</a>` : 'Tidak Ada';
+                                    aggregated[userId].foto = entry.foto || aggregated[userId].foto;
+                                }
+                            }
+                            aggregated[userId].totalHadir = aggregated[userId].dayStatuses.filter(s => s === 'Hadir').length;
+                            aggregated[userId].totalAlfa = aggregated[userId].dayStatuses.filter(s => s === 'Alfa').length;
+                            aggregated[userId].totalIzin = aggregated[userId].dayStatuses.filter(s => s === 'Izin').length;
+                            aggregated[userId].totalSakit = aggregated[userId].dayStatuses.filter(s => s === 'Sakit').length;
+                            aggregated[userId].totalMinggu = `${aggregated[userId].totalHadir} Hadir, ${aggregated[userId].totalSakit} Sakit, ${aggregated[userId].totalIzin} Izin, ${aggregated[userId].totalAlfa} Alfa`;
+                            filteredData.push(aggregated[userId]);
+                        }
+                    }
+                }
+                renderTable(type, filteredData, filterDay);
+            } catch (error) {
+                console.error("Error loading absensi data:", error);
+                tbody.innerHTML = `<tr><td colspan="9" class="error-message">Gagal memuat data. ${error.message}</td></tr>`;
+            }
+        }
+
+        // Helper functions for data filtering and display
+        async function getDisplayName(uid, type) {
+            const userSnapshot = await db.ref(`users/${uid}`).once('value');
+            const userData = userSnapshot.val();
+            return userData ? userData.name : (type === 'guru' ? 'Guru Tidak Dikenal' : 'Siswa Tidak Dikenal');
+        }
+
+        async function isTeacherOfStudent(studentId, teacherName) {
+            const studentAbsenceSnapshot = await db.ref(`absensi/siswa/${studentId}`).once('value');
+            const studentData = studentAbsenceSnapshot.val();
+            if (studentData) {
+                 for (const mapelKey in studentData) {
+                    const waktuData = studentData[mapelKey];
+                    for (const waktuKey in waktuData) {
+                        const entry = waktuData[waktuKey];
+                        if (entry.namaGuru === teacherName) {
+                            return true;
+                        }
+                    }
+                 }
+            }
+            return false;
+        }
+
+        async function isStudentInWaliKelasClass(studentId, waliKelasClass) {
+            const studentAbsenceSnapshot = await db.ref(`absensi/siswa/${studentId}`).once('value');
+            const studentData = studentAbsenceSnapshot.val();
+            if (studentData) {
+                 for (const mapelKey in studentData) {
+                    const waktuData = studentData[mapelKey];
+                    for (const waktuKey in waktuData) {
+                        const entry = waktuData[waktuKey];
+                        if (entry.kelas === waliKelasClass) {
+                            return true;
+                        }
+                    }
+                 }
+            }
+            return false;
+        }
+
+
+        /**
+         * Renders the table with attendance data.
+         * @param {string} type 'guru' or 'siswa'
+         * @param {Array} data Aggregated attendance data.
+         * @param {string} filterDay 'all' or '1' through '7'
+         */
+        function renderTable(type, data, filterDay) {
+            const tbodyId = type === 'guru' ? 'guruAbsensiBody' : 'siswaAbsensiBody';
+            const tableId = type === 'guru' ? 'guruAbsensiTable' : 'siswaAbsensiTable';
+            const tbody = document.getElementById(tbodyId);
+            const theadRow = document.querySelector(`#${tableId} thead tr`);
+            tbody.innerHTML = ''; // Clear existing data
+
+            theadRow.querySelectorAll('.dynamic-day-header, [data-column="totalMinggu"]').forEach(header => header.remove());
+
+            if (filterDay === 'all') {
+                for (let i = 1; i <= 7; i++) {
+                    const th = document.createElement('th');
+                    th.textContent = `Hari ke-${i}`;
+                    th.classList.add('dynamic-day-header');
+                    th.setAttribute('data-column', `hari${i}`);
+                    theadRow.insertBefore(th, theadRow.querySelector('[data-column="indikator"]'));
+                }
+                const totalTh = document.createElement('th');
+                totalTh.textContent = 'Keseluruhan (Minggu)';
+                totalTh.setAttribute('data-column', 'totalMinggu');
+                totalTh.classList.add('dynamic-day-header');
+                theadRow.appendChild(totalTh);
+            } else {
+                const th = document.createElement('th');
+                th.textContent = `Hari ke-${filterDay}`;
+                th.classList.add('dynamic-day-header');
+                th.setAttribute('data-column', `hari${filterDay}`);
+                theadRow.insertBefore(th, theadRow.querySelector('[data-column="indikator"]'));
+            }
+
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="${theadRow.cells.length}" class="loading-message">Tidak ada data absensi untuk ditampilkan.</td></tr>`;
+                return;
+            }
+
+            data.forEach(entry => {
+                const row = tbody.insertRow();
+
+                if (type === 'guru') {
+                    row.insertCell().setAttribute('data-label', 'Nama Guru'); row.cells[row.cells.length - 1].textContent = entry.namaGuru;
+                    row.insertCell().setAttribute('data-label', 'Pelajaran'); row.cells[row.cells.length - 1].textContent = entry.pelajaran;
+                    row.insertCell().setAttribute('data-label', 'Kelas'); row.cells[row.cells.length - 1].textContent = entry.kelas;
+
+                    const lokasiCell = row.insertCell(); lokasiCell.setAttribute('data-label', 'Lokasi'); lokasiCell.innerHTML = entry.lokasi;
+                    const fotoCell = row.insertCell(); fotoCell.setAttribute('data-label', 'Foto');
+                    if (entry.foto && entry.foto !== 'Tidak Diketahui') {
+                        const img = document.createElement('img');
+                        img.src = entry.foto;
+                        img.alt = 'Foto Guru';
+                        fotoCell.appendChild(img);
+                    } else {
+                        fotoCell.textContent = 'Tidak Ada';
+                    }
+                    const materiCell = row.insertCell(); materiCell.setAttribute('data-label', 'Materi'); materiCell.textContent = entry.materi;
+
+                    if (currentUserRole !== 'kepalaSekolah' && currentUserRole !== 'wakasek') {
+                        lokasiCell.classList.add('hidden');
+                        fotoCell.classList.add('hidden');
+                        materiCell.classList.add('hidden');
+                    }
+
+                } else { // type === 'siswa'
+                    row.insertCell().setAttribute('data-label', 'Nama'); row.cells[row.cells.length - 1].textContent = entry.namaSiswa;
+                    row.insertCell().setAttribute('data-label', 'Pelajaran'); row.cells[row.cells.length - 1].textContent = entry.pelajaran;
+                    row.insertCell().setAttribute('data-label', 'Kelas'); row.cells[row.cells.length - 1].textContent = entry.kelas;
+
+                    const lokasiCell = row.insertCell(); lokasiCell.setAttribute('data-label', 'Lokasi'); lokasiCell.innerHTML = entry.lokasi;
+                    const fotoCell = row.insertCell(); fotoCell.setAttribute('data-label', 'Foto');
+                    if (entry.foto && entry.foto !== 'Tidak Diketahui') {
+                        const img = document.createElement('img');
+                        img.src = entry.foto;
+                        img.alt = 'Foto Siswa';
+                        fotoCell.appendChild(img);
+                    } else {
+                        fotoCell.textContent = 'Tidak Ada';
+                    }
+                    const namaGuruCell = row.insertCell(); namaGuruCell.setAttribute('data-label', 'Nama Guru'); namaGuruCell.textContent = entry.namaGuru;
+
+                    if (currentUserRole !== 'kepalaSekolah' && currentUserRole !== 'wakasek') {
+                        lokasiCell.classList.add('hidden');
+                        fotoCell.classList.add('hidden');
+                        namaGuruCell.classList.add('hidden');
+                    }
+                }
+
+                if (filterDay === 'all') {
+                    entry.dayStatuses.forEach((status, index) => {
+                        const cell = row.insertCell();
+                        cell.setAttribute('data-label', `Hari ke-${index + 1}`);
+                        cell.textContent = status;
+                        if (status === 'Alfa') cell.classList.add('indicator-red');
+                        else if (status === 'Sakit' || status === 'Izin') cell.classList.add('indicator-yellow');
+                        else if (status === 'Hadir') cell.classList.add('indicator-green');
+                    });
+                } else {
+                    const dayIndex = parseInt(filterDay) - 1;
+                    const cell = row.insertCell();
+                    cell.setAttribute('data-label', `Hari ke-${filterDay}`);
+                    const status = entry.dayStatuses[dayIndex];
+                    cell.textContent = status;
+                    if (status === 'Alfa') cell.classList.add('indicator-red');
+                    else if (status === 'Sakit' || status === 'Izin') cell.classList.add('indicator-yellow');
+                    else if (status === 'Hadir') cell.classList.add('indicator-green');
+                }
+
+                const indicatorCell = row.insertCell();
+                indicatorCell.setAttribute('data-label', 'Indikator');
+                if (entry.totalAlfa > 0) {
+                    indicatorCell.classList.add('indicator-red');
+                    indicatorCell.textContent = 'Buruk';
+                } else if (entry.totalSakit > 0 || entry.totalIzin > 0) {
+                    indicatorCell.classList.add('indicator-yellow');
+                    indicatorCell.textContent = 'Perhatian';
+                } else {
+                    indicatorCell.classList.add('indicator-green');
+                    indicatorCell.textContent = 'Baik';
+                }
+
+                const totalMingguCell = row.insertCell();
+                totalMingguCell.setAttribute('data-label', 'Keseluruhan (Minggu)');
+                totalMingguCell.textContent = entry.totalMinggu;
+            });
+            attachSortingListeners(tableId);
+        }
+
+
+        // --- Filtering by Day (Admin Panel) ---
+        filterGuruHari.addEventListener('change', function() {
+            loadAbsensiData('guru', this.value);
+        });
+
+        filterSiswaHari.addEventListener('change', function() {
+            loadAbsensiData('siswa', this.value);
+        });
+
+        // --- Table Sorting (Admin Panel) ---
+        let currentSortColumn = -1;
+        let currentSortDirection = 'asc';
+
+        function attachSortingListeners(tableId) {
+            const table = document.getElementById(tableId);
+            const headers = table.querySelectorAll('th');
+            headers.forEach((header, index) => {
+                header.removeEventListener('click', header._sortHandler);
+                header._sortHandler = () => sortTable(tableId, index);
+                header.addEventListener('click', header._sortHandler);
+            });
+        }
+
+        function sortTable(tableId, n) {
+            const table = document.getElementById(tableId);
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.rows);
+            const headers = table.querySelectorAll('th');
+
+            headers.forEach(header => {
+                header.classList.remove('asc', 'desc');
+            });
+
+            if (currentSortColumn === n) {
+                currentSortDirection = (currentSortDirection === 'asc') ? 'desc' : 'asc';
+            } else {
+                currentSortColumn = n;
+                currentSortDirection = 'asc';
+            }
+
+            headers[n].classList.add(currentSortDirection);
+
+            rows.sort((rowA, rowB) => {
+                let x = rowA.cells[n].textContent.toLowerCase();
+                let y = rowB.cells[n].textContent.toLowerCase();
+
+                if (!isNaN(parseFloat(x)) && !isNaN(parseFloat(y))) {
+                    x = parseFloat(x);
+                    y = parseFloat(y);
+                }
+
+                let comparison = 0;
+                if (x > y) {
+                    comparison = 1;
+                } else if (x < y) {
+                    comparison = -1;
+                }
+                return currentSortDirection === 'asc' ? comparison : -comparison;
+            });
+
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        // --- Export to Excel Functionality (Admin Panel) ---
+        function exportTableToExcel(tableId, filename = '') {
+            const table = document.getElementById(tableId);
+            const ws = XLSX.utils.table_to_sheet(table);
+
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+            if (!filename) {
+                filename = tableId + '.xlsx';
+            }
+            XLSX.writeFile(wb, filename);
+        }
+
+        document.getElementById('exportGuruExcel').addEventListener('click', function() {
+            exportTableToExcel('guruAbsensiTable', 'Rekap_Absensi_Guru.xlsx');
+        });
+
+        document.getElementById('exportSiswaExcel').addEventListener('click', function() {
+            exportTableToExcel('siswaAbsensiTable', 'Rekap_Absensi_Siswa.xlsx');
+        });
+
+        // --- Fungsi untuk memuat dan menampilkan lokasi siswa di peta (Admin Panel) ---
+        async function loadSiswaLocations() {
+            if (!map) {
+                console.error("Peta belum diinisialisasi. Tidak dapat memuat lokasi siswa.");
+                document.getElementById('mapContainer').innerHTML = '<p class="error-message text-red-500">Gagal memuat peta. Pastikan Leaflet dimuat dan koneksi internet stabil.</p>';
+                return;
+            }
+
+            markers.forEach(marker => marker.remove());
+            markers = [];
+
+            const mapContainer = document.getElementById('mapContainer');
+            if (!mapContainer.querySelector('.loading-message')) {
+                const loadingParagraph = document.createElement('p');
+                loadingParagraph.classList.add('loading-message', 'text-gray-400', 'absolute', 'inset-0', 'flex', 'items-center', 'justify-center');
+                loadingParagraph.textContent = 'Memuat lokasi siswa...';
+                mapContainer.appendChild(loadingParagraph);
+            }
+
+            try {
+                const snapshot = await db.ref('absensi/siswa').once('value');
+                const rawData = snapshot.val();
+                let bounds = L.latLngBounds();
+                let locationsFound = false;
+
+                if (rawData) {
+                    for (const userId in rawData) {
+                        const mapelData = rawData[userId];
+                        for (const mapelKey in mapelData) {
+                            const waktuData = mapelData[mapelKey];
+                            for (const waktuKey in waktuData) {
+                                const entry = waktuData[waktuKey];
+                                if (entry.lokasi && entry.lokasi.latitude && entry.lokasi.longitude) {
+                                    const lat = parseFloat(entry.lokasi.latitude);
+                                    const lng = parseFloat(entry.lokasi.longitude);
+
+                                    if (!isNaN(lat) && !isNaN(lng)) {
+                                        const position = L.latLng(lat, lng);
+                                        const marker = L.marker(position).addTo(map);
+
+                                        const infoWindowContent = `
+                                            <div class="p-2 text-black">
+                                                <h4 class="font-bold">${entry.nama || 'Siswa Tidak Dikenal'}</h4>
+                                                <p>Kelas: ${entry.kelas || 'Tidak Diketahui'}</p>
+                                                <p>Pelajaran: ${entry.mapel || 'Tidak Diketahui'}</p>
+                                                <p>Waktu: ${new Date(entry.waktu).toLocaleString('id-ID')}</p>
+                                                ${entry.foto ? `<img src="${entry.foto}" alt="Foto Siswa" style="width:100px; height:auto; border-radius:4px; margin-top:8px;">` : ''}
+                                            </div>
+                                        `;
+                                        marker.bindPopup(infoWindowContent);
+
+                                        markers.push(marker);
+                                        bounds.extend(position);
+                                        locationsFound = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                mapContainer.querySelector('.loading-message')?.remove();
+
+                if (locationsFound) {
+                    map.fitBounds(bounds);
+                } else {
+                    map.setView({ lat: -6.5583, lng: 107.4589 }, 12);
+                    if (!mapContainer.querySelector('.error-message')) {
+                        const noDataParagraph = document.createElement('p');
+                        noDataParagraph.classList.add('error-message', 'text-gray-400', 'absolute', 'inset-0', 'flex', 'items-center', 'justify-center');
+                        noDataParagraph.textContent = 'Tidak ada data lokasi siswa yang tersedia.';
+                        mapContainer.appendChild(noDataParagraph);
+                    }
+                }
+
+            } catch (error) {
+                console.error("Kesalahan saat memuat lokasi siswa untuk peta:", error);
+                mapContainer.querySelector('.loading-message')?.remove();
+                if (!mapContainer.querySelector('.error-message')) {
+                    const errorParagraph = document.createElement('p');
+                    errorParagraph.classList.add('error-message', 'text-red-500', 'absolute', 'inset-0', 'flex', 'items-center', 'justify-center');
+                    errorParagraph.textContent = `Gagal memuat lokasi peta: ${error.message}.`;
+                    mapContainer.appendChild(errorParagraph);
                 }
             }
         }
