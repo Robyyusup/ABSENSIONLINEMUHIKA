@@ -2,7 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Penting untuk responsivitas dan dukungan zoom perangkat -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
     <title>Digital Attendance System - SMK Muhammadiyah Campaka</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -162,11 +163,11 @@
             --line-height-loose: 2;
 
             /* Advanced Transitions */
-            --transition-all: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-colors: color 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-transform: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-opacity: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-shadow: box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-all: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); /* Slightly longer transition */
+            --transition-colors: color 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-transform: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-opacity: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-shadow: box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -197,6 +198,12 @@
             font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+
+            /* Menyelaraskan konten utama di tengah layar */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: var(--space-6); /* Memberikan padding di sekitar container utama */
         }
 
         /* Enhanced Animated Background */
@@ -311,17 +318,16 @@
             pointer-events: none;
         }
 
-        /* Main Container */
+        /* Main Container - Fleksibel untuk berbagai ukuran layar */
         .container {
             max-width: 680px;
-            margin: 0 auto;
+            width: 100%; /* Memastikan container mengisi lebar yang tersedia */
+            margin: 0 auto; /* Tetap auto untuk centering horizontal */
             padding: var(--space-6);
             position: relative;
             z-index: 10;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            /* min-height pada body sudah menangani centering vertikal */
+            /* display: flex; align-items: center; justify-content: center; pada body sudah cukup */
         }
 
         /* Premium Glass Card */
@@ -463,6 +469,7 @@
             margin-bottom: var(--space-3);
             letter-spacing: -0.025em;
             line-height: var(--line-height-tight);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3); /* Added text shadow for depth */
         }
 
         .header-text p {
@@ -471,11 +478,13 @@
             font-weight: 500;
             opacity: 0.9;
             line-height: var(--line-height-relaxed);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Added text shadow for depth */
         }
 
         /* Modern Form Elements */
         .form-group {
             margin-bottom: var(--space-10);
+            position: relative; /* Added for potential future icon/adornment positioning */
         }
 
         .form-label {
@@ -508,6 +517,7 @@
             font-weight: 500;
             transition: var(--transition-all);
             position: relative;
+            z-index: 2; /* Ensure input is above any potential background effects */
         }
 
         .form-input::placeholder {
@@ -519,7 +529,7 @@
             outline: none;
             border-color: var(--primary-400);
             background: var(--glass-bg-hover);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), 0 0 20px rgba(59, 130, 246, 0.2); /* Enhanced focus shadow */
             transform: translateY(-2px);
         }
 
@@ -540,6 +550,7 @@
             transition: var(--transition-all);
             position: relative;
             overflow: hidden;
+            box-shadow: var(--glass-shadow); /* Added default shadow */
         }
 
         .info-card::before {
@@ -558,6 +569,7 @@
             transform: translateY(-6px);
             box-shadow: var(--glass-shadow-lg);
             border-color: var(--glass-border-hover);
+            transform: scale(1.02); /* Subtle zoom on hover */
         }
 
         .info-card:hover::before {
@@ -574,6 +586,7 @@
             width: 32px;
             height: 32px;
             color: var(--primary-400);
+            filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.5)); /* Glow effect for icons */
         }
 
         .info-card-label {
@@ -589,6 +602,7 @@
             font-weight: 700;
             color: var(--neutral-100);
             font-size: var(--font-size-lg);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2); /* Subtle text shadow */
         }
 
         /* Premium Status Cards */
@@ -602,6 +616,7 @@
             transition: var(--transition-all);
             position: relative;
             overflow: hidden;
+            box-shadow: var(--glass-shadow); /* Added default shadow */
         }
 
         .status-card::after {
@@ -619,6 +634,7 @@
         .status-card:hover {
             transform: translateY(-2px);
             box-shadow: var(--glass-shadow);
+            transform: scale(1.01); /* Subtle zoom on hover */
         }
 
         .status-card:hover::after {
@@ -651,12 +667,14 @@
         .status-card-title svg {
             width: 16px;
             height: 16px;
+            filter: drop-shadow(0 0 3px rgba(255,255,255,0.2)); /* Subtle glow for title icons */
         }
 
         .status-card-value {
             font-size: var(--font-size-2xl);
             font-weight: 800;
             color: var(--neutral-100);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3); /* Subtle text shadow */
         }
 
         /* Modern Attendance Options */
@@ -681,6 +699,7 @@
             transition: var(--transition-all);
             position: relative;
             overflow: hidden;
+            box-shadow: var(--glass-shadow); /* Added default shadow */
         }
 
         .attendance-option::before {
@@ -694,12 +713,13 @@
             transition: var(--transition-all);
             transform: translate(-50%, -50%);
             border-radius: 50%;
+            z-index: 1; /* Ensure effect is behind icon/text */
         }
 
         .attendance-option:hover {
             background: var(--glass-bg-hover);
             transform: translateY(-4px);
-            box-shadow: var(--glass-shadow);
+            box-shadow: var(--glass-shadow-lg); /* Stronger shadow on hover */
         }
 
         .attendance-option:hover::before {
@@ -710,43 +730,46 @@
         .attendance-option.selected {
             border-color: var(--primary-400);
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.05) 100%);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-            transform: translateY(-4px);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), var(--glass-shadow-lg); /* Enhanced shadow for selected */
+            transform: translateY(-4px) scale(1.02); /* Slight scale on selected */
         }
 
         .attendance-option.hadir.selected {
             border-color: var(--success-400);
             background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.05) 100%);
-            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1), var(--glass-shadow-lg);
         }
 
         .attendance-option.sakit.selected {
             border-color: var(--orange-400);
             background: linear-gradient(135deg, rgba(249, 115, 22, 0.2) 0%, rgba(249, 115, 22, 0.05) 100%);
-            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1), var(--glass-shadow-lg);
         }
 
         .attendance-option.izin.selected {
             border-color: var(--warning-400);
             background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(251, 191, 36, 0.05) 100%);
-            box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.1);
+            box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.1), var(--glass-shadow-lg);
         }
 
         .attendance-option.alfa.selected {
             border-color: var(--danger-400);
             background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.05) 100%);
-            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1), var(--glass-shadow-lg);
         }
 
         .attendance-option-icon {
             margin-bottom: var(--space-4);
             display: flex;
             justify-content: center;
+            position: relative; /* Ensure icon is above ::before pseudo-element */
+            z-index: 2;
         }
 
         .attendance-option-icon svg {
             width: 28px;
             height: 28px;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.3)); /* Glow effect for icons */
         }
 
         .attendance-option.hadir .attendance-option-icon svg {
@@ -771,6 +794,8 @@
             color: var(--neutral-200);
             text-transform: uppercase;
             letter-spacing: 0.1em;
+            position: relative; /* Ensure text is above ::before pseudo-element */
+            z-index: 2;
         }
 
         /* Enhanced Camera Section */
@@ -789,6 +814,7 @@
             align-items: center;
             justify-content: center;
             border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow-lg); /* Added shadow for video container */
         }
 
         .video-element {
@@ -815,6 +841,7 @@
             padding: var(--space-8);
             flex-direction: column;
             gap: var(--space-4);
+            box-shadow: var(--glass-shadow); /* Added default shadow */
         }
 
         .photo-preview svg {
@@ -844,6 +871,7 @@
             justify-content: center;
             gap: var(--space-3);
             min-height: 60px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2); /* Base shadow for buttons */
         }
 
         .btn::before {
@@ -909,6 +937,7 @@
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
+            opacity: 0.6; /* Dim disabled buttons */
         }
 
         .btn:disabled::before {
@@ -931,6 +960,7 @@
             align-items: center;
             justify-content: center;
             gap: var(--space-3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); /* Shadow for status messages */
         }
 
         .status-message::before {
@@ -1111,6 +1141,7 @@
         .attendance-option:focus-visible {
             outline: 2px solid var(--primary-400);
             outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), 0 0 20px rgba(59, 130, 246, 0.2); /* Consistent focus shadow */
         }
 
         /* High Contrast Mode Support */
@@ -1789,7 +1820,7 @@
                         item.subject === currentUserData.subjectTeaching
                     );
                     classForAbsence = activeScheduleForAbsence ? activeScheduleForAbsence.class : '-';
-                    subjectForAbsence = activeScheduleForAbsence ? activeGuruSchedule.subject : '-'; // Fixed variable name
+                    subjectForAbsence = activeScheduleForAbsence ? activeScheduleForAbsence.subject : '-'; // Corrected variable name
                 }
 
                 if (!activeScheduleForAbsence) {
@@ -1799,8 +1830,8 @@
 
                 // Capture photo if camera is active and attendance type is 'Hadir'
                 let photoData = '';
-                if (selectedAttendanceType === 'Hadir') { // Removed !video.classList.contains('hidden') to allow submission even if camera wasn't explicitly started
-                    if (stream && video.srcObject && !video.classList.contains('hidden')) { // Check if stream is active
+                if (selectedAttendanceType === 'Hadir') { 
+                    if (stream && video.srcObject && !video.classList.contains('hidden')) { 
                         canvas.width = video.videoWidth || 640;
                         canvas.height = video.videoHeight || 480;
                         const ctx = canvas.getContext('2d');
@@ -1812,18 +1843,17 @@
                         photoPreview.classList.remove('hidden');
                         video.classList.add('hidden');
                     } else {
-                        // Handle case where 'Hadir' is selected but camera not active
                         showStatusMessage('Untuk absensi Hadir, kamera harus diaktifkan dan foto harus diambil. Silakan aktifkan kamera.', 'warning');
-                        btnAbsen.disabled = false; // Re-enable button
+                        btnAbsen.disabled = false;
                         btnAbsenText.classList.remove('hidden');
                         btnAbsenIcon.classList.remove('hidden');
                         btnAbsenSpinner.classList.add('hidden');
-                        return; // Stop the process
+                        return;
                     }
                 }
 
                 // Get location for 'Hadir' attendance
-                let lokasi = { latitude: null, longitude: null }; // Changed default to null for clarity
+                let lokasi = { latitude: null, longitude: null };
                 if (selectedAttendanceType === 'Hadir') {
                     showStatusMessage('Mengakses lokasi...', 'info');
                     try {
@@ -1845,14 +1875,14 @@
                         lokasi.longitude = posisi.coords.longitude;
                     } catch (error) {
                         showStatusMessage('Tidak dapat mengakses lokasi: ' + error.message + '. Lokasi akan dicatat sebagai 0,0.', 'warning');
-                        lokasi = { latitude: 0, longitude: 0 }; // Fallback to 0,0 if location fails
+                        lokasi = { latitude: 0, longitude: 0 };
                     }
                 }
 
                 // Prepare attendance data
                 const dataAbsensi = {
                     id: inputId,
-                    nama: inputId, // Consider getting actual name from userList if available
+                    nama: inputId, 
                     role: currentUserData.role,
                     kelas: classForAbsence,
                     waktu: new Date().toISOString(),
@@ -1868,7 +1898,7 @@
                 if (currentUserData.role === 'guru') {
                     const materiInput = prompt("Anda adalah guru. Masukkan materi pelajaran hari ini:");
                     dataAbsensi.materi = materiInput || 'Tidak ada materi';
-                    dataAbsensi.namaGuru = inputId; // Assuming teacher's name is their ID
+                    dataAbsensi.namaGuru = inputId;
                 }
 
                 // Save to Firebase
