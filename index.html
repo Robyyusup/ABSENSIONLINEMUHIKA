@@ -394,7 +394,7 @@
             position: relative;
         }
 
-        .-container {
+        .-container { /* This class is not directly used in the provided HTML for the header layout */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -403,7 +403,7 @@
             flex-wrap: wrap;
         }
 
-        .logo {
+        .logo { /* This class is not directly used for the main logo-avatar in the HTML */
             width: 100px;
             height: 100px;
             background: var(--gradient-button-primary);
@@ -890,6 +890,19 @@
             box-shadow: 0 15px 60px rgba(34, 197, 94, 0.4);
         }
 
+        .btn-reset { /* New style for reset button */
+            background: var(--neutral-700);
+            color: var(--neutral-100);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-reset:hover {
+            background: var(--neutral-600);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+
         .btn:disabled {
             background: linear-gradient(135deg, var(--neutral-600) 0%, var(--neutral-700) 100%);
             color: var(--neutral-400);
@@ -1134,42 +1147,36 @@
         <div class="bg-shape"></div>
     </div>
     
-    <!-- Grid Overlay -->
-    <div class="grid-overlay"></div>
-<div class="container">
-    <div class="glass-card">
-        <div class="header">
-            <div class="logo-avatar">
-                <img src="https://robyyusup.github.io/ABSENSIONLINEMUHIKA/logo_muhika-removebg-preview.png" alt="Logo SMK" />
-            </div>
-            <div class="header-text">
-                <h1>Digital Attendance</h1>
-                <p>SMK Muhammadiyah Campaka Purwakarta</p>
-            </div>
-        </div>
-        </div>
-</div>
+ <div class="container">
+    <div class="glass-card" id="mainCard"> <!-- Added ID for easier manipulation -->
+      <div class="logo-avatar">
+        <img src="https://robyyusup.github.io/ABSENSIONLINEMUHIKA/logo_muhika-removebg-preview.png" alt="Logo SMK">
+      </div>
+      <div class="header-text">
+        <h1>e-Presensi Digital</h1>
+        <p>SMK Muhammadiyah Campaka - Purwakarta</p>
+      </div>
 
             <!-- User ID Input with Modern Icon -->
-            <div class="form-group">
+            <div class="form-group" id="userIdGroup">
                 <label for="userId" class="form-label">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.35-4.35"></path>
                     </svg>
-                    <span>Student/Teacher ID</span>
+                    <span>ID Siswa/Guru</span>
                 </label>
                 <input 
                     type="text" 
                     id="userId" 
                     class="form-input" 
-                    placeholder="Scan QR Code or enter your unique ID" 
+                    placeholder="Pindai QR Code atau masukkan ID unik Anda" 
                     autofocus 
                 />
             </div>
 
             <!-- Enhanced Schedule Info -->
-            <div class="info-grid">
+            <div class="info-grid" id="infoGrid">
                 <div class="info-card">
                     <div class="info-card-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1177,7 +1184,7 @@
                             <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                         </svg>
                     </div>
-                    <div class="info-card-label">Subject</div>
+                    <div class="info-card-label">Mata Pelajaran</div>
                     <div class="info-card-value" id="subject">-</div>
                 </div>
                 <div class="info-card">
@@ -1187,43 +1194,43 @@
                             <polyline points="12,6 12,12 16,14"></polyline>
                         </svg>
                     </div>
-                    <div class="info-card-label">Schedule</div>
+                    <div class="info-card-label">Jadwal</div>
                     <div class="info-card-value" id="schedule">-</div>
                 </div>
             </div>
 
             <!-- Enhanced Status Cards -->
-            <div class="status-card role">
+            <div class="status-card role" id="roleCard">
                 <div class="status-card-title">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                    Your Role
+                    Peran Anda
                 </div>
-                <div class="status-card-value" id="detectedRole">Not Detected</div>
+                <div class="status-card-value" id="detectedRole">Belum Terdeteksi</div>
             </div>
 
-            <div class="status-card class">
+            <div class="status-card class" id="classCard">
                 <div class="status-card-title">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 21h18"></path>
                         <path d="M5 21V7l8-4v18"></path>
                         <path d="M19 21V11l-6-4"></path>
                     </svg>
-                    Class/Teaching
+                    Kelas/Mengajar
                 </div>
                 <div class="status-card-value" id="detectedClass">-</div>
             </div>
 
             <!-- Modern Attendance Type Selection -->
-            <div class="attendance-type">
+            <div class="attendance-type" id="attendanceTypeSection">
                 <label class="form-label">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
                         <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
                     </svg>
-                    <span>Attendance Status</span>
+                    <span>Status Kehadiran</span>
                 </label>
                 <div class="attendance-options">
                     <div class="attendance-option hadir" data-type="Hadir" tabindex="0">
@@ -1233,7 +1240,7 @@
                                 <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
                             </svg>
                         </div>
-                        <div class="attendance-option-text">Present</div>
+                        <div class="attendance-option-text">Hadir</div>
                     </div>
                     <div class="attendance-option sakit" data-type="Sakit" tabindex="0">
                         <div class="attendance-option-icon">
@@ -1242,7 +1249,7 @@
                                 <path d="M12 5L8 21l4-7 4 7-4-16"></path>
                             </svg>
                         </div>
-                        <div class="attendance-option-text">Sick</div>
+                        <div class="attendance-option-text">Sakit</div>
                     </div>
                     <div class="attendance-option izin" data-type="Izin" tabindex="0">
                         <div class="attendance-option-icon">
@@ -1253,7 +1260,7 @@
                                 <path d="M3 21h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2Z"></path>
                             </svg>
                         </div>
-                        <div class="attendance-option-text">Permission</div>
+                        <div class="attendance-option-text">Izin</div>
                     </div>
                     <div class="attendance-option alfa" data-type="Alfa" tabindex="0">
                         <div class="attendance-option-icon">
@@ -1263,13 +1270,13 @@
                                 <line x1="9" y1="9" x2="15" y2="15"></line>
                             </svg>
                         </div>
-                        <div class="attendance-option-text">Absent</div>
+                        <div class="attendance-option-text">Alfa</div>
                     </div>
                 </div>
             </div>
 
             <!-- Enhanced Camera Section -->
-            <div class="camera-section">
+            <div class="camera-section" id="cameraSection">
                 <div class="video-container">
                     <video id="video" class="video-element hidden" autoplay playsinline></video>
                     <div id="photoPreview" class="photo-preview">
@@ -1277,7 +1284,7 @@
                             <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
                             <circle cx="12" cy="13" r="3"></circle>
                         </svg>
-                        <span>Photo will appear here after camera activation</span>
+                        <span>Foto akan muncul di sini setelah kamera aktif</span>
                     </div>
                 </div>
                 <canvas id="canvas" class="hidden"></canvas>
@@ -1289,7 +1296,7 @@
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
                     <circle cx="12" cy="13" r="3"></circle>
                 </svg>
-                <span>Activate Camera</span>
+                <span>Aktifkan Kamera</span>
             </button>
             
             <button id="btnAbsen" class="btn btn-success" disabled>
@@ -1298,17 +1305,26 @@
                     <polyline points="9,11 12,14 22,4"></polyline>
                     <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
                 </svg>
-                <span id="btnAbsenText">Confirm Attendance</span>
+                <span id="btnAbsenText">Konfirmasi Kehadiran</span>
             </button>
 
-            <!-- Enhanced Status Message -->
+            <!-- Enhanced Status Message (Final Result Display) -->
             <div id="statusMessage" class="hidden"></div>
+            <button id="btnReset" class="btn btn-reset hidden">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 10v4a2 2 0 0 0 2 2h4"></path>
+                    <path d="M7 14l-4-4 4-4"></path>
+                    <path d="M21 14v-4a2 2 0 0 0-2-2h-4"></path>
+                    <path d="M17 10l4 4-4 4"></path>
+                </svg>
+                <span>Mulai Absensi Baru</span>
+            </button>
 
             <!-- Hidden Elements -->
             <div class="hidden">
                 <select id="role">
-                    <option value="siswa">Student</option>
-                    <option value="guru">Teacher</option>
+                    <option value="siswa">Siswa</option>
+                    <option value="guru">Guru</option>
                 </select>
             </div>
         </div>
@@ -1384,7 +1400,9 @@
         ];
 
         // DOM Elements
+        const mainCard = document.getElementById('mainCard');
         const userIdInput = document.getElementById('userId');
+        const userIdGroup = document.getElementById('userIdGroup'); // Added ID
         const roleSelect = document.getElementById('role');
         const subjectSpan = document.getElementById('subject');
         const scheduleSpan = document.getElementById('schedule');
@@ -1400,6 +1418,12 @@
         const photoPreview = document.getElementById('photoPreview');
         const statusMessage = document.getElementById('statusMessage');
         const attendanceOptions = document.querySelectorAll('.attendance-option');
+        const infoGrid = document.getElementById('infoGrid'); // Added ID
+        const roleCard = document.getElementById('roleCard'); // Added ID
+        const classCard = document.getElementById('classCard'); // Added ID
+        const attendanceTypeSection = document.getElementById('attendanceTypeSection'); // Added ID
+        const cameraSection = document.getElementById('cameraSection'); // Added ID
+        const btnReset = document.getElementById('btnReset'); // New Reset Button
 
         // Global Variables
         let stream;
@@ -1467,7 +1491,8 @@
             statusMessage.innerHTML = `${createStatusIcon(type)}<span>${message}</span>`;
             statusMessage.classList.remove('hidden');
             
-            if (type === 'success') {
+            // For general messages, hide after a few seconds
+            if (type !== 'success' && type !== 'error') {
                 setTimeout(() => {
                     statusMessage.classList.add('hidden');
                 }, 5000);
@@ -1489,7 +1514,7 @@
                 subjectSpan.textContent = '-';
                 scheduleSpan.textContent = '-';
                 btnAbsen.disabled = true;
-                showStatusMessage('Not yet time for attendance, please try during active schedule.', 'warning');
+                showStatusMessage('Belum waktu absensi, coba lagi selama jadwal aktif.', 'warning');
             }
         }
 
@@ -1526,12 +1551,12 @@
                 selectedAttendanceType = option.dataset.type;
                 
                 const labels = {
-                    'Hadir': 'Present',
-                    'Sakit': 'Sick',
-                    'Izin': 'Permission',
-                    'Alfa': 'Absent'
+                    'Hadir': 'Kehadiran',
+                    'Sakit': 'Sakit',
+                    'Izin': 'Izin',
+                    'Alfa': 'Alfa'
                 };
-                btnAbsenText.textContent = `Confirm ${labels[selectedAttendanceType]}`;
+                btnAbsenText.textContent = `Konfirmasi ${labels[selectedAttendanceType]}`;
                 updateButtonIcon(selectedAttendanceType);
             };
 
@@ -1547,6 +1572,86 @@
         // Set default selection
         document.querySelector('.attendance-option[data-type="Hadir"]').classList.add('selected');
 
+        // Function to hide all input/button sections and show final message/reset
+        function showFinalResultScreen() {
+            userIdGroup.classList.add('hidden');
+            infoGrid.classList.add('hidden');
+            roleCard.classList.add('hidden');
+            classCard.classList.add('hidden');
+            attendanceTypeSection.classList.add('hidden');
+            cameraSection.classList.add('hidden');
+            btnStartCamera.classList.add('hidden');
+            btnAbsen.classList.add('hidden');
+            
+            statusMessage.style.fontSize = 'var(--font-size-2xl)'; // Make final message more prominent
+            statusMessage.style.padding = 'var(--space-10)';
+            statusMessage.style.marginTop = 'var(--space-16)'; // More space above
+            
+            btnReset.classList.remove('hidden');
+        }
+
+        // Function to reset the form for a new attendance
+        function resetForm() {
+            userIdInput.value = '';
+            currentUserData = null;
+            selectedAttendanceType = 'Hadir'; // Reset to default
+            document.querySelector('.attendance-option[data-type="Hadir"]').click(); // Visually select "Hadir"
+
+            // Hide status message and reset its styles
+            hideStatusMessage();
+            statusMessage.style.fontSize = ''; 
+            statusMessage.style.padding = '';
+            statusMessage.style.marginTop = '';
+
+            // Show input/button sections
+            userIdGroup.classList.remove('hidden');
+            infoGrid.classList.remove('hidden');
+            roleCard.classList.remove('hidden');
+            classCard.classList.remove('hidden');
+            attendanceTypeSection.classList.remove('hidden');
+            cameraSection.classList.remove('hidden');
+            btnStartCamera.classList.remove('hidden');
+            btnAbsen.classList.remove('hidden'); // Show absen button
+            btnAbsen.disabled = true; // Disable until ID is entered
+
+            btnReset.classList.add('hidden');
+
+            // Reset camera state
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                video.classList.add('hidden');
+                stream = null;
+            }
+            photoPreview.classList.remove('hidden');
+            photoPreview.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="3"></circle>
+                </svg>
+                <span>Foto akan muncul di sini setelah kamera aktif</span>
+            `;
+            btnStartCamera.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="3"></circle>
+                </svg>
+                <span>Aktifkan Kamera</span>
+            `;
+            btnStartCamera.disabled = false;
+
+
+            // Reset display values
+            subjectSpan.textContent = '-';
+            scheduleSpan.textContent = '-';
+            detectedRoleSpan.textContent = 'Belum Terdeteksi';
+            detectedClassSpan.textContent = '-';
+
+            // Ensure absensi button is disabled until valid ID
+            btnAbsen.disabled = true;
+            btnAbsenText.textContent = 'Konfirmasi Kehadiran';
+            updateButtonIcon('Hadir'); // Reset button icon
+        }
+
         // User ID Input Handler
         userIdInput.addEventListener('input', () => {
             const inputId = userIdInput.value.trim();
@@ -1556,7 +1661,7 @@
 
             if (currentUserData) {
                 roleSelect.value = currentUserData.role;
-                detectedRoleSpan.textContent = currentUserData.role === 'siswa' ? 'Student' : 'Teacher';
+                detectedRoleSpan.textContent = currentUserData.role === 'siswa' ? 'Siswa' : 'Guru';
 
                 if (currentUserData.role === 'siswa') {
                     detectedClassSpan.textContent = currentUserData.class;
@@ -1570,7 +1675,7 @@
                         subjectSpan.textContent = '-';
                         scheduleSpan.textContent = '-';
                         btnAbsen.disabled = true;
-                        showStatusMessage('No active schedule for your class at this time.', 'warning');
+                        showStatusMessage('Tidak ada jadwal aktif untuk kelas Anda saat ini.', 'warning');
                     }
                 } else if (currentUserData.role === 'guru') {
                     const activeGuruSchedule = scheduleList.find(item =>
@@ -1580,28 +1685,28 @@
                     );
 
                     if (activeGuruSchedule) {
-                        detectedClassSpan.textContent = `Teaching ${activeGuruSchedule.class}`;
+                        detectedClassSpan.textContent = `Mengajar ${activeGuruSchedule.class}`;
                         subjectSpan.textContent = activeGuruSchedule.subject;
                         scheduleSpan.textContent = `${activeGuruSchedule.start} - ${activeGuruSchedule.end}`;
                         btnAbsen.disabled = false;
                         hideStatusMessage();
                     } else {
-                        detectedClassSpan.textContent = 'No active class';
+                        detectedClassSpan.textContent = 'Tidak ada kelas aktif';
                         subjectSpan.textContent = '-';
                         scheduleSpan.textContent = '-';
                         btnAbsen.disabled = true;
-                        showStatusMessage('You have no active teaching schedule at this time.', 'warning');
+                        showStatusMessage('Anda tidak memiliki jadwal mengajar aktif saat ini.', 'warning');
                     }
                 }
             } else {
                 roleSelect.value = 'siswa';
-                detectedRoleSpan.textContent = inputId.length > 0 ? 'Unknown ID/Name' : 'Not Detected';
+                detectedRoleSpan.textContent = inputId.length > 0 ? 'ID/Nama Tidak Dikenal' : 'Belum Terdeteksi';
                 detectedClassSpan.textContent = '-';
                 subjectSpan.textContent = '-';
                 scheduleSpan.textContent = '-';
                 if (inputId.length > 0) {
                     btnAbsen.disabled = true;
-                    showStatusMessage('Unknown ID/Name. You are not authorized for attendance.', 'error');
+                    showStatusMessage('ID/Nama tidak dikenal. Anda tidak diizinkan untuk absensi.', 'error');
                 } else {
                     btnAbsen.disabled = true;
                     hideStatusMessage();
@@ -1625,13 +1730,13 @@
                     video.classList.remove('hidden');
                     photoPreview.classList.add('hidden');
                     
-                    showStatusMessage('Camera active. Make sure your face is clearly visible.', 'success');
+                    showStatusMessage('Kamera aktif. Pastikan wajah Anda terlihat jelas.', 'info'); // Changed to info
                     btnStartCamera.innerHTML = `
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
                             <circle cx="12" cy="13" r="3"></circle>
                         </svg>
-                        <span>Camera Active</span>
+                        <span>Kamera Aktif</span>
                     `;
                     btnStartCamera.disabled = true;
 
@@ -1639,15 +1744,15 @@
                     console.error("Camera error:", error);
 
                     if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
-                        showStatusMessage('Camera access denied. Please allow camera access in your browser.', 'error');
+                        showStatusMessage('Akses kamera ditolak. Harap izinkan akses kamera di browser Anda.', 'error');
                     } else if (error.name === 'NotFoundError') {
-                        showStatusMessage('Camera not found. Please check your device.', 'error');
+                        showStatusMessage('Kamera tidak ditemukan. Harap periksa perangkat Anda.', 'error');
                     } else {
-                        showStatusMessage('Failed to access camera: ' + error.message, 'error');
+                        showStatusMessage('Gagal mengakses kamera: ' + error.message, 'error');
                     }
                 }
             } else {
-                showStatusMessage('Your browser does not support camera access.', 'error');
+                showStatusMessage('Browser Anda tidak mendukung akses kamera.', 'error');
             }
         });
 
@@ -1657,7 +1762,7 @@
             const inputIdNormalized = inputId.toUpperCase();
 
             if (!currentUserData || currentUserData.id.toUpperCase() !== inputIdNormalized) {
-                showStatusMessage('Error: Unknown ID/Name or not detected. Please enter ID correctly.', 'error');
+                showStatusMessage('Error: ID/Nama tidak dikenal atau tidak terdeteksi. Harap masukkan ID dengan benar.', 'error');
                 return;
             }
 
@@ -1684,33 +1789,43 @@
                         item.subject === currentUserData.subjectTeaching
                     );
                     classForAbsence = activeScheduleForAbsence ? activeScheduleForAbsence.class : '-';
-                    subjectForAbsence = activeScheduleForAbsence ? activeScheduleForAbsence.subject : '-';
+                    subjectForAbsence = activeScheduleForAbsence ? activeGuruSchedule.subject : '-'; // Fixed variable name
                 }
 
                 if (!activeScheduleForAbsence) {
-                    showStatusMessage('Attendance failed: No matching active schedule at this time.', 'error');
+                    showStatusMessage('Absensi gagal: Tidak ada jadwal aktif yang cocok saat ini.', 'error');
                     return;
                 }
 
                 // Capture photo if camera is active and attendance type is 'Hadir'
                 let photoData = '';
-                if (selectedAttendanceType === 'Hadir' && !video.classList.contains('hidden')) {
-                    canvas.width = video.videoWidth || 640;
-                    canvas.height = video.videoHeight || 480;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                    photoData = canvas.toDataURL('image/jpeg', 0.8);
-                    
-                    // Show photo preview
-                    photoPreview.innerHTML = `<img src="${photoData}" alt="Captured photo" style="width: 100%; height: auto; border-radius: var(--radius-2xl);">`;
-                    photoPreview.classList.remove('hidden');
-                    video.classList.add('hidden');
+                if (selectedAttendanceType === 'Hadir') { // Removed !video.classList.contains('hidden') to allow submission even if camera wasn't explicitly started
+                    if (stream && video.srcObject && !video.classList.contains('hidden')) { // Check if stream is active
+                        canvas.width = video.videoWidth || 640;
+                        canvas.height = video.videoHeight || 480;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        photoData = canvas.toDataURL('image/jpeg', 0.8);
+                        
+                        // Show photo preview
+                        photoPreview.innerHTML = `<img src="${photoData}" alt="Foto yang diambil" style="width: 100%; height: auto; border-radius: var(--radius-2xl);">`;
+                        photoPreview.classList.remove('hidden');
+                        video.classList.add('hidden');
+                    } else {
+                        // Handle case where 'Hadir' is selected but camera not active
+                        showStatusMessage('Untuk absensi Hadir, kamera harus diaktifkan dan foto harus diambil. Silakan aktifkan kamera.', 'warning');
+                        btnAbsen.disabled = false; // Re-enable button
+                        btnAbsenText.classList.remove('hidden');
+                        btnAbsenIcon.classList.remove('hidden');
+                        btnAbsenSpinner.classList.add('hidden');
+                        return; // Stop the process
+                    }
                 }
 
                 // Get location for 'Hadir' attendance
-                let lokasi = { latitude: 0, longitude: 0 };
+                let lokasi = { latitude: null, longitude: null }; // Changed default to null for clarity
                 if (selectedAttendanceType === 'Hadir') {
-                    showStatusMessage('Accessing location...', 'info');
+                    showStatusMessage('Mengakses lokasi...', 'info');
                     try {
                         const posisi = await new Promise((resolve, reject) => {
                             const geoTimeout = setTimeout(() => reject(new Error('Geolocation timeout')), 10000);
@@ -1729,14 +1844,15 @@
                         lokasi.latitude = posisi.coords.latitude;
                         lokasi.longitude = posisi.coords.longitude;
                     } catch (error) {
-                        showStatusMessage('Cannot access location: ' + error.message, 'warning');
+                        showStatusMessage('Tidak dapat mengakses lokasi: ' + error.message + '. Lokasi akan dicatat sebagai 0,0.', 'warning');
+                        lokasi = { latitude: 0, longitude: 0 }; // Fallback to 0,0 if location fails
                     }
                 }
 
                 // Prepare attendance data
                 const dataAbsensi = {
                     id: inputId,
-                    nama: inputId,
+                    nama: inputId, // Consider getting actual name from userList if available
                     role: currentUserData.role,
                     kelas: classForAbsence,
                     waktu: new Date().toISOString(),
@@ -1750,9 +1866,9 @@
 
                 // Add teacher material if applicable
                 if (currentUserData.role === 'guru') {
-                    const materiInput = prompt("You are a teacher. Enter today's lesson material:");
-                    dataAbsensi.materi = materiInput || '-';
-                    dataAbsensi.namaGuru = inputId;
+                    const materiInput = prompt("Anda adalah guru. Masukkan materi pelajaran hari ini:");
+                    dataAbsensi.materi = materiInput || 'Tidak ada materi';
+                    dataAbsensi.namaGuru = inputId; // Assuming teacher's name is their ID
                 }
 
                 // Save to Firebase
@@ -1760,33 +1876,33 @@
                 await db.ref(path).set(dataAbsensi);
 
                 const statusLabels = {
-                    'Hadir': 'Present',
-                    'Sakit': 'Sick',
-                    'Izin': 'Permission',
-                    'Alfa': 'Absent'
+                    'Hadir': 'Hadir',
+                    'Sakit': 'Sakit',
+                    'Izin': 'Izin',
+                    'Alfa': 'Alfa'
                 };
-                showStatusMessage(`${statusLabels[selectedAttendanceType]} attendance successfully saved!`, 'success');
+                showStatusMessage(`Absensi ${statusLabels[selectedAttendanceType]} berhasil disimpan!`, 'success');
                 
-                // Reset form
-                btnAbsen.disabled = true;
-                if (stream) {
-                    stream.getTracks().forEach(track => track.stop());
-                    video.classList.add('hidden');
-                }
+                // Show final result screen and hide input elements
+                showFinalResultScreen();
 
             } catch (error) {
-                showStatusMessage("Failed to save attendance: " + error.message, 'error');
+                showStatusMessage("Gagal menyimpan absensi: " + error.message, 'error');
             } finally {
-                // Reset loading state
+                // Always reset loading state regardless of success or failure
                 btnAbsenText.classList.remove('hidden');
                 btnAbsenIcon.classList.remove('hidden');
                 btnAbsenSpinner.classList.add('hidden');
             }
         });
 
+        // Reset button event listener
+        btnReset.addEventListener('click', resetForm);
+
+
         // Initialize
         updateScheduleDisplay();
-        setInterval(updateScheduleDisplay, 60000);
+        setInterval(updateScheduleDisplay, 60000); // Check schedule every minute
 
         // Keyboard support
         document.addEventListener('keydown', (e) => {
@@ -1802,7 +1918,7 @@
         if ('requestIdleCallback' in window) {
             requestIdleCallback(() => {
                 // Initialize non-critical features
-                console.log('Digital Attendance System initialized');
+                console.log('Sistem Absensi Digital diinisialisasi');
             });
         }
     </script>
