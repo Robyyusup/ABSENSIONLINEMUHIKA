@@ -2,12 +2,12 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Absensi Digital SMK Muhammadiyah Campaka</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Attendance System - SMK Muhammadiyah Campaka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Primary Blue Palette */
+            /* Enhanced Color System */
             --primary-50: #eff6ff;
             --primary-100: #dbeafe;
             --primary-200: #bfdbfe;
@@ -18,45 +18,155 @@
             --primary-700: #1d4ed8;
             --primary-800: #1e40af;
             --primary-900: #1e3a8a;
+            --primary-950: #172554;
 
-            /* Secondary Colors */
-            --secondary-300: #7dd3fc;
-            --secondary-400: #38bdf8;
-            --secondary-500: #0ea5e9;
+            --secondary-50: #faf5ff;
+            --secondary-100: #f3e8ff;
+            --secondary-200: #e9d5ff;
+            --secondary-300: #d8b4fe;
+            --secondary-400: #c084fc;
+            --secondary-500: #a855f7;
+            --secondary-600: #9333ea;
+            --secondary-700: #7c3aed;
+            --secondary-800: #6b21a8;
+            --secondary-900: #581c87;
 
-            /* Status Colors */
+            --success-50: #f0fdf4;
+            --success-100: #dcfce7;
+            --success-200: #bbf7d0;
+            --success-300: #86efac;
             --success-400: #4ade80;
             --success-500: #22c55e;
             --success-600: #16a34a;
-            
-            --warning-400: #facc15;
-            --warning-500: #eab308;
-            --warning-600: #ca8a04;
-            
+            --success-700: #15803d;
+            --success-800: #166534;
+            --success-900: #14532d;
+
+            --warning-50: #fffbeb;
+            --warning-100: #fef3c7;
+            --warning-200: #fde68a;
+            --warning-300: #fcd34d;
+            --warning-400: #fbbf24;
+            --warning-500: #f59e0b;
+            --warning-600: #d97706;
+            --warning-700: #b45309;
+            --warning-800: #92400e;
+            --warning-900: #78350f;
+
+            --danger-50: #fef2f2;
+            --danger-100: #fee2e2;
+            --danger-200: #fecaca;
+            --danger-300: #fca5a5;
             --danger-400: #f87171;
             --danger-500: #ef4444;
             --danger-600: #dc2626;
+            --danger-700: #b91c1c;
+            --danger-800: #991b1b;
+            --danger-900: #7f1d1d;
 
+            --orange-50: #fff7ed;
+            --orange-100: #ffedd5;
+            --orange-200: #fed7aa;
+            --orange-300: #fdba74;
             --orange-400: #fb923c;
             --orange-500: #f97316;
             --orange-600: #ea580c;
+            --orange-700: #c2410c;
+            --orange-800: #9a3412;
+            --orange-900: #7c2d12;
 
-            /* Neutral Colors */
-            --neutral-50: #f8fafc;
-            --neutral-100: #f1f5f9;
-            --neutral-200: #e2e8f0;
-            --neutral-300: #cbd5e1;
-            --neutral-400: #94a3b8;
-            --neutral-500: #64748b;
-            --neutral-600: #475569;
-            --neutral-700: #334155;
-            --neutral-800: #1e293b;
-            --neutral-900: #0f172a;
+            /* Enhanced Neutral Colors */
+            --neutral-50: #fafafa;
+            --neutral-100: #f5f5f5;
+            --neutral-200: #e5e5e5;
+            --neutral-300: #d4d4d4;
+            --neutral-400: #a3a3a3;
+            --neutral-500: #737373;
+            --neutral-600: #525252;
+            --neutral-700: #404040;
+            --neutral-800: #262626;
+            --neutral-900: #171717;
+            --neutral-950: #0a0a0a;
 
-            /* Glass Effect */
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --glass-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            /* Advanced Glass Effects */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-bg-hover: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-border-hover: rgba(255, 255, 255, 0.15);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --glass-shadow-lg: 0 20px 80px rgba(0, 0, 0, 0.15);
+            --glass-shadow-xl: 0 25px 100px rgba(0, 0, 0, 0.2);
+
+            /* Premium Gradients */
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-dark: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 50%, #0f0f0f 100%);
+            --gradient-card: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+            --gradient-button-primary: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%);
+            --gradient-button-success: linear-gradient(135deg, var(--success-500) 0%, var(--success-600) 100%);
+            --gradient-mesh: radial-gradient(at 40% 20%, hsla(28,100%,74%,1) 0px, transparent 50%),
+                            radial-gradient(at 80% 0%, hsla(189,100%,56%,1) 0px, transparent 50%),
+                            radial-gradient(at 0% 50%, hsla(355,100%,93%,1) 0px, transparent 50%),
+                            radial-gradient(at 80% 50%, hsla(340,100%,76%,1) 0px, transparent 50%),
+                            radial-gradient(at 0% 100%, hsla(22,100%,77%,1) 0px, transparent 50%),
+                            radial-gradient(at 80% 100%, hsla(242,100%,70%,1) 0px, transparent 50%),
+                            radial-gradient(at 0% 0%, hsla(343,100%,76%,1) 0px, transparent 50%);
+
+            /* Enhanced Spacing */
+            --space-0: 0;
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-7: 1.75rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-14: 3.5rem;
+            --space-16: 4rem;
+            --space-20: 5rem;
+            --space-24: 6rem;
+            --space-32: 8rem;
+
+            /* Modern Border Radius */
+            --radius-xs: 0.25rem;
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --radius-3xl: 2rem;
+            --radius-4xl: 2.5rem;
+            --radius-full: 9999px;
+
+            /* Enhanced Typography */
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            --font-size-5xl: 3rem;
+            --font-size-6xl: 3.75rem;
+            --font-size-7xl: 4.5rem;
+
+            --line-height-none: 1;
+            --line-height-tight: 1.25;
+            --line-height-snug: 1.375;
+            --line-height-normal: 1.5;
+            --line-height-relaxed: 1.625;
+            --line-height-loose: 2;
+
+            /* Advanced Transitions */
+            --transition-all: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-colors: color 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-transform: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-opacity: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-shadow: box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -65,381 +175,675 @@
             box-sizing: border-box;
         }
 
+        ::selection {
+            background: var(--primary-500);
+            color: white;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, var(--primary-900) 0%, var(--primary-800) 50%, var(--primary-600) 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gradient-dark);
+            background-attachment: fixed;
             min-height: 100vh;
             color: var(--neutral-50);
             position: relative;
             overflow-x: hidden;
+            line-height: var(--line-height-normal);
+            font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Animated Background Shapes */
-        .bg-shape {
+        /* Enhanced Animated Background */
+        .bg-animation {
             position: fixed;
-            opacity: 0.05;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 0;
-            animation: float 6s ease-in-out infinite;
+            overflow: hidden;
+            pointer-events: none;
         }
 
-        .bg-shape:nth-child(1) {
-            top: 10%;
-            left: 10%;
-            width: 100px;
-            height: 100px;
-            background: var(--primary-400);
+        .bg-mesh {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-mesh);
+            opacity: 0.05;
+            animation: meshMove 30s ease-in-out infinite;
+        }
+
+        .bg-shape {
+            position: absolute;
+            opacity: 0.02;
+            animation: float 25s ease-in-out infinite;
             border-radius: 50%;
-            animation-delay: 0s;
+            filter: blur(1px);
         }
 
         .bg-shape:nth-child(2) {
-            top: 20%;
-            right: 15%;
-            width: 80px;
-            height: 80px;
-            background: var(--secondary-400);
-            border-radius: 20px;
-            animation-delay: 2s;
+            top: 15%;
+            left: 15%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--primary-400) 0%, transparent 70%);
+            animation-delay: 0s;
         }
 
         .bg-shape:nth-child(3) {
-            bottom: 20%;
-            left: 20%;
-            width: 120px;
-            height: 120px;
-            background: var(--success-400);
-            border-radius: 50%;
-            animation-delay: 4s;
+            top: 60%;
+            right: 20%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--secondary-400) 0%, transparent 70%);
+            animation-delay: 8s;
         }
 
         .bg-shape:nth-child(4) {
-            bottom: 30%;
-            right: 10%;
-            width: 60px;
-            height: 60px;
-            background: var(--warning-400);
-            border-radius: 15px;
-            animation-delay: 1s;
+            bottom: 25%;
+            left: 25%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, var(--success-400) 0%, transparent 70%);
+            animation-delay: 16s;
+        }
+
+        .bg-shape:nth-child(5) {
+            top: 35%;
+            right: 35%;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, var(--warning-400) 0%, transparent 70%);
+            animation-delay: 4s;
+        }
+
+        .bg-shape:nth-child(6) {
+            bottom: 45%;
+            right: 15%;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, var(--orange-400) 0%, transparent 70%);
+            animation-delay: 12s;
+        }
+
+        @keyframes meshMove {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
+            0%, 100% { 
+                transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+            }
+            25% { 
+                transform: translateY(-40px) translateX(30px) rotate(90deg) scale(1.15);
+            }
+            50% { 
+                transform: translateY(-80px) translateX(-20px) rotate(180deg) scale(0.85);
+            }
+            75% { 
+                transform: translateY(-40px) translateX(-40px) rotate(270deg) scale(1.05);
+            }
+        }
+
+        /* Enhanced Grid Pattern */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.015;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 1;
+            pointer-events: none;
         }
 
         /* Main Container */
         .container {
-            max-width: 600px;
+            max-width: 680px;
             margin: 0 auto;
-            padding: 20px;
+            padding: var(--space-6);
             position: relative;
-            z-index: 1;
+            z-index: 10;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* Glass Card */
+        /* Premium Glass Card */
         .glass-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: var(--glass-shadow);
-            padding: 40px;
+            border-radius: var(--radius-4xl);
+            box-shadow: var(--glass-shadow-xl);
+            padding: var(--space-16);
             width: 100%;
-            animation: slideUp 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: var(--transition-all);
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500), var(--primary-500));
+            border-radius: var(--radius-4xl);
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition-opacity);
+        }
+
+        .glass-card:hover::after {
+            opacity: 0.1;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(60px) scale(0.9);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
-        /* Header */
+        /* Enhanced Header */
         .header {
             text-align: center;
-            margin-bottom: 32px;
-            padding-bottom: 24px;
+            margin-bottom: var(--space-12);
+            padding-bottom: var(--space-10);
             border-bottom: 1px solid var(--glass-border);
+            position: relative;
         }
 
         .logo-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 16px;
-            margin-bottom: 16px;
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
             flex-wrap: wrap;
         }
 
         .logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
-            border-radius: 20px;
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-button-primary);
+            border-radius: var(--radius-3xl);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            font-weight: 800;
+            font-size: var(--font-size-3xl);
+            font-weight: 900;
             color: white;
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
-            animation: pulse 2s infinite;
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.4);
+            position: relative;
+            overflow: hidden;
+            animation: pulse 4s ease-in-out infinite;
+            transition: var(--transition-transform);
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shine 5s ease-in-out infinite;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 20px 60px rgba(59, 130, 246, 0.4);
+            }
+            50% { 
+                transform: scale(1.02);
+                box-shadow: 0 25px 80px rgba(59, 130, 246, 0.5);
+            }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
         }
 
         .header-text h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary-300), var(--secondary-300));
+            font-size: var(--font-size-5xl);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-300) 0%, var(--secondary-400) 50%, var(--primary-200) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 8px;
+            margin-bottom: var(--space-3);
+            letter-spacing: -0.025em;
+            line-height: var(--line-height-tight);
         }
 
         .header-text p {
-            font-size: 1.1rem;
+            font-size: var(--font-size-xl);
             color: var(--neutral-300);
             font-weight: 500;
+            opacity: 0.9;
+            line-height: var(--line-height-relaxed);
         }
 
-        /* Form Elements */
+        /* Modern Form Elements */
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: var(--space-10);
         }
 
         .form-label {
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
             font-weight: 600;
             color: var(--neutral-200);
-            margin-bottom: 8px;
-            font-size: 0.95rem;
+            margin-bottom: var(--space-4);
+            font-size: var(--font-size-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .form-label svg {
+            width: 18px;
+            height: 18px;
+            opacity: 0.8;
         }
 
         .form-input {
             width: 100%;
-            padding: 16px 20px;
-            background: rgba(255, 255, 255, 0.1);
+            padding: var(--space-6) var(--space-7);
+            background: var(--glass-bg);
             border: 1px solid var(--glass-border);
-            border-radius: 12px;
+            border-radius: var(--radius-2xl);
             color: var(--neutral-50);
-            font-size: 16px;
+            font-size: var(--font-size-lg);
             font-family: inherit;
-            transition: all 0.3s ease;
+            font-weight: 500;
+            transition: var(--transition-all);
+            position: relative;
         }
 
         .form-input::placeholder {
-            color: rgba(248, 250, 252, 0.6);
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 400;
         }
 
         .form-input:focus {
             outline: none;
             border-color: var(--primary-400);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.3);
-            transform: translateY(-1px);
-        }
-
-        /* Info Cards */
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .info-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 16px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .info-card:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--glass-bg-hover);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
             transform: translateY(-2px);
         }
 
+        /* Enhanced Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: var(--space-5);
+            margin-bottom: var(--space-10);
+        }
+
+        .info-card {
+            background: var(--gradient-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-8);
+            text-align: center;
+            transition: var(--transition-all);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .info-card:hover {
+            background: var(--glass-bg-hover);
+            transform: translateY(-6px);
+            box-shadow: var(--glass-shadow-lg);
+            border-color: var(--glass-border-hover);
+        }
+
+        .info-card:hover::before {
+            left: 100%;
+        }
+
         .info-card-icon {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
+            margin-bottom: var(--space-4);
+            display: flex;
+            justify-content: center;
+        }
+
+        .info-card-icon svg {
+            width: 32px;
+            height: 32px;
+            color: var(--primary-400);
         }
 
         .info-card-label {
-            font-size: 0.85rem;
+            font-size: var(--font-size-xs);
             color: var(--neutral-400);
-            margin-bottom: 4px;
+            margin-bottom: var(--space-3);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 700;
         }
 
         .info-card-value {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--neutral-100);
-            font-size: 0.95rem;
+            font-size: var(--font-size-lg);
         }
 
-        /* Status Cards */
+        /* Premium Status Cards */
         .status-card {
-            background: rgba(255, 255, 255, 0.08);
+            background: var(--gradient-card);
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: var(--radius-3xl);
+            padding: var(--space-8);
+            margin-bottom: var(--space-8);
             text-align: center;
-            transition: all 0.3s ease;
+            transition: var(--transition-all);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-400), var(--secondary-400));
+            opacity: 0;
+            transition: var(--transition-opacity);
+        }
+
+        .status-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .status-card:hover::after {
+            opacity: 1;
         }
 
         .status-card.role {
-            border-color: rgba(59, 130, 246, 0.3);
-            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.2);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.02) 100%);
         }
 
         .status-card.class {
-            border-color: rgba(34, 197, 94, 0.3);
-            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.2);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.02) 100%);
         }
 
         .status-card-title {
-            font-size: 0.9rem;
+            font-size: var(--font-size-sm);
             color: var(--neutral-400);
-            margin-bottom: 8px;
+            margin-bottom: var(--space-3);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+        }
+
+        .status-card-title svg {
+            width: 16px;
+            height: 16px;
         }
 
         .status-card-value {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: var(--font-size-2xl);
+            font-weight: 800;
             color: var(--neutral-100);
         }
 
-        /* Camera Section */
+        /* Modern Attendance Options */
+        .attendance-type {
+            margin-bottom: var(--space-10);
+        }
+
+        .attendance-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: var(--space-5);
+            margin-top: var(--space-6);
+        }
+
+        .attendance-option {
+            background: var(--gradient-card);
+            border: 2px solid var(--glass-border);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-6);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-all);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .attendance-option::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            transition: var(--transition-all);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+
+        .attendance-option:hover {
+            background: var(--glass-bg-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .attendance-option:hover::before {
+            width: 120px;
+            height: 120px;
+        }
+
+        .attendance-option.selected {
+            border-color: var(--primary-400);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.05) 100%);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .attendance-option.hadir.selected {
+            border-color: var(--success-400);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.05) 100%);
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
+        }
+
+        .attendance-option.sakit.selected {
+            border-color: var(--orange-400);
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.2) 0%, rgba(249, 115, 22, 0.05) 100%);
+            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+        }
+
+        .attendance-option.izin.selected {
+            border-color: var(--warning-400);
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(251, 191, 36, 0.05) 100%);
+            box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.1);
+        }
+
+        .attendance-option.alfa.selected {
+            border-color: var(--danger-400);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.05) 100%);
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+        }
+
+        .attendance-option-icon {
+            margin-bottom: var(--space-4);
+            display: flex;
+            justify-content: center;
+        }
+
+        .attendance-option-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .attendance-option.hadir .attendance-option-icon svg {
+            color: var(--success-400);
+        }
+
+        .attendance-option.sakit .attendance-option-icon svg {
+            color: var(--orange-400);
+        }
+
+        .attendance-option.izin .attendance-option-icon svg {
+            color: var(--warning-400);
+        }
+
+        .attendance-option.alfa .attendance-option-icon svg {
+            color: var(--danger-400);
+        }
+
+        .attendance-option-text {
+            font-size: var(--font-size-sm);
+            font-weight: 700;
+            color: var(--neutral-200);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Enhanced Camera Section */
         .camera-section {
-            margin: 24px 0;
+            margin: var(--space-10) 0;
         }
 
         .video-container {
             position: relative;
-            border-radius: 16px;
+            border-radius: var(--radius-3xl);
             overflow: hidden;
-            margin-bottom: 16px;
-            background: var(--neutral-800);
-            min-height: 200px;
+            margin-bottom: var(--space-6);
+            background: linear-gradient(135deg, var(--neutral-800) 0%, var(--neutral-900) 100%);
+            min-height: 300px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 1px solid var(--glass-border);
         }
 
         .video-element {
             width: 100%;
             height: auto;
-            border-radius: 16px;
+            border-radius: var(--radius-3xl);
         }
 
         .photo-preview {
             width: 100%;
             height: auto;
-            border-radius: 16px;
+            border-radius: var(--radius-3xl);
             border: 2px dashed var(--glass-border);
-            background: rgba(255, 255, 255, 0.05);
-            min-height: 200px;
+            background: var(--gradient-card);
+            min-height: 300px;
             object-fit: cover;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--neutral-400);
-            font-size: 0.9rem;
-        }
-
-        /* Attendance Type Selection */
-        .attendance-type {
-            margin-bottom: 24px;
-        }
-
-        .attendance-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 12px;
-            margin-top: 12px;
-        }
-
-        .attendance-option {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 16px 12px;
+            font-size: var(--font-size-base);
+            font-weight: 500;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
+            padding: var(--space-8);
+            flex-direction: column;
+            gap: var(--space-4);
         }
 
-        .attendance-option:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
+        .photo-preview svg {
+            width: 48px;
+            height: 48px;
+            opacity: 0.6;
         }
 
-        .attendance-option.selected {
-            border-color: var(--primary-400);
-            background: rgba(59, 130, 246, 0.2);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-        }
-
-        .attendance-option.hadir.selected {
-            border-color: var(--success-400);
-            background: rgba(34, 197, 94, 0.2);
-            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
-        }
-
-        .attendance-option.sakit.selected {
-            border-color: var(--orange-400);
-            background: rgba(249, 115, 22, 0.2);
-            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
-        }
-
-        .attendance-option.izin.selected {
-            border-color: var(--warning-400);
-            background: rgba(234, 179, 8, 0.2);
-            box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.2);
-        }
-
-        .attendance-option-icon {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
-        }
-
-        .attendance-option-text {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--neutral-200);
-        }
-
-        /* Buttons */
+        /* Premium Buttons */
         .btn {
             width: 100%;
-            padding: 16px 24px;
+            padding: var(--space-6) var(--space-10);
             border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: var(--radius-2xl);
+            font-size: var(--font-size-base);
+            font-weight: 700;
             font-family: inherit;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition-all);
             position: relative;
             overflow: hidden;
-            margin-bottom: 12px;
+            margin-bottom: var(--space-5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-3);
+            min-height: 60px;
         }
 
         .btn::before {
@@ -449,40 +853,45 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
         }
 
         .btn:hover::before {
             left: 100%;
         }
 
+        .btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+            background: var(--gradient-button-primary);
             color: white;
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3);
         }
 
         .btn-primary:hover {
-            background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
-            transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(59, 130, 246, 0.4);
+            background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-700) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 60px rgba(59, 130, 246, 0.4);
         }
 
         .btn-success {
-            background: linear-gradient(135deg, var(--success-500), var(--success-600));
+            background: var(--gradient-button-success);
             color: white;
-            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+            box-shadow: 0 10px 40px rgba(34, 197, 94, 0.3);
         }
 
         .btn-success:hover {
-            background: linear-gradient(135deg, var(--success-600), var(--success-700));
-            transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(34, 197, 94, 0.4);
+            background: linear-gradient(135deg, var(--success-600) 0%, var(--success-700) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 60px rgba(34, 197, 94, 0.4);
         }
 
         .btn:disabled {
-            background: var(--neutral-600);
+            background: linear-gradient(135deg, var(--neutral-600) 0%, var(--neutral-700) 100%);
             color: var(--neutral-400);
             cursor: not-allowed;
             transform: none;
@@ -493,55 +902,99 @@
             display: none;
         }
 
-        /* Status Messages */
+        /* Enhanced Status Messages */
         .status-message {
-            padding: 16px;
-            border-radius: 12px;
-            margin-top: 16px;
+            padding: var(--space-6);
+            border-radius: var(--radius-2xl);
+            margin-top: var(--space-6);
             text-align: center;
-            font-weight: 500;
-            animation: fadeIn 0.3s ease;
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            animation: fadeIn 0.4s ease;
+            border: 1px solid;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-3);
+        }
+
+        .status-message::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            opacity: 0.8;
+        }
+
+        .status-message svg {
+            width: 18px;
+            height: 18px;
         }
 
         .status-message.success {
-            background: rgba(34, 197, 94, 0.2);
-            border: 1px solid rgba(34, 197, 94, 0.3);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border-color: rgba(34, 197, 94, 0.3);
             color: var(--success-300);
         }
 
+        .status-message.success::before {
+            background: var(--success-400);
+        }
+
         .status-message.error {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%);
+            border-color: rgba(239, 68, 68, 0.3);
             color: var(--danger-300);
         }
 
+        .status-message.error::before {
+            background: var(--danger-400);
+        }
+
         .status-message.warning {
-            background: rgba(234, 179, 8, 0.2);
-            border: 1px solid rgba(234, 179, 8, 0.3);
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.05) 100%);
+            border-color: rgba(251, 191, 36, 0.3);
             color: var(--warning-300);
         }
 
+        .status-message.warning::before {
+            background: var(--warning-400);
+        }
+
         .status-message.info {
-            background: rgba(59, 130, 246, 0.2);
-            border: 1px solid rgba(59, 130, 246, 0.3);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%);
+            border-color: rgba(59, 130, 246, 0.3);
             color: var(--primary-300);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .status-message.info::before {
+            background: var(--primary-400);
         }
 
-        /* Loading Spinner */
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px) scale(0.9); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
+        /* Enhanced Loading Spinner */
         .loading-spinner {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            width: 22px;
+            height: 22px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             border-top-color: var(--primary-400);
             animation: spin 1s linear infinite;
-            margin-right: 8px;
         }
 
         @keyframes spin {
@@ -553,30 +1006,30 @@
             display: none !important;
         }
 
-        /* Responsive Design */
-        @media (max-width: 640px) {
+        /* Enhanced Responsive Design */
+        @media (max-width: 768px) {
             .container {
-                padding: 16px;
+                padding: var(--space-4);
             }
 
             .glass-card {
-                padding: 24px;
-                border-radius: 20px;
+                padding: var(--space-10);
+                border-radius: var(--radius-3xl);
             }
 
             .header-text h1 {
-                font-size: 2rem;
+                font-size: var(--font-size-4xl);
             }
 
             .logo-container {
                 flex-direction: column;
-                gap: 12px;
+                gap: var(--space-5);
             }
 
             .logo {
-                width: 60px;
-                height: 60px;
-                font-size: 20px;
+                width: 80px;
+                height: 80px;
+                font-size: var(--font-size-2xl);
             }
 
             .info-grid {
@@ -588,14 +1041,82 @@
             }
 
             .btn {
-                padding: 14px 20px;
-                font-size: 15px;
+                padding: var(--space-5) var(--space-8);
+                font-size: var(--font-size-sm);
+                min-height: 56px;
+            }
+
+            .video-container {
+                min-height: 240px;
+            }
+
+            .photo-preview {
+                min-height: 240px;
+                padding: var(--space-6);
+            }
+
+            .photo-preview svg {
+                width: 36px;
+                height: 36px;
             }
         }
 
         @media (max-width: 480px) {
+            .glass-card {
+                padding: var(--space-8);
+            }
+
             .attendance-options {
                 grid-template-columns: 1fr;
+            }
+
+            .header-text h1 {
+                font-size: var(--font-size-3xl);
+            }
+
+            .logo {
+                width: 70px;
+                height: 70px;
+                font-size: var(--font-size-xl);
+            }
+        }
+
+        /* Accessibility Enhancements */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Enhanced Focus Styles */
+        .btn:focus-visible,
+        .form-input:focus-visible,
+        .attendance-option:focus-visible {
+            outline: 2px solid var(--primary-400);
+            outline-offset: 2px;
+        }
+
+        /* High Contrast Mode Support */
+        @media (prefers-contrast: high) {
+            .glass-card {
+                background: rgba(0, 0, 0, 0.8);
+                border: 2px solid var(--neutral-400);
+            }
+            
+            .form-input {
+                background: rgba(0, 0, 0, 0.6);
+                border: 2px solid var(--neutral-400);
+            }
+        }
+
+        /* Dark Mode Improvements */
+        @media (prefers-color-scheme: dark) {
+            .glass-card {
+                background: var(--glass-bg);
             }
         }
     </style>
@@ -603,114 +1124,191 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 </head>
 <body>
-    <!-- Animated Background Shapes -->
-    <div class="bg-shape"></div>
-    <div class="bg-shape"></div>
-    <div class="bg-shape"></div>
-    <div class="bg-shape"></div>
+    <!-- Enhanced Animated Background -->
+    <div class="bg-animation">
+        <div class="bg-mesh"></div>
+        <div class="bg-shape"></div>
+        <div class="bg-shape"></div>
+        <div class="bg-shape"></div>
+        <div class="bg-shape"></div>
+        <div class="bg-shape"></div>
+    </div>
+    
+    <!-- Grid Overlay -->
+    <div class="grid-overlay"></div>
 
     <div class="container">
         <div class="glass-card">
-            <!-- Header -->
+            <!-- Enhanced Header -->
             <div class="header">
                 <div class="logo-container">
                     <div class="logo">SMK</div>
                     <div class="header-text">
-                        <h1>ABSENSI DIGITAL</h1>
+                        <h1>Digital Attendance</h1>
                         <p>SMK Muhammadiyah Campaka Purwakarta</p>
                     </div>
                 </div>
             </div>
 
-            <!-- User ID Input -->
+            <!-- User ID Input with Modern Icon -->
             <div class="form-group">
                 <label for="userId" class="form-label">
-                    🔍 Masukkan ID Siswa/Guru
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <span>Student/Teacher ID</span>
                 </label>
                 <input 
                     type="text" 
                     id="userId" 
                     class="form-input" 
-                    placeholder="Scan QR Code atau ketik ID unik Anda" 
+                    placeholder="Scan QR Code or enter your unique ID" 
                     autofocus 
                 />
             </div>
 
-            <!-- Schedule Info -->
+            <!-- Enhanced Schedule Info -->
             <div class="info-grid">
                 <div class="info-card">
-                    <div class="info-card-icon">📚</div>
-                    <div class="info-card-label">Mata Pelajaran</div>
+                    <div class="info-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
+                    </div>
+                    <div class="info-card-label">Subject</div>
                     <div class="info-card-value" id="subject">-</div>
                 </div>
                 <div class="info-card">
-                    <div class="info-card-icon">⏰</div>
-                    <div class="info-card-label">Jam Pelajaran</div>
+                    <div class="info-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12,6 12,12 16,14"></polyline>
+                        </svg>
+                    </div>
+                    <div class="info-card-label">Schedule</div>
                     <div class="info-card-value" id="schedule">-</div>
                 </div>
             </div>
 
-            <!-- Status Cards -->
+            <!-- Enhanced Status Cards -->
             <div class="status-card role">
-                <div class="status-card-title">👤 Peran Anda</div>
-                <div class="status-card-value" id="detectedRole">Belum Terdeteksi</div>
+                <div class="status-card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Your Role
+                </div>
+                <div class="status-card-value" id="detectedRole">Not Detected</div>
             </div>
 
             <div class="status-card class">
-                <div class="status-card-title">🏫 Kelas/Mengajar</div>
+                <div class="status-card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 21h18"></path>
+                        <path d="M5 21V7l8-4v18"></path>
+                        <path d="M19 21V11l-6-4"></path>
+                    </svg>
+                    Class/Teaching
+                </div>
                 <div class="status-card-value" id="detectedClass">-</div>
             </div>
 
-            <!-- Attendance Type Selection -->
+            <!-- Modern Attendance Type Selection -->
             <div class="attendance-type">
-                <label class="form-label">📋 Pilih Status Kehadiran</label>
+                <label class="form-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                    </svg>
+                    <span>Attendance Status</span>
+                </label>
                 <div class="attendance-options">
-                    <div class="attendance-option hadir" data-type="Hadir">
-                        <div class="attendance-option-icon">✅</div>
-                        <div class="attendance-option-text">Hadir</div>
+                    <div class="attendance-option hadir" data-type="Hadir" tabindex="0">
+                        <div class="attendance-option-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9,11 12,14 22,4"></polyline>
+                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                            </svg>
+                        </div>
+                        <div class="attendance-option-text">Present</div>
                     </div>
-                    <div class="attendance-option sakit" data-type="Sakit">
-                        <div class="attendance-option-icon">🤒</div>
-                        <div class="attendance-option-text">Sakit</div>
+                    <div class="attendance-option sakit" data-type="Sakit" tabindex="0">
+                        <div class="attendance-option-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5Z"></path>
+                                <path d="M12 5L8 21l4-7 4 7-4-16"></path>
+                            </svg>
+                        </div>
+                        <div class="attendance-option-text">Sick</div>
                     </div>
-                    <div class="attendance-option izin" data-type="Izin">
-                        <div class="attendance-option-icon">📝</div>
-                        <div class="attendance-option-text">Izin</div>
+                    <div class="attendance-option izin" data-type="Izin" tabindex="0">
+                        <div class="attendance-option-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 12h6"></path>
+                                <path d="M9 16h6"></path>
+                                <path d="M9 8h6"></path>
+                                <path d="M3 21h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2Z"></path>
+                            </svg>
+                        </div>
+                        <div class="attendance-option-text">Permission</div>
                     </div>
-                    <div class="attendance-option alfa" data-type="Alfa">
-                        <div class="attendance-option-icon">❌</div>
-                        <div class="attendance-option-text">Alfa</div>
+                    <div class="attendance-option alfa" data-type="Alfa" tabindex="0">
+                        <div class="attendance-option-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="15" y1="9" x2="9" y2="15"></line>
+                                <line x1="9" y1="9" x2="15" y2="15"></line>
+                            </svg>
+                        </div>
+                        <div class="attendance-option-text">Absent</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Camera Section -->
+            <!-- Enhanced Camera Section -->
             <div class="camera-section">
                 <div class="video-container">
-                    <video id="video" class="video-element hidden" autoplay></video>
-                    <img id="photoPreview" class="photo-preview" alt="📸 Foto akan muncul di sini setelah kamera diaktifkan" />
+                    <video id="video" class="video-element hidden" autoplay playsinline></video>
+                    <div id="photoPreview" class="photo-preview">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                            <circle cx="12" cy="13" r="3"></circle>
+                        </svg>
+                        <span>Photo will appear here after camera activation</span>
+                    </div>
                 </div>
                 <canvas id="canvas" class="hidden"></canvas>
             </div>
 
-            <!-- Action Buttons -->
+            <!-- Enhanced Action Buttons -->
             <button id="btnStartCamera" class="btn btn-primary">
-                📷 Aktifkan Kamera
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="3"></circle>
+                </svg>
+                <span>Activate Camera</span>
             </button>
             
             <button id="btnAbsen" class="btn btn-success" disabled>
-                <span id="btnAbsenText">✅ Konfirmasi Absensi</span>
                 <span id="btnAbsenSpinner" class="loading-spinner hidden"></span>
+                <svg id="btnAbsenIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9,11 12,14 22,4"></polyline>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                </svg>
+                <span id="btnAbsenText">Confirm Attendance</span>
             </button>
 
-            <!-- Status Message -->
+            <!-- Enhanced Status Message -->
             <div id="statusMessage" class="hidden"></div>
 
             <!-- Hidden Elements -->
             <div class="hidden">
                 <select id="role">
-                    <option value="siswa">Siswa</option>
-                    <option value="guru">Guru</option>
+                    <option value="siswa">Student</option>
+                    <option value="guru">Teacher</option>
                 </select>
             </div>
         </div>
@@ -795,6 +1393,7 @@
         const btnStartCamera = document.getElementById('btnStartCamera');
         const btnAbsen = document.getElementById('btnAbsen');
         const btnAbsenText = document.getElementById('btnAbsenText');
+        const btnAbsenIcon = document.getElementById('btnAbsenIcon');
         const btnAbsenSpinner = document.getElementById('btnAbsenSpinner');
         const video = document.getElementById('video');
         const canvas = document.getElementById('canvas');
@@ -805,7 +1404,7 @@
         // Global Variables
         let stream;
         let currentUserData = null;
-        let selectedAttendanceType = 'Hadir'; // Default to 'Hadir'
+        let selectedAttendanceType = 'Hadir';
 
         // Helper Functions
         function getCurrentDay() {
@@ -838,12 +1437,36 @@
             }
         }
 
+        function createStatusIcon(type) {
+            const icons = {
+                'success': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9,11 12,14 22,4"></polyline>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                </svg>`,
+                'error': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                </svg>`,
+                'warning': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>`,
+                'info': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>`
+            };
+            return icons[type] || icons['info'];
+        }
+
         function showStatusMessage(message, type = 'info') {
             statusMessage.className = `status-message ${type}`;
-            statusMessage.textContent = message;
+            statusMessage.innerHTML = `${createStatusIcon(type)}<span>${message}</span>`;
             statusMessage.classList.remove('hidden');
             
-            // Auto hide after 5 seconds for success messages
             if (type === 'success') {
                 setTimeout(() => {
                     statusMessage.classList.add('hidden');
@@ -866,30 +1489,58 @@
                 subjectSpan.textContent = '-';
                 scheduleSpan.textContent = '-';
                 btnAbsen.disabled = true;
-                showStatusMessage('Belum waktu absensi, silakan coba saat jadwal aktif.', 'warning');
+                showStatusMessage('Not yet time for attendance, please try during active schedule.', 'warning');
             }
+        }
+
+        function updateButtonIcon(attendanceType) {
+            const icons = {
+                'Hadir': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9,11 12,14 22,4"></polyline>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                </svg>`,
+                'Sakit': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5Z"></path>
+                    <path d="M12 5L8 21l4-7 4 7-4-16"></path>
+                </svg>`,
+                'Izin': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 12h6"></path>
+                    <path d="M9 16h6"></path>
+                    <path d="M9 8h6"></path>
+                    <path d="M3 21h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2Z"></path>
+                </svg>`,
+                'Alfa': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                </svg>`
+            };
+            btnAbsenIcon.innerHTML = icons[attendanceType];
         }
 
         // Attendance Type Selection
         attendanceOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                // Remove selected class from all options
+            const handleSelection = () => {
                 attendanceOptions.forEach(opt => opt.classList.remove('selected'));
-                
-                // Add selected class to clicked option
                 option.classList.add('selected');
-                
-                // Update selected attendance type
                 selectedAttendanceType = option.dataset.type;
                 
-                // Update button text
-                const icons = {
-                    'Hadir': '✅',
-                    'Sakit': '🤒',
-                    'Izin': '📝',
-                    'Alfa': '❌'
+                const labels = {
+                    'Hadir': 'Present',
+                    'Sakit': 'Sick',
+                    'Izin': 'Permission',
+                    'Alfa': 'Absent'
                 };
-                btnAbsenText.textContent = `${icons[selectedAttendanceType]} Konfirmasi ${selectedAttendanceType}`;
+                btnAbsenText.textContent = `Confirm ${labels[selectedAttendanceType]}`;
+                updateButtonIcon(selectedAttendanceType);
+            };
+
+            option.addEventListener('click', handleSelection);
+            option.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleSelection();
+                }
             });
         });
 
@@ -905,7 +1556,7 @@
 
             if (currentUserData) {
                 roleSelect.value = currentUserData.role;
-                detectedRoleSpan.textContent = currentUserData.role === 'siswa' ? 'Siswa' : 'Guru';
+                detectedRoleSpan.textContent = currentUserData.role === 'siswa' ? 'Student' : 'Teacher';
 
                 if (currentUserData.role === 'siswa') {
                     detectedClassSpan.textContent = currentUserData.class;
@@ -919,7 +1570,7 @@
                         subjectSpan.textContent = '-';
                         scheduleSpan.textContent = '-';
                         btnAbsen.disabled = true;
-                        showStatusMessage('Tidak ada jadwal aktif untuk kelas Anda saat ini.', 'warning');
+                        showStatusMessage('No active schedule for your class at this time.', 'warning');
                     }
                 } else if (currentUserData.role === 'guru') {
                     const activeGuruSchedule = scheduleList.find(item =>
@@ -929,28 +1580,28 @@
                     );
 
                     if (activeGuruSchedule) {
-                        detectedClassSpan.textContent = `Mengajar di ${activeGuruSchedule.class}`;
+                        detectedClassSpan.textContent = `Teaching ${activeGuruSchedule.class}`;
                         subjectSpan.textContent = activeGuruSchedule.subject;
                         scheduleSpan.textContent = `${activeGuruSchedule.start} - ${activeGuruSchedule.end}`;
                         btnAbsen.disabled = false;
                         hideStatusMessage();
                     } else {
-                        detectedClassSpan.textContent = 'Tidak ada kelas aktif';
+                        detectedClassSpan.textContent = 'No active class';
                         subjectSpan.textContent = '-';
                         scheduleSpan.textContent = '-';
                         btnAbsen.disabled = true;
-                        showStatusMessage('Anda tidak memiliki jadwal mengajar yang aktif saat ini.', 'warning');
+                        showStatusMessage('You have no active teaching schedule at this time.', 'warning');
                     }
                 }
             } else {
                 roleSelect.value = 'siswa';
-                detectedRoleSpan.textContent = inputId.length > 0 ? 'ID/Nama tidak dikenal' : 'Belum Terdeteksi';
+                detectedRoleSpan.textContent = inputId.length > 0 ? 'Unknown ID/Name' : 'Not Detected';
                 detectedClassSpan.textContent = '-';
                 subjectSpan.textContent = '-';
                 scheduleSpan.textContent = '-';
                 if (inputId.length > 0) {
                     btnAbsen.disabled = true;
-                    showStatusMessage('ID/Nama tidak dikenal. Anda tidak diizinkan untuk absensi.', 'error');
+                    showStatusMessage('Unknown ID/Name. You are not authorized for attendance.', 'error');
                 } else {
                     btnAbsen.disabled = true;
                     hideStatusMessage();
@@ -963,30 +1614,40 @@
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 try {
                     stream = await navigator.mediaDevices.getUserMedia({
-                        video: { facingMode: 'user' }
+                        video: { 
+                            facingMode: 'user',
+                            width: { ideal: 640 },
+                            height: { ideal: 480 }
+                        }
                     });
 
                     video.srcObject = stream;
                     video.classList.remove('hidden');
                     photoPreview.classList.add('hidden');
                     
-                    showStatusMessage('✅ Kamera aktif. Pastikan wajah terlihat jelas.', 'success');
-                    btnStartCamera.textContent = '📷 Kamera Aktif';
+                    showStatusMessage('Camera active. Make sure your face is clearly visible.', 'success');
+                    btnStartCamera.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                            <circle cx="12" cy="13" r="3"></circle>
+                        </svg>
+                        <span>Camera Active</span>
+                    `;
                     btnStartCamera.disabled = true;
 
                 } catch (error) {
                     console.error("Camera error:", error);
 
                     if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
-                        showStatusMessage('❌ Akses kamera ditolak. Mohon izinkan kamera di browser.', 'error');
+                        showStatusMessage('Camera access denied. Please allow camera access in your browser.', 'error');
                     } else if (error.name === 'NotFoundError') {
-                        showStatusMessage('❌ Kamera tidak ditemukan. Periksa perangkat Anda.', 'error');
+                        showStatusMessage('Camera not found. Please check your device.', 'error');
                     } else {
-                        showStatusMessage('❌ Gagal mengakses kamera: ' + error.message, 'error');
+                        showStatusMessage('Failed to access camera: ' + error.message, 'error');
                     }
                 }
             } else {
-                showStatusMessage('❌ Browser Anda tidak mendukung akses kamera.', 'error');
+                showStatusMessage('Your browser does not support camera access.', 'error');
             }
         });
 
@@ -996,12 +1657,13 @@
             const inputIdNormalized = inputId.toUpperCase();
 
             if (!currentUserData || currentUserData.id.toUpperCase() !== inputIdNormalized) {
-                showStatusMessage('Error: ID/Nama tidak dikenal atau belum dideteksi. Harap masukkan ID dengan benar.', 'error');
+                showStatusMessage('Error: Unknown ID/Name or not detected. Please enter ID correctly.', 'error');
                 return;
             }
 
             // Show loading state
             btnAbsenText.classList.add('hidden');
+            btnAbsenIcon.classList.add('hidden');
             btnAbsenSpinner.classList.remove('hidden');
             btnAbsen.disabled = true;
 
@@ -1026,21 +1688,21 @@
                 }
 
                 if (!activeScheduleForAbsence) {
-                    showStatusMessage('Gagal absensi: Tidak ada jadwal aktif yang cocok saat ini.', 'error');
+                    showStatusMessage('Attendance failed: No matching active schedule at this time.', 'error');
                     return;
                 }
 
                 // Capture photo if camera is active and attendance type is 'Hadir'
                 let photoData = '';
                 if (selectedAttendanceType === 'Hadir' && !video.classList.contains('hidden')) {
-                    canvas.width = video.videoWidth || 320;
-                    canvas.height = video.videoHeight || 240;
+                    canvas.width = video.videoWidth || 640;
+                    canvas.height = video.videoHeight || 480;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                    photoData = canvas.toDataURL('image/png');
+                    photoData = canvas.toDataURL('image/jpeg', 0.8);
                     
                     // Show photo preview
-                    photoPreview.src = photoData;
+                    photoPreview.innerHTML = `<img src="${photoData}" alt="Captured photo" style="width: 100%; height: auto; border-radius: var(--radius-2xl);">`;
                     photoPreview.classList.remove('hidden');
                     video.classList.add('hidden');
                 }
@@ -1048,7 +1710,7 @@
                 // Get location for 'Hadir' attendance
                 let lokasi = { latitude: 0, longitude: 0 };
                 if (selectedAttendanceType === 'Hadir') {
-                    showStatusMessage('Sedang mengakses lokasi...', 'info');
+                    showStatusMessage('Accessing location...', 'info');
                     try {
                         const posisi = await new Promise((resolve, reject) => {
                             const geoTimeout = setTimeout(() => reject(new Error('Geolocation timeout')), 10000);
@@ -1067,8 +1729,7 @@
                         lokasi.latitude = posisi.coords.latitude;
                         lokasi.longitude = posisi.coords.longitude;
                     } catch (error) {
-                        showStatusMessage('Tidak dapat mengakses lokasi: ' + error.message, 'warning');
-                        // Continue without location for non-critical attendance types
+                        showStatusMessage('Cannot access location: ' + error.message, 'warning');
                     }
                 }
 
@@ -1089,7 +1750,7 @@
 
                 // Add teacher material if applicable
                 if (currentUserData.role === 'guru') {
-                    const materiInput = prompt("Anda adalah guru. Masukkan materi pelajaran hari ini:");
+                    const materiInput = prompt("You are a teacher. Enter today's lesson material:");
                     dataAbsensi.materi = materiInput || '-';
                     dataAbsensi.namaGuru = inputId;
                 }
@@ -1098,7 +1759,13 @@
                 const path = `absensi/${dataAbsensi.role}/${dataAbsensi.id}/${dataAbsensi.kelas}/${Date.now()}`;
                 await db.ref(path).set(dataAbsensi);
 
-                showStatusMessage(`✅ Absensi ${selectedAttendanceType} berhasil disimpan!`, 'success');
+                const statusLabels = {
+                    'Hadir': 'Present',
+                    'Sakit': 'Sick',
+                    'Izin': 'Permission',
+                    'Alfa': 'Absent'
+                };
+                showStatusMessage(`${statusLabels[selectedAttendanceType]} attendance successfully saved!`, 'success');
                 
                 // Reset form
                 btnAbsen.disabled = true;
@@ -1108,24 +1775,36 @@
                 }
 
             } catch (error) {
-                showStatusMessage("❌ Gagal menyimpan absensi: " + error.message, 'error');
+                showStatusMessage("Failed to save attendance: " + error.message, 'error');
             } finally {
                 // Reset loading state
                 btnAbsenText.classList.remove('hidden');
+                btnAbsenIcon.classList.remove('hidden');
                 btnAbsenSpinner.classList.add('hidden');
             }
         });
 
         // Initialize
         updateScheduleDisplay();
-        setInterval(updateScheduleDisplay, 60000); // Check schedule every minute
+        setInterval(updateScheduleDisplay, 60000);
 
-        // Enter key support
-        document.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !btnAbsen.disabled) {
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !btnAbsen.disabled && document.activeElement !== userIdInput) {
                 btnAbsen.click();
             }
         });
+
+        // Smooth scrolling
+        document.documentElement.style.scrollBehavior = 'smooth';
+
+        // Performance optimization
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+                // Initialize non-critical features
+                console.log('Digital Attendance System initialized');
+            });
+        }
     </script>
 </body>
 </html>
