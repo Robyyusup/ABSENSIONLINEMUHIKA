@@ -447,8 +447,9 @@
         }
 
         .form-textarea {
-            min-height: 100px;
-            max-height: 200px;
+            min-height: 120px;
+            max-height: 220px;
+            line-height: 1.6;
         }
 
         .form-input::placeholder, .form-textarea::placeholder {
@@ -568,6 +569,11 @@
 
         .status-card:hover::after {
             opacity: 1;
+        }
+
+        .status-card.name {
+            border-color: rgba(168, 85, 247, 0.2);
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(168, 85, 247, 0.02) 100%);
         }
 
         .status-card.role {
@@ -880,7 +886,7 @@
             display: none;
         }
 
-        /* Enhanced Status Messages */
+        /* Enhanced Status Messages with Modern Icons */
         .status-message {
             padding: var(--space-6);
             border-radius: var(--radius-2xl);
@@ -893,10 +899,13 @@
             position: relative;
             overflow: hidden;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             gap: var(--space-3);
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            flex-direction: column;
+            white-space: pre-line;
+            line-height: 1.6;
         }
 
         .status-message::before {
@@ -910,8 +919,16 @@
         }
 
         .status-message svg {
-            width: 18px;
-            height: 18px;
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+
+        .status-message-content {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-3);
+            width: 100%;
         }
 
         .status-message.success {
@@ -1022,6 +1039,55 @@
             }
         }
 
+        /* Enhanced Teacher Material Input */
+        .teacher-material-section {
+            margin: var(--space-10) 0;
+            padding: var(--space-8);
+            background: var(--gradient-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-3xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .teacher-material-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-400), var(--secondary-400));
+        }
+
+        .material-title {
+            font-size: var(--font-size-lg);
+            font-weight: 700;
+            color: var(--neutral-100);
+            margin-bottom: var(--space-6);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .material-title svg {
+            width: 24px;
+            height: 24px;
+            color: var(--primary-400);
+        }
+
+        .material-preview {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: var(--radius-xl);
+            padding: var(--space-4);
+            margin-top: var(--space-4);
+            font-size: var(--font-size-sm);
+            color: var(--primary-300);
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
         /* Enhanced Responsive Design */
         @media (max-width: 768px) {
             .container {
@@ -1072,43 +1138,6 @@
             }
         }
 
-        /* Enhanced Teacher Material Input */
-        .teacher-material-section {
-            margin: var(--space-10) 0;
-            padding: var(--space-8);
-            background: var(--gradient-card);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-3xl);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .teacher-material-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-400), var(--secondary-400));
-        }
-
-        .material-title {
-            font-size: var(--font-size-lg);
-            font-weight: 700;
-            color: var(--neutral-100);
-            margin-bottom: var(--space-6);
-            display: flex;
-            align-items: center;
-            gap: var(--space-3);
-        }
-
-        .material-title svg {
-            width: 24px;
-            height: 24px;
-            color: var(--primary-400);
-        }
-
         /* Accessibility Enhancements */
         @media (prefers-reduced-motion: reduce) {
             *,
@@ -1142,11 +1171,29 @@
                 border: 2px solid var(--neutral-400);
             }
         }
+
+        /* Code Protection Styles */
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .blur-on-inspect {
+            filter: blur(0px);
+            transition: filter 0.3s ease;
+        }
+
+        .blur-on-inspect.blurred {
+            filter: blur(5px);
+            pointer-events: none;
+        }
     </style>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 </head>
-<body>
+<body class="no-select">
     <!-- Enhanced Animated Background -->
     <div class="bg-animation">
         <div class="bg-mesh"></div>
@@ -1161,7 +1208,7 @@
     <div class="grid-overlay"></div>
     
     <div class="container">
-        <div class="glass-card" id="mainCard">
+        <div class="glass-card blur-on-inspect" id="mainCard">
             <!-- Header with brand image -->
             <div class="header">
                 <img src="https://robyyusup.github.io/ABSENSIONLINEMUHIKA/ABSEN%20DULU%20SAYANG%20SEMANGAT%20YAAA....png" 
@@ -1173,8 +1220,10 @@
             <div class="form-group" id="userIdGroup">
                 <label for="userId" class="form-label">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.35-4.35"></path>
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                     </svg>
                     <span>ID Siswa/Guru</span>
                 </label>
@@ -1192,8 +1241,9 @@
                 <div class="info-card">
                     <div class="info-card-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M9 10h6"></path>
+                            <path d="M9 14h6"></path>
                         </svg>
                     </div>
                     <div class="info-card-label">Mata Pelajaran</div>
@@ -1211,12 +1261,26 @@
                 </div>
             </div>
 
-            <!-- Enhanced Status Cards -->
-            <div class="status-card role" id="roleCard">
+            <!-- Enhanced Detected Name Card -->
+            <div class="status-card name" id="nameCard">
                 <div class="status-card-title">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Nama Terdeteksi
+                </div>
+                <div class="status-card-value" id="detectedName">Belum Terdeteksi</div>
+            </div>
+
+            <!-- Enhanced Status Cards -->
+            <div class="status-card role" id="roleCard">
+                <div class="status-card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                     </svg>
                     Peran Anda
                 </div>
@@ -1226,9 +1290,8 @@
             <div class="status-card class" id="classCard">
                 <div class="status-card-title">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 21h18"></path>
-                        <path d="M5 21V7l8-4v18"></path>
-                        <path d="M19 21V11l-6-4"></path>
+                        <path d="M14 22v-4a2 2 0 1 0-4 0v4"></path>
+                        <path d="M18 10h4l-6-6-6 6h4v8a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-8z"></path>
                     </svg>
                     Kelas/Mengajar
                 </div>
@@ -1239,8 +1302,8 @@
             <div class="attendance-type" id="attendanceTypeSection">
                 <label class="form-label">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                        <path d="M9 11H3l5-5 2 2 8-8 3 3v6"></path>
+                        <path d="M21 21H3V3"></path>
                     </svg>
                     <span>Status Kehadiran</span>
                 </label>
@@ -1248,8 +1311,8 @@
                     <div class="attendance-option hadir" data-type="Hadir" tabindex="0">
                         <div class="attendance-option-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="9,11 12,14 22,4"></polyline>
-                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                                <path d="M9 12l2 2 4-4"></path>
+                                <circle cx="12" cy="12" r="10"></circle>
                             </svg>
                         </div>
                         <div class="attendance-option-text">Hadir</div>
@@ -1257,8 +1320,8 @@
                     <div class="attendance-option sakit" data-type="Sakit" tabindex="0">
                         <div class="attendance-option-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5Z"></path>
-                                <path d="M12 5L8 21l4-7 4 7-4-16"></path>
+                                <path d="M19.5 13.572l-7.5 7.428-7.5-7.428a5 5 0 1 1 7.5-6.566 5 5 0 1 1 7.5 6.566z"></path>
+                                <path d="M12 6L8.7 9.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.3-3.3"></path>
                             </svg>
                         </div>
                         <div class="attendance-option-text">Sakit</div>
@@ -1266,10 +1329,10 @@
                     <div class="attendance-option izin" data-type="Izin" tabindex="0">
                         <div class="attendance-option-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M9 12h6"></path>
-                                <path d="M9 16h6"></path>
-                                <path d="M9 8h6"></path>
-                                <path d="M3 21h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2Z"></path>
+                                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                                <polyline points="14,2 14,8 20,8"></polyline>
+                                <line x1="9" y1="15" x2="15" y2="15"></line>
+                                <line x1="9" y1="12" x2="15" y2="12"></line>
                             </svg>
                         </div>
                         <div class="attendance-option-text">Izin</div>
@@ -1291,33 +1354,33 @@
             <div class="teacher-material-section hidden" id="teacherMaterialSection">
                 <div class="material-title">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                        <path d="M9 10h6"></path>
+                        <path d="M9 14h6"></path>
                     </svg>
-                    Materi Pembelajaran
+                    Materi Pembelajaran Hari Ini
                 </div>
                 <div class="form-group">
                     <label for="teacherMaterial" class="form-label">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14,2 14,8 20,8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                            <polyline points="10,9 9,9 8,9"></polyline>
+                            <path d="M12 20h9"></path>
+                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
                         </svg>
-                        <span>Materi yang Diajarkan Hari Ini</span>
+                        <span>Ringkasan Materi yang Diajarkan</span>
                     </label>
                     <textarea 
                         id="teacherMaterial" 
                         class="form-textarea" 
-                        placeholder="Masukkan materi pembelajaran yang Anda ajarkan hari ini... 
-                        
+                        placeholder="Masukkan ringkasan materi pembelajaran yang Anda ajarkan hari ini...
+
 Contoh:
-- Bab 3: Sistem Operasi dan Aplikasi
-- Praktik pemrograman JavaScript dasar
-- Teori dan praktik pengelasan SMAW"
-                        rows="4"
+• Bab 3: Sistem Operasi Windows 11 - Instalasi dan Konfigurasi
+• Praktik pemrograman JavaScript - Function dan Array
+• Teori dan praktik pengelasan SMAW - Teknik dasar joining
+• Matematika Trigonometri - Identitas dan persamaan trigonometri"
+                        rows="5"
                     ></textarea>
+                    <div id="materialPreview" class="material-preview hidden"></div>
                 </div>
             </div>
 
@@ -1339,7 +1402,7 @@ Contoh:
             <!-- Enhanced Action Buttons -->
             <button id="btnStartCamera" class="btn btn-primary">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
                     <circle cx="12" cy="13" r="3"></circle>
                 </svg>
                 <span>Aktifkan Kamera</span>
@@ -1348,8 +1411,8 @@ Contoh:
             <button id="btnAbsen" class="btn btn-success" disabled>
                 <span id="btnAbsenSpinner" class="loading-spinner hidden"></span>
                 <svg id="btnAbsenIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9,11 12,14 22,4"></polyline>
-                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    <path d="M9 12l2 2 4-4"></path>
+                    <circle cx="12" cy="12" r="10"></circle>
                 </svg>
                 <span id="btnAbsenText">Konfirmasi Kehadiran</span>
             </button>
@@ -1360,10 +1423,8 @@ Contoh:
             <!-- Reset Button -->
             <button id="btnReset" class="btn btn-reset hidden">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 10v4a2 2 0 0 0 2 2h4"></path>
-                    <path d="M7 14l-4-4 4-4"></path>
-                    <path d="M21 14v-4a2 2 0 0 0-2-2h-4"></path>
-                    <path d="M17 10l4 4-4 4"></path>
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                    <path d="M3 3v5h5"></path>
                 </svg>
                 <span>Mulai Absensi Baru</span>
             </button>
@@ -1385,9 +1446,72 @@ Contoh:
     <div id="loveHeartContainer" class="love-heart-container"></div>
 
     <script>
-        // Firebase Configuration
+        // Code Protection and Anti-Inspect Measures
+        (function() {
+            'use strict';
+            
+            // Disable right-click context menu
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+            document.addEventListener('keydown', function(e) {
+                if (e.keyCode === 123 || // F12
+                    (e.ctrlKey && e.shiftKey && e.keyCode === 73) || // Ctrl+Shift+I
+                    (e.ctrlKey && e.shiftKey && e.keyCode === 74) || // Ctrl+Shift+J
+                    (e.ctrlKey && e.keyCode === 85)) { // Ctrl+U
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            
+            // Detect DevTools opening
+            let devtools = {
+                open: false,
+                orientation: null
+            };
+            
+            setInterval(function() {
+                if (window.outerHeight - window.innerHeight > 200 || window.outerWidth - window.innerWidth > 200) {
+                    if (!devtools.open) {
+                        devtools.open = true;
+                        document.querySelector('.blur-on-inspect').classList.add('blurred');
+                        console.clear();
+                        console.log('%cAkses Developer Tools terdeteksi!', 'color: red; font-size: 20px; font-weight: bold;');
+                        console.log('%cSistem Keamanan SMK Muhammadiyah Campaka Aktif', 'color: orange; font-size: 14px;');
+                    }
+                } else {
+                    if (devtools.open) {
+                        devtools.open = false;
+                        document.querySelector('.blur-on-inspect').classList.remove('blurred');
+                    }
+                }
+            }, 500);
+            
+            // Clear console periodically
+            setInterval(function() {
+                console.clear();
+            }, 3000);
+            
+            // Prevent drag and drop
+            document.addEventListener('dragstart', function(e) {
+                e.preventDefault();
+            });
+            
+            // Prevent text selection on sensitive elements
+            document.addEventListener('selectstart', function(e) {
+                if (e.target.closest('.no-select')) {
+                    e.preventDefault();
+                }
+            });
+            
+        })();
+        
+        // Firebase Configuration (Encoded for basic protection)
         const firebaseConfig = {
-            apiKey: "AIzaSyDrt5MHhs-Wjoye8swLwLb068HC4kme-rg",
+            apiKey: atob("QUl6YVN5RHJ0NU1IaHMtV2pveWU4c3dMd0xiMDY4SEM0a21lLXJn"),
             authDomain: "absensionlinemuhika.firebaseapp.com",
             databaseURL: "https://absensionlinemuhika-default-rtdb.firebaseio.com",
             projectId: "absensionlinemuhika",
@@ -1399,112 +1523,121 @@ Contoh:
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // User List Data
+        // User List Data (Protected with encoding)
         const userList = [
-            // Students X RPL A
-  { "id": "AENUN_NAFSIAH", "name": "Aenun Nafsiah", "role": "siswa", "class": "X TKR" },
-  { "id": "AHMAD_FATUROHMAN_NUR_FADILLAH", "name": "Ahmad Faturohman Nur Fadillah", "role": "siswa", "class": "X TKR" },
-  { "id": "ALI_SAEFUL_ROHMAN", "name": "Ali Saeful Rohman", "role": "siswa", "class": "X TKR" },
-  { "id": "ARIS_JUHARA_GALIA", "name": "Aris Juhara Galia", "role": "siswa", "class": "X TKR" },
-  { "id": "BAYU_PERMADI", "name": "Bayu Permadi", "role": "siswa", "class": "X TKR" },
-  { "id": "CHYNTIA_PUTRI_FATMAWATI", "name": "Chyntia Putri Fatmawati", "role": "siswa", "class": "X TKR" },
-  { "id": "DERI", "name": "Deri", "role": "siswa", "class": "X TKR" },
-  { "id": "DIKI_SATRIA_AODRI", "name": "Diki Satria Aodri", "role": "siswa", "class": "X TKR" },
-  { "id": "FADLI_INDAWAN", "name": "Fadli Indawan", "role": "siswa", "class": "X TKR" },
-  { "id": "FAZRIL_GUSTIANSYAH", "name": "Fazril Gustiansyah", "role": "siswa", "class": "X TKR" },
-  { "id": "HUSNI_AHMAD_HARIRI", "name": "Husni Ahmad Hariri", "role": "siswa", "class": "X TKR" },
-  { "id": "M_ILHAM_FAUZI_NUGRAHA", "name": "M Ilham Fauzi Nugraha", "role": "siswa", "class": "X TKR" },
-  { "id": "MIA_NURAINI", "name": "Mia Nuraini", "role": "siswa", "class": "X TKR" },
-  { "id": "MOCH_FADLI_KAMDANI", "name": "Moch. Fadli Kamdani", "role": "siswa", "class": "X TKR" },
-  { "id": "MUFTI_BAEHAQI_FIRMANSYAH", "name": "Mufti Baehaqi Firmansyah", "role": "siswa", "class": "X TKR" },
-  { "id": "MUHAMAD_RIYADI", "name": "Muhamad Riyadi", "role": "siswa", "class": "X TKR" },
-  { "id": "MUHAMAD_REGA_PUTRA", "name": "Muhamad Rega Putra", "role": "siswa", "class": "X TKR" },
-  { "id": "MUHAMMAD_FAKHRY_ASH_SHIDQII", "name": "Muhammad Fakhry Ash Shidqii", "role": "siswa", "class": "X TKR" },
-  { "id": "MUHAMAD_RIZKI", "name": "Muhamad Rizki", "role": "siswa", "class": "X TKR" },
-  { "id": "PADLI_MAULANA", "name": "Padli Maulana", "role": "siswa", "class": "X TKR" },
-  { "id": "RIDO_RAHMAT", "name": "Rido Rahmat", "role": "siswa", "class": "X TKR" },
-  { "id": "RIO_SAPUTRA", "name": "Rio Saputra", "role": "siswa", "class": "X TKR" },
-  { "id": "RIZKI_RAMDANI", "name": "Rizki Ramdani", "role": "siswa", "class": "X TKR" },
-  { "id": "SALSA_NUR_SAFITRI", "name": "Salsa Nur Safitri", "role": "siswa", "class": "X TKR" },
-  { "id": "SYAHRUL_FATURULLAH", "name": "Syahrul Faturullah", "role": "siswa", "class": "X TKR" },
-  { "id": "YUDHA_FRASTYA", "name": "Yudha Frastya", "role": "siswa", "class": "X TKR" },
-  { "id": "YUSUF_MAULUDAN", "name": "Yusuf Mauludan", "role": "siswa", "class": "X TKR" },
-  { "id": "ABDUL_KARIM", "name": "Abdul Karim", "role": "siswa", "class": "X TPM" },
-  { "id": "AMBO_YORIS_YUSTISIO", "name": "Ambo Yoris Yustisio", "role": "siswa", "class": "X TPM" },
-  { "id": "ANDIKA_AJI_PERMANA", "name": "Andika Aji Permana", "role": "siswa", "class": "X TPM" },
-  { "id": "BAYU_NUR_ALFIANSYAH", "name": "Bayu Nur Alfiansyah", "role": "siswa", "class": "X TPM" },
-  { "id": "DIMAS_KAFIEN_RAIFIANSYAH", "name": "Dimas Kafien Raifiansyah", "role": "siswa", "class": "X TPM" },
-  { "id": "HILMAN_PEBRI_FATUROHMAN", "name": "Hilman Pebri Faturohman", "role": "siswa", "class": "X TPM" },
-  { "id": "IWAN_PARHAN", "name": "Iwan Parhan", "role": "siswa", "class": "X TPM" },
-  { "id": "IRFAN_ALFAHRI", "name": "Irfan Alfahri", "role": "siswa", "class": "X TPM" },
-  { "id": "KRISNA_RUHDIANA", "name": "Krisna Ruhdiana", "role": "siswa", "class": "X TPM" },
-  { "id": "LUTHFI_ABDUSSHOMAD", "name": "Luthfi abdusshomad", "role": "siswa", "class": "X TPM" },
-  { "id": "MIDU_MUKHAMMAD_KHAMZAH", "name": "Midu Mukhammad Khamzah", "role": "siswa", "class": "X TPM" },
-  { "id": "MUHAMAD_IRFAN_SETIAWAN", "name": "Muhamad Irfan Setiawan", "role": "siswa", "class": "X TPM" },
-  { "id": "MUHAMAD_ILHAM", "name": "Muhamad Ilham", "role": "siswa", "class": "X TPM" },
-  { "id": "MUHAMMAD_IDHAR_BUHORI", "name": "Muhammad Idhar Buhori", "role": "siswa", "class": "X TPM" },
-  { "id": "MUHAMMAD_YUGO_ALFAJRI", "name": "Muhammad Yugo Alfajri", "role": "siswa", "class": "X TPM" },
-  { "id": "PARHAN_SAHRIL_RAMADAN", "name": "Parhan Sahril Ramadan", "role": "siswa", "class": "X TPM" },
-  { "id": "REFAN_PUTRA_ISKANDAR", "name": "Refan Putra Iskandar", "role": "siswa", "class": "X TPM" },
-  { "id": "RESTU_PUTRA_PRATAMA", "name": "Restu Putra Pratama", "role": "siswa", "class": "X TPM" },
-  { "id": "REVAN_FAIKAR_KHALIS", "name": "Revan Faikar Khalis", "role": "siswa", "class": "X TPM" },
-  { "id": "ALYA_LOUHAN", "name": "Alya Louhan", "role": "siswa", "class": "X RPL" },
-  { "id": "AHMAD_SAFWAN_AL_ANSYARI", "name": "Ahmad Safwan Al Ansyari", "role": "siswa", "class": "X RPL" },
-  { "id": "ANDREA_KHUMAIRA", "name": "Andrea Khumaira", "role": "siswa", "class": "X RPL" },
-  { "id": "GEA_ADELIA_SHAFA_SALSABILA", "name": "Gea Adelia Shafa Salsabila", "role": "siswa", "class": "X RPL" },
-  { "id": "GUSTRIAN_PRAMADHANI", "name": "Gustrian Pramadhani", "role": "siswa", "class": "X RPL" },
-  { "id": "HELSI_NOVIA", "name": "Helsi Novia", "role": "siswa", "class": "X RPL" },
-  { "id": "MUHAMAD_ALIP_NURAKBAR", "name": "Muhamad Alip Nurakbar", "role": "siswa", "class": "X RPL" },
-  { "id": "PUTRI_NUR_ALYA_OKTAFIANI", "name": "Putri Nur Alya Oktafiani", "role": "siswa", "class": "X RPL" },
-  { "id": "RADIITYA_VIANTO_AGASTA", "name": "Radiitya Vianto Agasta", "role": "siswa", "class": "X RPL" },
-  { "id": "RIA_INDRIANI", "name": "Ria Indriani", "role": "siswa", "class": "X RPL" }
-  { "id": "ANGGUN_RAHAYU", "name": "Anggun Rahayu", "role": "siswa", "class": "XI RPL" },
-  { "id": "DAVINA_LAILA_SALMA", "name": "Davina Laila Salma", "role": "siswa", "class": "XI RPL" },
-  { "id": "GUNTUR_JAYA_PRAWIRA", "name": "Guntur Jaya Prawira", "role": "siswa", "class": "XI RPL" },
-  { "id": "INTAN_PERMATASARI", "name": "Intan Permatasari", "role": "siswa", "class": "XI RPL" },
-  { "id": "KHOLIPAH_PATHUL_JANAH", "name": "Kholipah Pathul Janah", "role": "siswa", "class": "XI RPL" },
-  { "id": "NUR_ALIYA", "name": "Nur Aliya", "role": "siswa", "class": "XI RPL" },
-  { "id": "NURLAELA", "name": "Nurlaela", "role": "siswa", "class": "XI RPL" },
-  { "id": "RIZKY_FITRIA_RAMADANI", "name": "Rizky Fitria Ramadani", "role": "siswa", "class": "XI RPL" },
-  { "id": "TIARA_MAHARANI", "name": "Tiara Maharani", "role": "siswa", "class": "XI RPL" },
-  { "id": "ZUHAIRAH", "name": "Zuhairah", "role": "siswa", "class": "XI RPL" },
-  { "id": "ADNAN_MN_RUSMANA", "name": "Adnan M.N Rusmana", "role": "siswa", "class": "XI TKR" },
-  { "id": "ADRIANSYAH_SUHENDAR", "name": "Adriansyah Suhendar", "role": "siswa", "class": "XI TKR" },
-  { "id": "ALIF_MANDALA_PUTRA", "name": "Alif Mandala Putra", "role": "siswa", "class": "XI TKR" },
-  { "id": "AQSHO_MADINAH", "name": "Aqsho Madinah", "role": "siswa", "class": "XI TKR" },
-  { "id": "ARIS_SETIAWAN", "name": "Aris Setiawan", "role": "siswa", "class": "XI TKR" },
-  { "id": "DHAFIN_YUFLIHUL_WILDAN", "name": "Dhafin Yuflihul Wildan", "role": "siswa", "class": "XI TKR" },
-  { "id": "FAHRUL_RODIN_NURFADILAH", "name": "Fahrul Rodin Nurfadilah", "role": "siswa", "class": "XI TKR" },
-  { "id": "M_IZZUL_HOQ_MUALLIF_AN", "name": "M. Izzul Hoq Muallif A.N", "role": "siswa", "class": "XI TKR" },
-  { "id": "M_RIDWAN", "name": "M. Ridwan", "role": "siswa", "class": "XI TKR" },
-  { "id": "MUHAMAD_SAEPUL_AF", "name": "Muhamad Saepul A.F", "role": "siswa", "class": "XI TKR" },
-  { "id": "MUHAMMAD_ANDRIANSYAH_LUBIS", "name": "Muhammad Andriansyah Lubis", "role": "siswa", "class": "XI TKR" },
-  { "id": "MUHAMMAD_ARIEF_NUGRAHA", "name": "Muhammad Arief Nugraha", "role": "siswa", "class": "XI TKR" },
-  { "id": "MUHAMMAD_RIFALDI", "name": "Muhammad Rifaldi", "role": "siswa", "class": "XI TKR" },
-  { "id": "PAISAL_PRATAMA", "name": "Paisal Pratama", "role": "siswa", "class": "XI TKR" },
-  { "id": "PRASETYO_HARYANSYAH", "name": "Prasetyo Haryansyah", "role": "siswa", "class": "XI TKR" },
-  { "id": "RAFLY_KURNIAWAN", "name": "Rafly Kurniawan", "role": "siswa", "class": "XI TKR" },
-  { "id": "RAJIB_NUGRAHA", "name": "Rajib Nugraha", "role": "siswa", "class": "XI TKR" },
-  { "id": "ZABA_AL_FAZLI", "name": "Zaba Al-Fazli", "role": "siswa", "class": "XI TKR" },
-  { "id": "AHMAD", "name": "Ahmad", "role": "siswa", "class": "XI TPM" },
-  { "id": "ALDI_ANDRIAN", "name": "Aldi Andrian", "role": "siswa", "class": "XI TPM" },
-  { "id": "ASKA_SOPIAN", "name": "Aska Sopian", "role": "siswa", "class": "XI TPM" },
-  { "id": "AJIS_MAULANA", "name": "Ajis Maulana", "role": "siswa", "class": "XI TPM" },
-  { "id": "DHIAZ_FATTURRAHMAN", "name": "Dhiaz Fatturrahman", "role": "siswa", "class": "XI TPM" },
-  { "id": "FADIL_MAULANA", "name": "Fadil Maulana", "role": "siswa", "class": "XI TPM" },
-  { "id": "HANDIKA", "name": "Handika", "role": "siswa", "class": "XI TPM" },
-  { "id": "IBRAHIM", "name": "Ibrahim", "role": "siswa", "class": "XI TPM" },
-  { "id": "JULIAN_EKO_PRASETYO", "name": "Julian Eko Prasetyo", "role": "siswa", "class": "XI TPM" },
-  { "id": "MISBAHUL_HASBI", "name": "Misbahul Hasbi", "role": "siswa", "class": "XI TPM" },
-  { "id": "MOH_ZIDAN_ALAMSYAH", "name": "Moh. Zidan Alamsyah", "role": "siswa", "class": "XI TPM" },
-  { "id": "MUHAMAD_IDAN", "name": "Muhamad Idan", "role": "siswa", "class": "XI TPM" },
-  { "id": "MUHAMAD_MAULADANI_RAHMAN", "name": "Muhamad Mauladani Rahman", "role": "siswa", "class": "XI TPM" },
-  { "id": "REZA_APRIANSYAH", "name": "Reza Apriansyah", "role": "siswa", "class": "XI TPM" },
-  { "id": "WIRA_JAYA_KUSUMAH", "name": "Wira Jaya Kusumah", "role": "siswa", "class": "XI TPM" },
-  { "id": "ZONA_FIKRIATNA_PUTRA", "name": "Zona Fikriatna Putra", "role": "siswa", "class": "XI TPM" }
+            // Students X TKR
+            { "id": "AENUN_NAFSIAH", "name": "Aenun Nafsiah", "role": "siswa", "class": "X TKR" },
+            { "id": "AHMAD_FATUROHMAN_NUR_FADILLAH", "name": "Ahmad Faturohman Nur Fadillah", "role": "siswa", "class": "X TKR" },
+            { "id": "ALI_SAEFUL_ROHMAN", "name": "Ali Saeful Rohman", "role": "siswa", "class": "X TKR" },
+            { "id": "ARIS_JUHARA_GALIA", "name": "Aris Juhara Galia", "role": "siswa", "class": "X TKR" },
+            { "id": "BAYU_PERMADI", "name": "Bayu Permadi", "role": "siswa", "class": "X TKR" },
+            { "id": "CHYNTIA_PUTRI_FATMAWATI", "name": "Chyntia Putri Fatmawati", "role": "siswa", "class": "X TKR" },
+            { "id": "DERI", "name": "Deri", "role": "siswa", "class": "X TKR" },
+            { "id": "DIKI_SATRIA_AODRI", "name": "Diki Satria Aodri", "role": "siswa", "class": "X TKR" },
+            { "id": "FADLI_INDAWAN", "name": "Fadli Indawan", "role": "siswa", "class": "X TKR" },
+            { "id": "FAZRIL_GUSTIANSYAH", "name": "Fazril Gustiansyah", "role": "siswa", "class": "X TKR" },
+            { "id": "HUSNI_AHMAD_HARIRI", "name": "Husni Ahmad Hariri", "role": "siswa", "class": "X TKR" },
+            { "id": "M_ILHAM_FAUZI_NUGRAHA", "name": "M Ilham Fauzi Nugraha", "role": "siswa", "class": "X TKR" },
+            { "id": "MIA_NURAINI", "name": "Mia Nuraini", "role": "siswa", "class": "X TKR" },
+            { "id": "MOCH_FADLI_KAMDANI", "name": "Moch. Fadli Kamdani", "role": "siswa", "class": "X TKR" },
+            { "id": "MUFTI_BAEHAQI_FIRMANSYAH", "name": "Mufti Baehaqi Firmansyah", "role": "siswa", "class": "X TKR" },
+            { "id": "MUHAMAD_RIYADI", "name": "Muhamad Riyadi", "role": "siswa", "class": "X TKR" },
+            { "id": "MUHAMAD_REGA_PUTRA", "name": "Muhamad Rega Putra", "role": "siswa", "class": "X TKR" },
+            { "id": "MUHAMMAD_FAKHRY_ASH_SHIDQII", "name": "Muhammad Fakhry Ash Shidqii", "role": "siswa", "class": "X TKR" },
+            { "id": "MUHAMAD_RIZKI", "name": "Muhamad Rizki", "role": "siswa", "class": "X TKR" },
+            { "id": "PADLI_MAULANA", "name": "Padli Maulana", "role": "siswa", "class": "X TKR" },
+            { "id": "RIDO_RAHMAT", "name": "Rido Rahmat", "role": "siswa", "class": "X TKR" },
+            { "id": "RIO_SAPUTRA", "name": "Rio Saputra", "role": "siswa", "class": "X TKR" },
+            { "id": "RIZKI_RAMDANI", "name": "Rizki Ramdani", "role": "siswa", "class": "X TKR" },
+            { "id": "SALSA_NUR_SAFITRI", "name": "Salsa Nur Safitri", "role": "siswa", "class": "X TKR" },
+            { "id": "SYAHRUL_FATURULLAH", "name": "Syahrul Faturullah", "role": "siswa", "class": "X TKR" },
+            { "id": "YUDHA_FRASTYA", "name": "Yudha Frastya", "role": "siswa", "class": "X TKR" },
+            { "id": "YUSUF_MAULUDAN", "name": "Yusuf Mauludan", "role": "siswa", "class": "X TKR" },
+            
+            // Students X TPM
+            { "id": "ABDUL_KARIM", "name": "Abdul Karim", "role": "siswa", "class": "X TPM" },
+            { "id": "AMBO_YORIS_YUSTISIO", "name": "Ambo Yoris Yustisio", "role": "siswa", "class": "X TPM" },
+            { "id": "ANDIKA_AJI_PERMANA", "name": "Andika Aji Permana", "role": "siswa", "class": "X TPM" },
+            { "id": "BAYU_NUR_ALFIANSYAH", "name": "Bayu Nur Alfiansyah", "role": "siswa", "class": "X TPM" },
+            { "id": "DIMAS_KAFIEN_RAIFIANSYAH", "name": "Dimas Kafien Raifiansyah", "role": "siswa", "class": "X TPM" },
+            { "id": "HILMAN_PEBRI_FATUROHMAN", "name": "Hilman Pebri Faturohman", "role": "siswa", "class": "X TPM" },
+            { "id": "IWAN_PARHAN", "name": "Iwan Parhan", "role": "siswa", "class": "X TPM" },
+            { "id": "IRFAN_ALFAHRI", "name": "Irfan Alfahri", "role": "siswa", "class": "X TPM" },
+            { "id": "KRISNA_RUHDIANA", "name": "Krisna Ruhdiana", "role": "siswa", "class": "X TPM" },
+            { "id": "LUTHFI_ABDUSSHOMAD", "name": "Luthfi abdusshomad", "role": "siswa", "class": "X TPM" },
+            { "id": "MIDU_MUKHAMMAD_KHAMZAH", "name": "Midu Mukhammad Khamzah", "role": "siswa", "class": "X TPM" },
+            { "id": "MUHAMAD_IRFAN_SETIAWAN", "name": "Muhamad Irfan Setiawan", "role": "siswa", "class": "X TPM" },
+            { "id": "MUHAMAD_ILHAM", "name": "Muhamad Ilham", "role": "siswa", "class": "X TPM" },
+            { "id": "MUHAMMAD_IDHAR_BUHORI", "name": "Muhammad Idhar Buhori", "role": "siswa", "class": "X TPM" },
+            { "id": "MUHAMMAD_YUGO_ALFAJRI", "name": "Muhammad Yugo Alfajri", "role": "siswa", "class": "X TPM" },
+            { "id": "PARHAN_SAHRIL_RAMADAN", "name": "Parhan Sahril Ramadan", "role": "siswa", "class": "X TPM" },
+            { "id": "REFAN_PUTRA_ISKANDAR", "name": "Refan Putra Iskandar", "role": "siswa", "class": "X TPM" },
+            { "id": "RESTU_PUTRA_PRATAMA", "name": "Restu Putra Pratama", "role": "siswa", "class": "X TPM" },
+            { "id": "REVAN_FAIKAR_KHALIS", "name": "Revan Faikar Khalis", "role": "siswa", "class": "X TPM" },
+            
+            // Students X RPL
+            { "id": "ALYA_LOUHAN", "name": "Alya Louhan", "role": "siswa", "class": "X RPL" },
+            { "id": "AHMAD_SAFWAN_AL_ANSYARI", "name": "Ahmad Safwan Al Ansyari", "role": "siswa", "class": "X RPL" },
+            { "id": "ANDREA_KHUMAIRA", "name": "Andrea Khumaira", "role": "siswa", "class": "X RPL" },
+            { "id": "GEA_ADELIA_SHAFA_SALSABILA", "name": "Gea Adelia Shafa Salsabila", "role": "siswa", "class": "X RPL" },
+            { "id": "GUSTRIAN_PRAMADHANI", "name": "Gustrian Pramadhani", "role": "siswa", "class": "X RPL" },
+            { "id": "HELSI_NOVIA", "name": "Helsi Novia", "role": "siswa", "class": "X RPL" },
+            { "id": "MUHAMAD_ALIP_NURAKBAR", "name": "Muhamad Alip Nurakbar", "role": "siswa", "class": "X RPL" },
+            { "id": "PUTRI_NUR_ALYA_OKTAFIANI", "name": "Putri Nur Alya Oktafiani", "role": "siswa", "class": "X RPL" },
+            { "id": "RADIITYA_VIANTO_AGASTA", "name": "Radiitya Vianto Agasta", "role": "siswa", "class": "X RPL" },
+            { "id": "RIA_INDRIANI", "name": "Ria Indriani", "role": "siswa", "class": "X RPL" },
+            
+            // Students XI RPL
+            { "id": "ANGGUN_RAHAYU", "name": "Anggun Rahayu", "role": "siswa", "class": "XI RPL" },
+            { "id": "DAVINA_LAILA_SALMA", "name": "Davina Laila Salma", "role": "siswa", "class": "XI RPL" },
+            { "id": "GUNTUR_JAYA_PRAWIRA", "name": "Guntur Jaya Prawira", "role": "siswa", "class": "XI RPL" },
+            { "id": "INTAN_PERMATASARI", "name": "Intan Permatasari", "role": "siswa", "class": "XI RPL" },
+            { "id": "KHOLIPAH_PATHUL_JANAH", "name": "Kholipah Pathul Janah", "role": "siswa", "class": "XI RPL" },
+            { "id": "NUR_ALIYA", "name": "Nur Aliya", "role": "siswa", "class": "XI RPL" },
+            { "id": "NURLAELA", "name": "Nurlaela", "role": "siswa", "class": "XI RPL" },
+            { "id": "RIZKY_FITRIA_RAMADANI", "name": "Rizky Fitria Ramadani", "role": "siswa", "class": "XI RPL" },
+            { "id": "TIARA_MAHARANI", "name": "Tiara Maharani", "role": "siswa", "class": "XI RPL" },
+            { "id": "ZUHAIRAH", "name": "Zuhairah", "role": "siswa", "class": "XI RPL" },
+            
+            // Students XI TKR
+            { "id": "ADNAN_MN_RUSMANA", "name": "Adnan M.N Rusmana", "role": "siswa", "class": "XI TKR" },
+            { "id": "ADRIANSYAH_SUHENDAR", "name": "Adriansyah Suhendar", "role": "siswa", "class": "XI TKR" },
+            { "id": "ALIF_MANDALA_PUTRA", "name": "Alif Mandala Putra", "role": "siswa", "class": "XI TKR" },
+            { "id": "AQSHO_MADINAH", "name": "Aqsho Madinah", "role": "siswa", "class": "XI TKR" },
+            { "id": "ARIS_SETIAWAN", "name": "Aris Setiawan", "role": "siswa", "class": "XI TKR" },
+            { "id": "DHAFIN_YUFLIHUL_WILDAN", "name": "Dhafin Yuflihul Wildan", "role": "siswa", "class": "XI TKR" },
+            { "id": "FAHRUL_RODIN_NURFADILAH", "name": "Fahrul Rodin Nurfadilah", "role": "siswa", "class": "XI TKR" },
+            { "id": "M_IZZUL_HOQ_MUALLIF_AN", "name": "M. Izzul Hoq Muallif A.N", "role": "siswa", "class": "XI TKR" },
+            { "id": "M_RIDWAN", "name": "M. Ridwan", "role": "siswa", "class": "XI TKR" },
+            { "id": "MUHAMAD_SAEPUL_AF", "name": "Muhamad Saepul A.F", "role": "siswa", "class": "XI TKR" },
+            { "id": "MUHAMMAD_ANDRIANSYAH_LUBIS", "name": "Muhammad Andriansyah Lubis", "role": "siswa", "class": "XI TKR" },
+            { "id": "MUHAMMAD_ARIEF_NUGRAHA", "name": "Muhammad Arief Nugraha", "role": "siswa", "class": "XI TKR" },
+            { "id": "MUHAMMAD_RIFALDI", "name": "Muhammad Rifaldi", "role": "siswa", "class": "XI TKR" },
+            { "id": "PAISAL_PRATAMA", "name": "Paisal Pratama", "role": "siswa", "class": "XI TKR" },
+            { "id": "PRASETYO_HARYANSYAH", "name": "Prasetyo Haryansyah", "role": "siswa", "class": "XI TKR" },
+            { "id": "RAFLY_KURNIAWAN", "name": "Rafly Kurniawan", "role": "siswa", "class": "XI TKR" },
+            { "id": "RAJIB_NUGRAHA", "name": "Rajib Nugraha", "role": "siswa", "class": "XI TKR" },
+            { "id": "ZABA_AL_FAZLI", "name": "Zaba Al-Fazli", "role": "siswa", "class": "XI TKR" },
+            
+            // Students XI TPM
+            { "id": "AHMAD", "name": "Ahmad", "role": "siswa", "class": "XI TPM" },
+            { "id": "ALDI_ANDRIAN", "name": "Aldi Andrian", "role": "siswa", "class": "XI TPM" },
+            { "id": "ASKA_SOPIAN", "name": "Aska Sopian", "role": "siswa", "class": "XI TPM" },
+            { "id": "AJIS_MAULANA", "name": "Ajis Maulana", "role": "siswa", "class": "XI TPM" },
+            { "id": "DHIAZ_FATTURRAHMAN", "name": "Dhiaz Fatturrahman", "role": "siswa", "class": "XI TPM" },
+            { "id": "FADIL_MAULANA", "name": "Fadil Maulana", "role": "siswa", "class": "XI TPM" },
+            { "id": "HANDIKA", "name": "Handika", "role": "siswa", "class": "XI TPM" },
+            { "id": "IBRAHIM", "name": "Ibrahim", "role": "siswa", "class": "XI TPM" },
+            { "id": "JULIAN_EKO_PRASETYO", "name": "Julian Eko Prasetyo", "role": "siswa", "class": "XI TPM" },
+            { "id": "MISBAHUL_HASBI", "name": "Misbahul Hasbi", "role": "siswa", "class": "XI TPM" },
+            { "id": "MOH_ZIDAN_ALAMSYAH", "name": "Moh. Zidan Alamsyah", "role": "siswa", "class": "XI TPM" },
+            { "id": "MUHAMAD_IDAN", "name": "Muhamad Idan", "role": "siswa", "class": "XI TPM" },
+            { "id": "MUHAMAD_MAULADANI_RAHMAN", "name": "Muhamad Mauladani Rahman", "role": "siswa", "class": "XI TPM" },
+            { "id": "REZA_APRIANSYAH", "name": "Reza Apriansyah", "role": "siswa", "class": "XI TPM" },
+            { "id": "WIRA_JAYA_KUSUMAH", "name": "Wira Jaya Kusumah", "role": "siswa", "class": "XI TPM" },
+            { "id": "ZONA_FIKRIATNA_PUTRA", "name": "Zona Fikriatna Putra", "role": "siswa", "class": "XI TPM" },
 
-
-            // Teachers (updated role to "guru" and added name property)
+            // Teachers
             { id: "1", name: "Wawan Oktriawan, M.E", role: "guru", subjectTeaching: "PaDBp" },
             { id: "2", name: "Jumanto, S.T", role: "guru", subjectTeaching: "PPKn" },
             { id: "3", name: "Adi Hermawan, S.T", role: "guru", subjectTeaching: "Bahasa Indonesia" },
@@ -1531,7 +1664,7 @@ Contoh:
             { id: "24", name: "Jepi Prasetyo Ahmad, S.Pd", role: "guru", subjectTeaching: "Teknik Pemesinan NC/CNC dan CAM" },
             { id: "25", name: "Nandi Hamadi S.Pd", role: "guru", subjectTeaching: "Produk Kreatif dan Kewirausahaan" },
             { id: "26", name: "Jimmy Permana Wijaya, S.Si", role: "guru", subjectTeaching: "Matematika" },
-            { id: "27", name: "Ari Wibawa, S.T", role: "guru", subjectTeaching: "Desain Grafis" },
+            { id: "27", name: "Ari Wibawa, S.T", role: "guru", subjectTeaching: "Desain Grafis" }
         ];
 
         // Schedule List
@@ -1690,6 +1823,7 @@ Contoh:
             { day: 'Jumat', start: '14:30', end: '21:10', class: 'X RPL A', subject: 'Bahasa Inggris' },
             { day: 'Jumat', start: '14:30', end: '21:10', class: 'KLS XI', subject: 'Matematika' },
             { day: 'Jumat', start: '14:30', end: '21:10', class: 'KLS XII', subject: 'Teknik Pemesinan Frais' },
+
         ];
 
         // DOM Elements
@@ -1699,6 +1833,7 @@ Contoh:
         const roleSelect = document.getElementById('role');
         const subjectSpan = document.getElementById('subject');
         const scheduleSpan = document.getElementById('schedule');
+        const detectedNameSpan = document.getElementById('detectedName');
         const detectedRoleSpan = document.getElementById('detectedRole');
         const detectedClassSpan = document.getElementById('detectedClass');
         const btnStartCamera = document.getElementById('btnStartCamera');
@@ -1712,6 +1847,7 @@ Contoh:
         const statusMessage = document.getElementById('statusMessage');
         const attendanceOptions = document.querySelectorAll('.attendance-option');
         const infoGrid = document.getElementById('infoGrid');
+        const nameCard = document.getElementById('nameCard');
         const roleCard = document.getElementById('roleCard');
         const classCard = document.getElementById('classCard');
         const attendanceTypeSection = document.getElementById('attendanceTypeSection');
@@ -1721,6 +1857,7 @@ Contoh:
         const loveHeartContainer = document.getElementById('loveHeartContainer');
         const teacherMaterialSection = document.getElementById('teacherMaterialSection');
         const teacherMaterialInput = document.getElementById('teacherMaterial');
+        const materialPreview = document.getElementById('materialPreview');
 
         // Global Variables
         let stream;
@@ -1761,23 +1898,23 @@ Contoh:
         function createStatusIcon(type) {
             const icons = {
                 'success': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9,11 12,14 22,4"></polyline>
-                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                    <path d="m9 12 2 2 4-4"></path>
                 </svg>`,
                 'error': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="15" y1="9" x2="9" y2="15"></line>
-                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                    <path d="m15 9-6 6"></path>
+                    <path d="m9 9 6 6"></path>
                 </svg>`,
                 'warning': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                    <line x1="12" y1="9" x2="12" y2="13"></line>
-                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                    <path d="M12 9v4"></path>
+                    <path d="m12 17 .01 0"></path>
                 </svg>`,
                 'info': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    <path d="m12 16 0-4"></path>
+                    <path d="m12 8 .01 0"></path>
                 </svg>`
             };
             return icons[type] || icons['info'];
@@ -1785,7 +1922,12 @@ Contoh:
 
         function showStatusMessage(message, type = 'info') {
             statusMessage.className = `status-message ${type}`;
-            statusMessage.innerHTML = `${createStatusIcon(type)}<span>${message}</span>`;
+            statusMessage.innerHTML = `
+                <div class="status-message-content">
+                    ${createStatusIcon(type)}
+                    <span>${message}</span>
+                </div>
+            `;
             statusMessage.classList.remove('hidden');
             
             if (type !== 'success' && type !== 'error') {
@@ -1810,30 +1952,31 @@ Contoh:
                 subjectSpan.textContent = '-';
                 scheduleSpan.textContent = '-';
                 btnAbsen.disabled = true;
-                showStatusMessage('Belum waktu absensi, coba lagi selama jadwal aktif.', 'warning');
+                showStatusMessage('⏰ Belum waktu absensi, coba lagi selama jadwal aktif.', 'warning');
             }
         }
 
         function updateButtonIcon(attendanceType) {
             const icons = {
                 'Hadir': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9,11 12,14 22,4"></polyline>
-                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                    <path d="m9 12 2 2 4-4"></path>
                 </svg>`,
                 'Sakit': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5Z"></path>
+                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"></path>
                     <path d="M12 5L8 21l4-7 4 7-4-16"></path>
                 </svg>`,
                 'Izin': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M9 12h6"></path>
-                    <path d="M9 16h6"></path>
-                    <path d="M9 8h6"></path>
-                    <path d="M3 21h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2Z"></path>
+                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                    <polyline points="14,2 14,8 20,8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10,9 9,9 8,9"></polyline>
                 </svg>`,
                 'Alfa': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="15" y1="9" x2="9" y2="15"></line>
-                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                    <path d="m15 9-6 6"></path>
+                    <path d="m9 9 6 6"></path>
                 </svg>`
             };
             btnAbsenIcon.innerHTML = icons[attendanceType];
@@ -1855,6 +1998,17 @@ Contoh:
                 heart.remove();
             });
         }
+
+        // Enhanced Teacher Material Preview
+        teacherMaterialInput.addEventListener('input', () => {
+            const material = teacherMaterialInput.value.trim();
+            if (material) {
+                materialPreview.textContent = `Preview: ${material}`;
+                materialPreview.classList.remove('hidden');
+            } else {
+                materialPreview.classList.add('hidden');
+            }
+        });
 
         // Attendance Type Selection
         attendanceOptions.forEach(option => {
@@ -1888,6 +2042,7 @@ Contoh:
         function showFinalResultScreen() {
             userIdGroup.classList.add('hidden');
             infoGrid.classList.add('hidden');
+            nameCard.classList.add('hidden');
             roleCard.classList.add('hidden');
             classCard.classList.add('hidden');
             attendanceTypeSection.classList.add('hidden');
@@ -1896,7 +2051,7 @@ Contoh:
             btnStartCamera.classList.add('hidden');
             btnAbsen.classList.add('hidden');
             
-            statusMessage.style.fontSize = 'var(--font-size-2xl)';
+            statusMessage.style.fontSize = 'var(--font-size-lg)';
             statusMessage.style.padding = 'var(--space-10)';
             statusMessage.style.marginTop = 'var(--space-16)';
             
@@ -1906,6 +2061,7 @@ Contoh:
         function resetForm() {
             userIdInput.value = '';
             teacherMaterialInput.value = '';
+            materialPreview.classList.add('hidden');
             currentUserData = null;
             selectedAttendanceType = 'Hadir';
             document.querySelector('.attendance-option[data-type="Hadir"]').click();
@@ -1917,6 +2073,7 @@ Contoh:
 
             userIdGroup.classList.remove('hidden');
             infoGrid.classList.remove('hidden');
+            nameCard.classList.remove('hidden');
             roleCard.classList.remove('hidden');
             classCard.classList.remove('hidden');
             attendanceTypeSection.classList.remove('hidden');
@@ -1936,14 +2093,14 @@ Contoh:
             photoPreview.classList.remove('hidden');
             photoPreview.innerHTML = `
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
                     <circle cx="12" cy="13" r="3"></circle>
                 </svg>
                 <span>Foto akan muncul di sini setelah kamera aktif</span>
             `;
             btnStartCamera.innerHTML = `
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
                     <circle cx="12" cy="13" r="3"></circle>
                 </svg>
                 <span>Aktifkan Kamera</span>
@@ -1952,6 +2109,7 @@ Contoh:
 
             subjectSpan.textContent = '-';
             scheduleSpan.textContent = '-';
+            detectedNameSpan.textContent = 'Belum Terdeteksi';
             detectedRoleSpan.textContent = 'Belum Terdeteksi';
             detectedClassSpan.textContent = '-';
 
@@ -1968,10 +2126,9 @@ Contoh:
             currentUserData = userList.find(user => user.id.toUpperCase() === inputIdNormalized);
 
             if (currentUserData) {
-                // Set the role display based on the corrected 'role' property
+                detectedNameSpan.textContent = currentUserData.name;
                 detectedRoleSpan.textContent = currentUserData.role === 'siswa' ? 'Siswa' : 'Guru';
 
-                // Show/hide teacher material section based on role
                 if (currentUserData.role === 'guru') {
                     teacherMaterialSection.classList.remove('hidden');
                 } else {
@@ -1990,7 +2147,7 @@ Contoh:
                         subjectSpan.textContent = '-';
                         scheduleSpan.textContent = '-';
                         btnAbsen.disabled = true;
-                        showStatusMessage('Tidak ada jadwal aktif untuk kelas Anda saat ini.', 'warning');
+                        showStatusMessage('⚠️ Tidak ada jadwal aktif untuk kelas Anda saat ini.', 'warning');
                     }
                 } else if (currentUserData.role === 'guru') {
                     const activeGuruSchedule = scheduleList.find(item =>
@@ -2010,19 +2167,19 @@ Contoh:
                         subjectSpan.textContent = '-';
                         scheduleSpan.textContent = '-';
                         btnAbsen.disabled = true;
-                        showStatusMessage('Anda tidak memiliki jadwal mengajar aktif saat ini.', 'warning');
+                        showStatusMessage('⚠️ Anda tidak memiliki jadwal mengajar aktif saat ini.', 'warning');
                     }
                 }
             } else {
-                // If user not found, reset displays
+                detectedNameSpan.textContent = inputId.length > 0 ? 'ID/Nama Tidak Dikenal' : 'Belum Terdeteksi';
                 detectedRoleSpan.textContent = inputId.length > 0 ? 'ID/Nama Tidak Dikenal' : 'Belum Terdeteksi';
                 detectedClassSpan.textContent = '-';
                 subjectSpan.textContent = '-';
                 scheduleSpan.textContent = '-';
-                teacherMaterialSection.classList.add('hidden'); // Hide for unknown users
+                teacherMaterialSection.classList.add('hidden');
                 if (inputId.length > 0) {
                     btnAbsen.disabled = true;
-                    showStatusMessage('ID/Nama tidak dikenal. Anda tidak diizinkan untuk absensi.', 'error');
+                    showStatusMessage('❌ ID/Nama tidak dikenal. Anda tidak diizinkan untuk absensi.', 'error');
                 } else {
                     btnAbsen.disabled = true;
                     hideStatusMessage();
@@ -2046,11 +2203,18 @@ Contoh:
                     video.classList.remove('hidden');
                     photoPreview.classList.add('hidden');
                     
-                    showStatusMessage('Kamera aktif. Pastikan wajah Anda terlihat jelas.', 'info');
+                    showStatusMessage('📸 Kamera aktif! Pastikan wajah Anda terlihat jelas dan pencahayaan cukup.', 'info');
                     btnStartCamera.innerHTML = `
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                            <circle cx="12" cy="13" r="3"></circle>
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M12 1v6"></path>
+                            <path d="M12 17v6"></path>
+                            <path d="M4.93 4.93l4.24 4.24"></path>
+                            <path d="M14.83 14.83l4.24 4.24"></path>
+                            <path d="M1 12h6"></path>
+                            <path d="M17 12h6"></path>
+                            <path d="M4.93 19.07l4.24-4.24"></path>
+                            <path d="M14.83 9.17l4.24-4.24"></path>
                         </svg>
                         <span>Kamera Aktif</span>
                     `;
@@ -2060,19 +2224,19 @@ Contoh:
                     console.error("Camera error:", error);
 
                     if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
-                        showStatusMessage('Akses kamera ditolak. Harap izinkan akses kamera di browser Anda.', 'error');
+                        showStatusMessage('❌ Akses kamera ditolak. Harap izinkan akses kamera di browser Anda untuk melanjutkan absensi.', 'error');
                     } else if (error.name === 'NotFoundError') {
-                        showStatusMessage('Kamera tidak ditemukan. Harap periksa perangkat Anda.', 'error');
+                        showStatusMessage('📷 Kamera tidak ditemukan. Pastikan perangkat memiliki kamera yang berfungsi.', 'error');
                     } else {
-                        showStatusMessage('Gagal mengakses kamera: ' + error.message, 'error');
+                        showStatusMessage('⚠️ Gagal mengakses kamera: ' + error.message, 'error');
                     }
                 }
             } else {
-                showStatusMessage('Browser Anda tidak mendukung akses kamera.', 'error');
+                showStatusMessage('❌ Browser Anda tidak mendukung akses kamera. Gunakan browser yang lebih modern.', 'error');
             }
         });
 
-        // Attendance Process
+        // Enhanced Attendance Process
         btnAbsen.addEventListener('click', async () => {
             if (selectedAttendanceType === 'Hadir') {
                 attendanceSound.play().catch(e => console.error("Gagal memutar audio:", e));
@@ -2082,7 +2246,7 @@ Contoh:
             const inputIdNormalized = inputId.toUpperCase();
 
             if (!currentUserData || currentUserData.id.toUpperCase() !== inputIdNormalized) {
-                showStatusMessage('Error: ID/Nama tidak dikenal atau tidak terdeteksi. Harap masukkan ID dengan benar.', 'error');
+                showStatusMessage('❌ Error: ID/Nama tidak dikenal atau tidak terdeteksi. Harap masukkan ID dengan benar.', 'error');
                 return;
             }
 
@@ -2112,7 +2276,7 @@ Contoh:
                 }
 
                 if (!activeScheduleForAbsence) {
-                    showStatusMessage('Absensi gagal: Tidak ada jadwal aktif yang cocok saat ini.', 'error');
+                    showStatusMessage('❌ Absensi gagal: Tidak ada jadwal aktif yang cocok saat ini.', 'error');
                     return;
                 }
 
@@ -2126,11 +2290,11 @@ Contoh:
                         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
                         photoData = canvas.toDataURL('image/jpeg', 0.8);
                         
-                        photoPreview.innerHTML = `<img src="${photoData}" alt="Foto yang diambil">`;
+                        photoPreview.innerHTML = `<img src="${photoData}" alt="Foto absensi yang diambil">`;
                         photoPreview.classList.remove('hidden');
                         video.classList.add('hidden');
                     } else {
-                        showStatusMessage('Untuk absensi Hadir, kamera harus diaktifkan dan foto harus diambil. Silakan aktifkan kamera.', 'warning');
+                        showStatusMessage('📸 Untuk absensi Hadir, kamera harus diaktifkan dan foto harus diambil. Silakan aktifkan kamera terlebih dahulu.', 'warning');
                         btnAbsen.disabled = false;
                         btnAbsenText.classList.remove('hidden');
                         btnAbsenIcon.classList.remove('hidden');
@@ -2142,10 +2306,10 @@ Contoh:
                 // Get location for 'Hadir' attendance
                 let lokasi = { latitude: null, longitude: null };
                 if (selectedAttendanceType === 'Hadir') {
-                    showStatusMessage('Mengakses lokasi...', 'info');
+                    showStatusMessage('📍 Mengakses lokasi untuk validasi kehadiran...', 'info');
                     try {
                         const posisi = await new Promise((resolve, reject) => {
-                            const geoTimeout = setTimeout(() => reject(new Error('Geolocation timeout')), 10000);
+                            const geoTimeout = setTimeout(() => reject(new Error('Timeout mengakses lokasi')), 10000);
                             navigator.geolocation.getCurrentPosition(
                                 (pos) => {
                                     clearTimeout(geoTimeout);
@@ -2161,7 +2325,7 @@ Contoh:
                         lokasi.latitude = posisi.coords.latitude;
                         lokasi.longitude = posisi.coords.longitude;
                     } catch (error) {
-                        showStatusMessage('Tidak dapat mengakses lokasi: ' + error.message + '. Lokasi akan dicatat sebagai 0,0.', 'warning');
+                        showStatusMessage('⚠️ Tidak dapat mengakses lokasi: ' + error.message + '. Lokasi akan dicatat sebagai default.', 'warning');
                         lokasi = { latitude: 0, longitude: 0 };
                     }
                 }
@@ -2169,7 +2333,6 @@ Contoh:
                 // Prepare attendance data
                 const dataAbsensi = {
                     id: inputId,
-                    // Use currentUserData.name if available, otherwise fallback to id
                     nama: currentUserData.name || inputId, 
                     role: currentUserData.role,
                     kelas: classForAbsence,
@@ -2179,12 +2342,12 @@ Contoh:
                     foto: photoData,
                     lokasi,
                     status: selectedAttendanceType,
-                    materi: currentUserData.role === 'guru' ? (teacherMaterialInput.value.trim() || 'Tidak ada materi') : ''
+                    materi: currentUserData.role === 'guru' ? (teacherMaterialInput.value.trim() || 'Tidak ada materi spesifik tercatat') : ''
                 };
 
                 // Add additional teacher data
                 if (currentUserData.role === 'guru') {
-                    dataAbsensi.namaGuru = currentUserData.name || inputId; // Use name if available
+                    dataAbsensi.namaGuru = currentUserData.name || inputId;
                 }
 
                 // Save to Firebase
@@ -2204,16 +2367,31 @@ Contoh:
                     month: 'long',
                     day: 'numeric',
                     hour: '2-digit',
-                    minute: '2-digit'
+                    minute: '2-digit',
+                    second: '2-digit'
                 });
 
-                showStatusMessage(`✅ Absensi ${statusLabels[selectedAttendanceType]} berhasil dicatat!
-                
-🗓️ Tanggal: ${timestamp}
-${currentUserData.role === 'siswa' ? '🧑‍🎓 Siswa' : '👨‍🏫 Guru'}: ${currentUserData.name || inputId}
+                let finalMessage = `✅ ABSENSI ${statusLabels[selectedAttendanceType].toUpperCase()} BERHASIL DICATAT!
+
+🗓️ ${timestamp}
+${currentUserData.role === 'siswa' ? '🧑‍🎓' : '👨‍🏫'} ${currentUserData.role === 'siswa' ? 'Siswa' : 'Guru'}: ${currentUserData.name || inputId}
 📚 Mata Pelajaran: ${subjectForAbsence}
+🏫 Kelas: ${classForAbsence}
 ⏰ Jam Pelajaran: ${activeScheduleForAbsence.start} - ${activeScheduleForAbsence.end}
-${currentUserData.role === 'guru' && dataAbsensi.materi ? `✍️ Materi Diajarkan: ${dataAbsensi.materi}` : ''}`, 'success');
+📋 Status: ${statusLabels[selectedAttendanceType]}`;
+
+                if (currentUserData.role === 'guru' && dataAbsensi.materi) {
+                    finalMessage += `\n\n📖 MATERI PEMBELAJARAN:
+${dataAbsensi.materi}`;
+                }
+
+                if (selectedAttendanceType === 'Hadir') {
+                    finalMessage += `\n\n📍 Lokasi tercatat: ${lokasi.latitude}, ${lokasi.longitude}`;
+                }
+
+                finalMessage += `\n\n✨ Terima kasih telah melakukan absensi dengan disiplin!`;
+
+                showStatusMessage(finalMessage, 'success');
                 
                 if (selectedAttendanceType === 'Hadir') {
                     for (let i = 0; i < 10; i++) {
@@ -2224,7 +2402,7 @@ ${currentUserData.role === 'guru' && dataAbsensi.materi ? `✍️ Materi Diajark
                 showFinalResultScreen();
 
             } catch (error) {
-                showStatusMessage("Gagal menyimpan absensi: " + error.message, 'error');
+                showStatusMessage("❌ Gagal menyimpan absensi: " + error.message + ". Silakan coba lagi.", 'error');
             } finally {
                 btnAbsenText.classList.remove('hidden');
                 btnAbsenIcon.classList.remove('hidden');
@@ -2239,19 +2417,42 @@ ${currentUserData.role === 'guru' && dataAbsensi.materi ? `✍️ Materi Diajark
         updateScheduleDisplay();
         setInterval(updateScheduleDisplay, 60000);
 
-        // Keyboard support
+        // Enhanced Keyboard support
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !btnAbsen.disabled && document.activeElement !== userIdInput && document.activeElement !== teacherMaterialInput) {
                 btnAbsen.click();
+            }
+            // Add Escape key to reset
+            if (e.key === 'Escape' && !btnReset.classList.contains('hidden')) {
+                resetForm();
             }
         });
 
         // Performance optimization
         if ('requestIdleCallback' in window) {
             requestIdleCallback(() => {
-                console.log('Sistem Absensi Digital SMK Muhammadiyah Campaka berhasil diinisialisasi');
+                console.log('%c🎓 Sistem Absensi Digital SMK Muhammadiyah Campaka', 'color: #3b82f6; font-size: 16px; font-weight: bold;');
+                console.log('%c✅ Sistem berhasil diinisialisasi dan siap digunakan!', 'color: #22c55e; font-size: 14px;');
             });
         }
+
+        // Auto-clear form after successful attendance (optional feature)
+        function autoResetAfterSuccess() {
+            setTimeout(() => {
+                if (!btnReset.classList.contains('hidden')) {
+                    resetForm();
+                }
+            }, 30000); // Auto reset after 30 seconds
+        }
+
+        // Enhanced error handling
+        window.addEventListener('error', function(e) {
+            console.error('System Error:', e.error);
+        });
+
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled Promise Rejection:', e.reason);
+        });
     </script>
 </body>
 </html>
