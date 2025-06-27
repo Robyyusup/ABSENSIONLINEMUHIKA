@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -107,43 +109,59 @@
                         '2xl': '1536px',
                     },
                     animation: {
-                        'fade-in': 'fadeIn 0.8s ease-out',
-                        'slide-up': 'slideUp 0.6s ease-out',
-                        'slide-down': 'slideDown 0.6s ease-out',
-                        'scale-in': 'scaleIn 0.4s ease-out',
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'slide-down': 'slideDown 0.5s ease-out',
+                        'scale-in': 'scaleIn 0.3s ease-out',
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'bounce-soft': 'bounceSoft 2s infinite',
                         'float': 'float 6s ease-in-out infinite',
                         'glow': 'glow 2s ease-in-out infinite alternate',
+                        'ripple': 'ripple 1.5s linear infinite',
+                        'wave': 'wave 1.5s ease-in-out infinite',
+                        'shimmer': 'shimmer 2s infinite',
                     },
                     keyframes: {
                         fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         },
                         slideUp: {
-                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         },
                         slideDown: {
-                            '0%': { opacity: '0', transform: 'translateY(-30px)' },
+                            '0%': { opacity: '0', transform: 'translateY(-20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         },
                         scaleIn: {
-                            '0%': { opacity: '0', transform: 'scale(0.9)' },
+                            '0%': { opacity: '0', transform: 'scale(0.95)' },
                             '100%': { opacity: '1', transform: 'scale(1)' },
                         },
                         bounceSoft: {
                             '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
+                            '50%': { transform: 'translateY(-8px)' },
                         },
                         float: {
                             '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-20px)' },
+                            '50%': { transform: 'translateY(-15px)' },
                         },
                         glow: {
-                            '0%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)' },
-                            '100%': { boxShadow: '0 0 30px rgba(59, 130, 246, 0.6), 0 0 40px rgba(59, 130, 246, 0.4)' },
+                            '0%': { boxShadow: '0 0 15px rgba(59, 130, 246, 0.3)' },
+                            '100%': { boxShadow: '0 0 25px rgba(59, 130, 246, 0.6), 0 0 35px rgba(59, 130, 246, 0.4)' },
+                        },
+                        ripple: {
+                            '0%': { transform: 'scale(0.8)', opacity: '1' },
+                            '100%': { transform: 'scale(2.5)', opacity: '0' },
+                        },
+                        wave: {
+                            '0%, 100%': { transform: 'rotate(0deg)' },
+                            '25%': { transform: 'rotate(5deg)' },
+                            '75%': { transform: 'rotate(-5deg)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-1000px 0' },
+                            '100%': { backgroundPosition: '1000px 0' },
                         },
                     },
                 }
@@ -153,6 +171,7 @@
     <style>
         * {
             scroll-behavior: smooth;
+            box-sizing: border-box;
         }
 
         body {
@@ -164,7 +183,7 @@
             margin: 0;
             padding: 0;
             color: #f8fafc;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             overflow-x: hidden;
         }
 
@@ -184,13 +203,13 @@
         /* Enhanced Container Styles */
         .glass-container {
             background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(25px) saturate(200%);
+            backdrop-filter: blur(20px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 24px;
             box-shadow: 
-                0 32px 64px rgba(0, 0, 0, 0.2),
+                0 25px 50px rgba(0, 0, 0, 0.2),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
@@ -206,16 +225,11 @@
             animation: shimmer 3s infinite;
         }
 
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
         body.light-mode .glass-container {
             background: rgba(255, 255, 255, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 
-                0 32px 64px rgba(0, 0, 0, 0.08),
+                0 25px 50px rgba(0, 0, 0, 0.08),
                 inset 0 1px 0 rgba(255, 255, 255, 0.9);
         }
 
@@ -223,16 +237,14 @@
         .input-field {
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 16px;
-            padding: 18px 24px;
+            border-radius: 14px;
+            padding: 16px 20px;
             color: #f8fafc;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 500;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             width: 100%;
-            box-sizing: border-box;
-            backdrop-filter: blur(10px);
-            position: relative;
+            backdrop-filter: blur(8px);
         }
 
         .input-field::placeholder {
@@ -245,8 +257,8 @@
             border-color: #60a5fa;
             background: rgba(255, 255, 255, 0.12);
             box-shadow: 
-                0 0 0 4px rgba(96, 165, 250, 0.2),
-                0 8px 32px rgba(96, 165, 250, 0.1);
+                0 0 0 3px rgba(96, 165, 250, 0.2),
+                0 6px 25px rgba(96, 165, 250, 0.1);
             transform: translateY(-2px);
         }
 
@@ -254,7 +266,7 @@
             background: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(203, 213, 225, 0.4);
             color: #1e293b;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
         }
 
         body.light-mode .input-field::placeholder {
@@ -265,8 +277,8 @@
             border-color: #3b82f6;
             background: rgba(255, 255, 255, 1);
             box-shadow: 
-                0 0 0 4px rgba(59, 130, 246, 0.15),
-                0 8px 32px rgba(59, 130, 246, 0.1);
+                0 0 0 3px rgba(59, 130, 246, 0.15),
+                0 6px 25px rgba(59, 130, 246, 0.1);
         }
 
         /* Enhanced Password Container */
@@ -278,13 +290,18 @@
 
         .password-toggle {
             position: absolute;
-            right: 20px;
+            right: 16px;
             cursor: pointer;
             color: rgba(248, 250, 252, 0.6);
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             z-index: 10;
             padding: 4px;
             border-radius: 8px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .password-toggle:hover {
@@ -306,16 +323,19 @@
         .btn-primary {
             background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
             border: none;
-            border-radius: 16px;
-            padding: 18px 32px;
+            border-radius: 14px;
+            padding: 16px 28px;
             color: white;
             font-weight: 600;
-            font-size: 16px;
+            font-size: 15px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-primary::before {
@@ -331,7 +351,7 @@
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 10px 28px rgba(59, 130, 246, 0.4);
         }
 
         .btn-primary:hover::before {
@@ -347,16 +367,19 @@
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 50px;
-            padding: 14px 28px;
+            padding: 12px 24px;
             color: rgba(248, 250, 252, 0.8);
             font-weight: 500;
             font-size: 14px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .tab-button::before {
@@ -376,7 +399,7 @@
             background: rgba(255, 255, 255, 0.12);
             color: #f8fafc;
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
         }
 
         .tab-button:hover::before {
@@ -389,7 +412,7 @@
             border-color: #3b82f6;
             color: white;
             transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 10px 28px rgba(59, 130, 246, 0.4);
             animation: glow 2s ease-in-out infinite alternate;
         }
 
@@ -397,7 +420,7 @@
             background: rgba(255, 255, 255, 0.8);
             border: 1px solid rgba(203, 213, 225, 0.4);
             color: #475569;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
         }
 
         body.light-mode .tab-button:hover {
@@ -413,27 +436,28 @@
         /* Enhanced Table Styles */
         .data-table {
             background: rgba(255, 255, 255, 0.03);
-            border-radius: 20px;
+            border-radius: 18px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
 
         body.light-mode .data-table {
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(203, 213, 225, 0.2);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.05);
         }
 
         .data-table th {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.15) 100%);
             color: #f8fafc;
-            padding: 20px 16px;
+            padding: 18px 14px;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 13px;
-            letter-spacing: 1px;
+            font-size: 12px;
+            letter-spacing: 0.8px;
             position: relative;
         }
 
@@ -443,7 +467,7 @@
         }
 
         .data-table td {
-            padding: 18px 16px;
+            padding: 16px 14px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.2s ease;
         }
@@ -453,13 +477,13 @@
         }
 
         .data-table tbody tr {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .data-table tbody tr:hover {
             background: rgba(255, 255, 255, 0.05);
-            transform: translateX(8px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transform: translateX(6px);
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
         }
 
         body.light-mode .data-table tbody tr:hover {
@@ -468,8 +492,8 @@
 
         /* Enhanced Status Badges */
         .status-badge {
-            padding: 8px 16px;
-            border-radius: 24px;
+            padding: 6px 14px;
+            border-radius: 20px;
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
@@ -477,9 +501,10 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-width: 80px;
+            min-width: 70px;
             transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            gap: 6px;
         }
 
         .status-badge:hover {
@@ -510,8 +535,8 @@
         /* Enhanced Loading Animation */
         .loading-spinner {
             display: inline-block;
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             border: 3px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             border-top-color: #60a5fa;
@@ -527,30 +552,30 @@
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 50px;
-            padding: 10px 20px;
+            padding: 8px 16px;
             color: rgba(248, 250, 252, 0.8);
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 14px;
+            gap: 8px;
+            font-size: 13px;
             font-weight: 500;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
         }
 
         .theme-toggle:hover {
             background: rgba(255, 255, 255, 0.12);
             color: #f8fafc;
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
         }
 
         body.light-mode .theme-toggle {
             background: rgba(255, 255, 255, 0.8);
             border: 1px solid rgba(203, 213, 225, 0.4);
             color: #475569;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
         }
 
         body.light-mode .theme-toggle:hover {
@@ -560,36 +585,36 @@
 
         /* Enhanced Map Container */
         #mapContainer {
-            border-radius: 20px;
+            border-radius: 18px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
 
         #mapContainer:hover {
             transform: translateY(-2px);
-            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
         }
 
         body.light-mode #mapContainer {
             border: 1px solid rgba(203, 213, 225, 0.2);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.05);
         }
 
         /* Enhanced Gallery */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
         }
 
         .gallery-item {
-            border-radius: 16px;
+            border-radius: 14px;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
             position: relative;
         }
 
@@ -602,13 +627,13 @@
             bottom: 0;
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.1));
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.25s ease;
             z-index: 1;
         }
 
         .gallery-item:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.2);
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
         }
 
         .gallery-item:hover::before {
@@ -617,11 +642,11 @@
 
         body.light-mode .gallery-item {
             border: 1px solid rgba(203, 213, 225, 0.2);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
         }
 
         body.light-mode .gallery-item:hover {
-            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
         }
 
         /* Enhanced Logo/Avatar */
@@ -630,6 +655,8 @@
             animation: float 6s ease-in-out infinite;
             position: relative;
             overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
         .logo-avatar::before {
@@ -643,27 +670,61 @@
             animation: shimmer 3s infinite;
         }
 
+        /* Ripple Effect */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            animation: pulse-slow 2s infinite;
+        }
+
         /* Responsive Design Enhancements */
         @media (max-width: 768px) {
             .container {
-                margin: 12px;
-                padding: 24px;
+                margin: 10px;
+                padding: 20px;
             }
             
             .tab-buttons {
                 flex-direction: column;
-                gap: 10px;
+                gap: 8px;
             }
             
             .tab-button {
                 width: 100%;
                 text-align: center;
-                padding: 16px 24px;
+                padding: 14px 20px;
             }
             
             .filter-controls {
                 flex-direction: column;
-                gap: 16px;
+                gap: 14px;
             }
             
             .filter-controls > * {
@@ -685,43 +746,43 @@
             
             .mobile-table tr {
                 display: block;
-                margin-bottom: 20px;
+                margin-bottom: 16px;
                 background: rgba(255, 255, 255, 0.05);
-                border-radius: 16px;
-                padding: 20px;
+                border-radius: 14px;
+                padding: 16px;
                 border: 1px solid rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(10px);
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-                transition: all 0.3s ease;
+                backdrop-filter: blur(8px);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+                transition: all 0.25s ease;
             }
 
             .mobile-table tr:hover {
-                transform: translateY(-4px);
-                box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+                transform: translateY(-3px);
+                box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
             }
             
             body.light-mode .mobile-table tr {
                 background: rgba(255, 255, 255, 0.9);
                 border: 1px solid rgba(203, 213, 225, 0.2);
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
             }
             
             .mobile-table td {
                 display: block;
-                padding: 10px 0;
+                padding: 8px 0;
                 border: none;
                 position: relative;
-                padding-left: 45%;
+                padding-left: 40%;
             }
             
             .mobile-table td::before {
                 content: attr(data-label);
                 position: absolute;
                 left: 0;
-                width: 40%;
+                width: 38%;
                 font-weight: 600;
                 color: #60a5fa;
-                font-size: 12px;
+                font-size: 11px;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
             }
@@ -731,39 +792,39 @@
             }
 
             .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-                gap: 16px;
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 14px;
             }
         }
 
         @media (min-width: 769px) and (max-width: 1024px) {
             .container {
                 max-width: 95%;
-                padding: 32px;
+                padding: 28px;
             }
         }
 
         @media (min-width: 1025px) {
             .container {
                 max-width: 1200px;
-                padding: 48px;
+                padding: 40px;
             }
         }
 
         /* Enhanced Scrollbar */
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 8px;
         }
 
         ::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
+            border-radius: 8px;
         }
 
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.6), rgba(37, 99, 235, 0.6));
-            border-radius: 10px;
-            transition: all 0.3s ease;
+            border-radius: 8px;
+            transition: all 0.25s ease;
         }
 
         ::-webkit-scrollbar-thumb:hover {
@@ -780,7 +841,7 @@
 
         /* Additional Enhancements */
         .content-section {
-            animation: fadeIn 0.6s ease-out;
+            animation: fadeIn 0.5s ease-out;
         }
 
         .filter-controls select:focus,
@@ -792,43 +853,86 @@
             background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
             border: none;
             border-radius: 12px;
-            padding: 12px 24px;
+            padding: 12px 20px;
             color: white;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 18px rgba(34, 197, 94, 0.3);
         }
 
         .btn-secondary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(34, 197, 94, 0.4);
+            box-shadow: 0 7px 24px rgba(34, 197, 94, 0.4);
         }
+        
+        .btn-light { /* New style for the reset button */
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border: 1px solid #cbd5e1;
+            border-radius: 14px;
+            padding: 16px 28px;
+            color: #334155;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-light:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+        }
+
+        .btn-light:active {
+            transform: translateY(-1px);
+        }
+
+        body.light-mode .btn-light {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-color: #e2e8f0;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        body.light-mode .btn-light:hover {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+        }
+
 
         .btn-danger {
             background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             border: none;
             border-radius: 50px;
-            padding: 10px 20px;
+            padding: 8px 16px;
             color: white;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 3px 14px rgba(239, 68, 68, 0.3);
         }
 
         .btn-danger:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 5px 20px rgba(239, 68, 68, 0.4);
         }
 
         .user-info-card {
             background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 50px;
-            padding: 12px 20px;
-            transition: all 0.3s ease;
+            padding: 10px 16px;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .user-info-card:hover {
@@ -849,8 +953,434 @@
         .error-message {
             background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
             border: 1px solid rgba(239, 68, 68, 0.3);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
             animation: slideDown 0.3s ease-out;
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Success message styling */
+        .success-message {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(22, 163, 74, 0.1));
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            backdrop-filter: blur(8px);
+            animation: slideDown 0.3s ease-out;
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Modern Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 180px;
+            background-color: rgba(30, 41, 59, 0.95);
+            color: #fff;
+            text-align: center;
+            border-radius: 10px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 13px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Wave Animation */
+        .wave {
+            animation: wave 1.5s ease-in-out infinite;
+            transform-origin: 70% 70%;
+            display: inline-block;
+        }
+
+        /* Modern Checkbox */
+        .custom-checkbox {
+            position: relative;
+            width: 20px;
+            height: 20px;
+            appearance: none;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .custom-checkbox:checked {
+            background: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        .custom-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 12px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        body.light-mode .custom-checkbox {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(203, 213, 225, 0.6);
+        }
+
+        /* Modern Radio Button */
+        .custom-radio {
+            position: relative;
+            width: 20px;
+            height: 20px;
+            appearance: none;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .custom-radio:checked {
+            background: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        .custom-radio:checked::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        body.light-mode .custom-radio {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(203, 213, 225, 0.6);
+        }
+
+        /* Modern Switch */
+        .custom-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            appearance: none;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .custom-switch:checked {
+            background: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        .custom-switch::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .custom-switch:checked::after {
+            left: calc(100% - 20px);
+        }
+
+        body.light-mode .custom-switch {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(203, 213, 225, 0.6);
+        }
+
+        /* Modern Progress Bar */
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        body.light-mode .progress-bar {
+            background: rgba(203, 213, 225, 0.3);
+        }
+
+        /* Modern Dropdown */
+        .custom-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .custom-dropdown-content {
+            display: none;
+            position: absolute;
+            background: rgba(30, 41, 59, 0.95);
+            min-width: 160px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .custom-dropdown:hover .custom-dropdown-content {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .custom-dropdown-item {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.2s ease;
+        }
+
+        .custom-dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Modern Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: rgba(30, 41, 59, 0.95);
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 500px;
+            width: 90%;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        body.light-mode .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(203, 213, 225, 0.4);
+        }
+
+        /* Modern Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(30, 41, 59, 0.95);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        body.light-mode .toast {
+            background: rgba(255, 255, 255, 0.95);
+            color: #1e293b;
+            border: 1px solid rgba(203, 213, 225, 0.4);
+        }
+
+        /* Modern Avatar */
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Modern Card */
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+        }
+
+        body.light-mode .card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(203, 213, 225, 0.4);
+        }
+
+        /* Modern Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        body.light-mode .badge {
+            background: rgba(203, 213, 225, 0.3);
+            color: #1e293b;
+        }
+
+        /* Modern Divider */
+        .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 16px 0;
+        }
+
+        body.light-mode .divider {
+            background: rgba(203, 213, 225, 0.3);
+        }
+
+        /* Modern Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .breadcrumb-item {
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s ease;
+        }
+
+        .breadcrumb-item:hover {
+            color: white;
+        }
+
+        .breadcrumb-separator {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        body.light-mode .breadcrumb-item {
+            color: rgba(30, 41, 59, 0.7);
+        }
+
+        body.light-mode .breadcrumb-item:hover {
+            color: #1e293b;
+        }
+
+        body.light-mode .breadcrumb-separator {
+            color: rgba(30, 41, 59, 0.4);
+        }
+
+        /* Modern Pagination */
+        .pagination {
+            display: flex;
+            gap: 8px;
+        }
+
+        .pagination-item {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.2s ease;
+        }
+
+        .pagination-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .pagination-item.active {
+            background: #3b82f6;
+        }
+
+        body.light-mode .pagination-item {
+            background: rgba(203, 213, 225, 0.3);
+            color: #1e293b;
+        }
+
+        body.light-mode .pagination-item:hover {
+            background: rgba(203, 213, 225, 0.5);
+        }
+
+        body.light-mode .pagination-item.active {
+            background: #3b82f6;
+            color: white;
         }
     </style>
     
@@ -867,17 +1397,36 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body class="animate-fade-in">
-    <div class="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
-        <div class="container glass-container animate-slide-up">
-            <!-- Login Area -->
-          <div id="login-area" class="max-w-md mx-auto">
-    <div class="text-center mb-10">
-        <div class="logo-avatar w-28 h-28 mx-auto mb-8 rounded-full overflow-hidden shadow-2xl">
-            <img src="https://robyyusup.github.io/ABSENSIONLINEMUHIKA/logo_muhika-removebg-preview.png" alt="Logo SMK" class="w-full h-full object-cover" />
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle text-success-400"></i>
+        <div id="toast-message">Operation completed successfully</div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 class="text-xl font-bold mb-4" id="modalTitle">Konfirmasi Penghapusan Data</h3>
+            <p id="modalMessage" class="mb-6">Apakah Anda yakin ingin menghapus semua data ini? Tindakan ini tidak dapat dibatalkan.</p>
+            <div class="flex justify-end gap-3">
+                <button id="cancelDelete" class="btn-light">Batal</button>
+                <button id="confirmDelete" class="btn-danger">Hapus Sekarang</button>
+            </div>
         </div>
-        <h1 class="text-3xl sm:text-4xl font-bold mb-3 bg-gradient-to-r from-primary-200 via-secondary-200 to-primary-300 bg-clip-text text-transparent leading-tight">
-            SMK Muhammadiyah Campaka
-        </h1>
+    </div>
+
+    <!-- Main Content -->
+    <div class="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
+        <div class="container glass-container animate-slide-up w-full max-w-6xl">
+            <!-- Login Area -->
+            <div id="login-area" class="max-w-md mx-auto">
+                <div class="text-center mb-10">
+                    <div class="logo-avatar w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl">
+                        <img src="https://robyyusup.github.io/ABSENSIONLINEMUHIKA/logo_muhika-removebg-preview.png" alt="Logo SMK" class="w-full h-full object-cover" />
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl font-bold mb-3 bg-gradient-to-r from-primary-200 via-secondary-200 to-primary-300 bg-clip-text text-transparent leading-tight">
+                        SMK Muhammadiyah Campaka
+                    </h1>
                     <p class="text-lg opacity-80 font-medium">Dashboard Login Admin</p>
                 </div>
                 
@@ -889,10 +1438,7 @@
                     <div class="password-container animate-slide-up" style="animation-delay: 0.2s;">
                         <input type="password" id="password" placeholder="Masukkan Kata Sandi Anda" class="input-field pr-16">
                         <span class="password-toggle" onclick="togglePassword()">
-                            <svg id="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                <circle cx="12" cy="12" r="3"></circle>
-                            </svg>
+                            <i id="eye-icon" class="fas fa-eye"></i>
                         </span>
                     </div>
                     
@@ -901,7 +1447,15 @@
                         <span id="login-spinner" class="loading-spinner hidden ml-2"></span>
                     </button>
                     
-                    <div id="login-error" class="hidden error-message text-danger-100 px-6 py-4 rounded-2xl text-center font-medium"></div>
+                    <!-- Added Reset Button -->
+                    <button onclick="resetLoginForm()" class="btn-light w-full animate-slide-up" style="animation-delay: 0.4s;">
+                        <i class="fas fa-redo-alt mr-2"></i> Reset Form
+                    </button>
+
+                    <div id="login-error" class="hidden error-message px-4 py-3 rounded-xl text-center font-medium">
+                        <i class="fas fa-exclamation-circle mr-2"></i>
+                        <span id="error-message-text">Error message here</span>
+                    </div>
                 </div>
             </div>
 
@@ -909,9 +1463,9 @@
             <div id="admin-panel" class="hidden">
                 <!-- Header -->
                 <div class="text-center mb-10">
-                    <div class="logo-avatar w-28 h-28 mx-auto mb-8 rounded-full overflow-hidden shadow-2xl">
-            <img src="https://robyyusup.github.io/ABSENSIONLINEMUHIKA/logo_muhika-removebg-preview.png" alt="Logo SMK" class="w-full h-full object-cover" />
-        </div>
+                    <div class="logo-avatar w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl">
+                        <img src="https://robyyusup.github.io/ABSENSIONLINEMUHIKA/logo_muhika-removebg-preview.png" alt="Logo SMK" class="w-full h-full object-cover" />
+                    </div>
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 bg-gradient-to-r from-primary-200 via-secondary-200 to-primary-300 bg-clip-text text-transparent leading-tight">
                         DASHBOARD REKAP ABSENSI<br>
                         <span class="text-xl sm:text-2xl lg:text-3xl">SMK Muhammadiyah Campaka Purwakarta</span>
@@ -922,28 +1476,36 @@
                 <!-- Top Controls -->
                 <div class="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4">
                     <div class="user-info-card flex items-center space-x-3">
-                        <span class="text-2xl">👤</span>
+                        <span class="text-xl"><i class="fas fa-user"></i></span>
                         <span id="displayUserName" class="font-semibold"></span>
                     </div>
                     
                     <div class="flex items-center gap-3">
                         <button id="themeToggle" class="theme-toggle">
-                            <span id="themeIcon">🌙</span>
+                            <span id="themeIcon"><i class="fas fa-moon"></i></span>
                             <span id="themeText">Mode Terang</span>
                         </button>
                         
                         <button onclick="logout()" class="btn-danger">
-                            Keluar
+                            <i class="fas fa-sign-out-alt mr-2"></i> Keluar
                         </button>
                     </div>
                 </div>
 
                 <!-- Tab Navigation -->
-                <div class="tab-buttons flex flex-wrap justify-center gap-4 mb-10">
-                    <button class="tab-button active" data-tab="guru-absensi-section">📚 Absensi Guru</button>
-                    <button class="tab-button" data-tab="siswa-absensi-section">🎓 Absensi Siswa</button>
-                    <button class="tab-button" data-tab="map-siswa-section">🗺️ Peta Siswa</button>
-                    <button class="tab-button" data-tab="gallery-siswa-section">📸 Galeri Siswa</button>
+                <div class="tab-buttons flex flex-wrap justify-center gap-3 mb-10">
+                    <button class="tab-button active" data-tab="guru-absensi-section">
+                        <i class="fas fa-chalkboard-teacher"></i> Absensi Guru
+                    </button>
+                    <button class="tab-button" data-tab="siswa-absensi-section">
+                        <i class="fas fa-user-graduate"></i> Absensi Siswa
+                    </button>
+                    <button class="tab-button" data-tab="map-siswa-section">
+                        <i class="fas fa-map-marked-alt"></i> Peta Siswa
+                    </button>
+                    <button class="tab-button" data-tab="gallery-siswa-section">
+                        <i class="fas fa-images"></i> Galeri Siswa
+                    </button>
                 </div>
 
                 <!-- Content Sections -->
@@ -951,10 +1513,10 @@
                 <!-- Teacher Attendance Section -->
                 <div id="guru-absensi-section" class="content-section">
                     <h3 class="text-2xl font-bold mb-8 text-primary-200 border-b border-white/20 pb-4 flex items-center gap-3">
-                        📚 <span>Rekap Absensi Guru</span>
+                        <i class="fas fa-chalkboard-teacher"></i> <span>Rekap Absensi Guru</span>
                     </h3>
                     
-                    <div class="filter-controls flex flex-col sm:flex-row gap-6 mb-8">
+                    <div class="filter-controls flex flex-col sm:flex-row gap-5 mb-8 justify-between">
                         <div class="flex-1">
                             <label for="filterGuruHari" class="block text-sm font-semibold mb-3 opacity-90">Filter Berdasarkan Hari:</label>
                             <select id="filterGuruHari" class="input-field">
@@ -969,9 +1531,12 @@
                             </select>
                         </div>
                         
-                        <div class="flex items-end">
+                        <div class="flex items-end gap-3">
                             <button id="exportGuruExcel" class="btn-secondary">
-                                📊 Export Excel
+                                <i class="fas fa-file-excel mr-2"></i> Export Excel
+                            </button>
+                            <button onclick="showConfirmationModal('guru')" class="btn-danger">
+                                <i class="fas fa-trash-alt mr-2"></i> Hapus Semua Data Absensi Guru
                             </button>
                         </div>
                     </div>
@@ -1005,10 +1570,10 @@
                 <!-- Student Attendance Section -->
                 <div id="siswa-absensi-section" class="content-section hidden">
                     <h3 class="text-2xl font-bold mb-8 text-primary-200 border-b border-white/20 pb-4 flex items-center gap-3">
-                        🎓 <span>Rekap Absensi Siswa</span>
+                        <i class="fas fa-user-graduate"></i> <span>Rekap Absensi Siswa</span>
                     </h3>
                     
-                    <div class="filter-controls flex flex-col sm:flex-row gap-6 mb-8">
+                    <div class="filter-controls flex flex-col sm:flex-row gap-5 mb-8 justify-between">
                         <div class="flex-1">
                             <label for="filterSiswaHari" class="block text-sm font-semibold mb-3 opacity-90">Filter Berdasarkan Hari:</label>
                             <select id="filterSiswaHari" class="input-field">
@@ -1023,9 +1588,12 @@
                             </select>
                         </div>
                         
-                        <div class="flex items-end">
+                        <div class="flex items-end gap-3">
                             <button id="exportSiswaExcel" class="btn-secondary">
-                                📊 Export Excel
+                                <i class="fas fa-file-excel mr-2"></i> Export Excel
+                            </button>
+                            <button onclick="showConfirmationModal('siswa')" class="btn-danger">
+                                <i class="fas fa-trash-alt mr-2"></i> Hapus Semua Data Absensi Siswa
                             </button>
                         </div>
                     </div>
@@ -1059,10 +1627,10 @@
                 <!-- Map Section -->
                 <div id="map-siswa-section" class="content-section hidden">
                     <h3 class="text-2xl font-bold mb-8 text-primary-200 border-b border-white/20 pb-4 flex items-center gap-3">
-                        🗺️ <span>Peta Lokasi Absensi Siswa</span>
+                        <i class="fas fa-map-marked-alt"></i> <span>Peta Lokasi Absensi Siswa</span>
                     </h3>
                     
-                    <div id="mapContainer" class="w-full h-96 sm:h-[500px] bg-neutral-700 flex items-center justify-center">
+                    <div id="mapContainer" class="w-full h-96 sm:h-[500px] bg-neutral-700 flex items-center justify-center rounded-xl">
                         <div class="text-center">
                             <div class="loading-spinner mx-auto mb-3"></div>
                             <div class="font-medium">Memuat peta lokasi siswa...</div>
@@ -1073,7 +1641,7 @@
                 <!-- Gallery Section -->
                 <div id="gallery-siswa-section" class="content-section hidden">
                     <h3 class="text-2xl font-bold mb-8 text-primary-200 border-b border-white/20 pb-4 flex items-center gap-3">
-                        📸 <span>Galeri Foto Absensi Siswa</span>
+                        <i class="fas fa-images"></i> <span>Galeri Foto Absensi Siswa</span>
                     </h3>
                     
                     <div id="galleryContainer" class="gallery-grid">
@@ -1112,6 +1680,7 @@
         let currentUserClass = null;
         let map;
         let markers = [];
+        let dataToDeleteType = null; // To store whether guru or siswa data is to be deleted
 
         // Enhanced Password Toggle Function
         function togglePassword() {
@@ -1120,16 +1689,12 @@
             
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
-                eyeIcon.innerHTML = `
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                    <line x1="1" y1="1" x2="23" y2="23"></line>
-                `;
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
             } else {
                 passwordInput.type = 'password';
-                eyeIcon.innerHTML = `
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                `;
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
             }
         }
 
@@ -1142,11 +1707,11 @@
             const body = document.body;
             if (theme === 'dark') {
                 body.classList.remove('light-mode');
-                themeIcon.textContent = '🌙';
+                themeIcon.innerHTML = '<i class="fas fa-moon"></i>';
                 themeText.textContent = 'Mode Terang';
             } else {
                 body.classList.add('light-mode');
-                themeIcon.textContent = '☀️';
+                themeIcon.innerHTML = '<i class="fas fa-sun"></i>';
                 themeText.textContent = 'Mode Gelap';
             }
             localStorage.setItem('theme', theme);
@@ -1160,6 +1725,42 @@
             const currentTheme = localStorage.getItem('theme');
             applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
         });
+
+        // Show Toast Notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            
+            // Set icon and color based on type
+            let icon, color;
+            switch(type) {
+                case 'success':
+                    icon = 'fa-check-circle';
+                    color = 'text-success-400';
+                    break;
+                case 'error':
+                    icon = 'fa-exclamation-circle';
+                    color = 'text-danger-400';
+                    break;
+                case 'warning':
+                    icon = 'fa-exclamation-triangle';
+                    color = 'text-warning-400';
+                    break;
+                case 'info':
+                    icon = 'fa-info-circle';
+                    color = 'text-primary-400';
+                    break;
+            }
+            
+            toast.innerHTML = `<i class="fas ${icon} ${color} mr-2"></i><div id="toast-message">${message}</div>`;
+            
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
 
         // Enhanced Authentication State Listener
         auth.onAuthStateChanged(user => {
@@ -1175,6 +1776,7 @@
                         setTimeout(() => {
                             document.querySelector('.tab-button.active')?.click();
                         }, 500);
+                        showToast(`Selamat datang, ${userData.name || user.email}`, 'success');
                     } else {
                         showError("Informasi peran pengguna tidak ditemukan. Silakan hubungi admin.");
                         logout();
@@ -1196,6 +1798,7 @@
             const loginText = document.getElementById('login-text');
             const loginSpinner = document.getElementById('login-spinner');
             const loginError = document.getElementById('login-error');
+            const errorMessageText = document.getElementById('error-message-text');
 
             if (!email || !password) {
                 showError("Mohon isi email dan kata sandi dengan lengkap.");
@@ -1241,6 +1844,17 @@
             }
         }
 
+        // Function to reset the login form
+        function resetLoginForm() {
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('eye-icon').classList.remove('fa-eye-slash');
+            document.getElementById('eye-icon').classList.add('fa-eye');
+            document.getElementById('password').type = 'password';
+            hideError(); // Hide any error messages
+            showToast('Formulir login telah direset', 'info');
+        }
+
         // Enhanced Logout Function
         async function logout() {
             try {
@@ -1256,8 +1870,10 @@
                     map.remove();
                     map = null;
                 }
+                showToast('Anda telah keluar dari sistem', 'info');
             } catch (error) {
                 console.error("Logout error:", error);
+                showToast('Gagal keluar. Silakan coba lagi.', 'error');
             }
         }
 
@@ -1312,9 +1928,7 @@
                 `;
                 
                 // Clear form
-                document.getElementById('email').value = '';
-                document.getElementById('password').value = '';
-                hideError();
+                resetLoginForm(); // Use the new reset function here
                 
                 loginArea.style.opacity = '1';
                 loginArea.style.transform = 'scale(1)';
@@ -1323,7 +1937,8 @@
 
         function showError(message) {
             const errorElement = document.getElementById("login-error");
-            errorElement.textContent = message;
+            const errorMessageText = document.getElementById("error-message-text");
+            errorMessageText.textContent = message;
             errorElement.classList.remove("hidden");
         }
 
@@ -1334,6 +1949,9 @@
         // Enhanced Tab Navigation
         document.querySelectorAll('.tab-button').forEach(button => {
             button.addEventListener('click', function() {
+                // Create ripple effect
+                createRippleEffect(this);
+                
                 // Update active tab with smooth transition
                 document.querySelectorAll('.tab-button').forEach(btn => {
                     btn.classList.remove('active');
@@ -1382,6 +2000,29 @@
             });
         });
 
+        // Create ripple effect
+        function createRippleEffect(element) {
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple-effect');
+            
+            // Get click position relative to the button
+            const rect = element.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            
+            // Set ripple position
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            
+            // Add ripple to button
+            element.appendChild(ripple);
+            
+            // Remove ripple after animation completes
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+
         // Enhanced Data Loading Functions
         async function loadAbsensiData(type, filterDay = 'all') {
             const tbodyId = type === 'guru' ? 'guruAbsensiBody' : 'siswaAbsensiBody';
@@ -1403,6 +2044,7 @@
                 if (rawData) {
                     if (type === 'guru') {
                         for (const guruId in rawData) {
+                            // Filter data based on current user role
                             if (currentUserRole === 'guru' && guruId !== auth.currentUser.uid) {
                                 continue;
                             }
@@ -1431,14 +2073,14 @@
                             for (const date in dailyEntries) {
                                 const entry = dailyEntries[date];
                                 const dayOfWeek = new Date(date).getDay();
-                                const dayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+                                const dayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Sunday is 0, map to 6 (end of week)
 
                                 aggregatedData[guruId].dayStatuses[dayIndex] = entry.status;
                                 aggregatedData[guruId].pelajaran = entry.pelajaran || aggregatedData[guruId].pelajaran;
                                 aggregatedData[guruId].kelas = entry.kelas || aggregatedData[guruId].kelas;
                                 
                                 if (entry.lokasi && entry.lokasi.latitude) {
-                                    aggregatedData[guruId].lokasi = `<a href="https://www.openstreetmap.org/?mlat=${entry.lokasi.latitude}&mlon=${entry.lokasi.longitude}#map=15/${entry.lokasi.latitude}/${entry.lokasi.longitude}" target="_blank" class="text-secondary-300 hover:text-secondary-200 transition-colors duration-200 hover:underline">📍 Lihat Peta</a>`;
+                                    aggregatedData[guruId].lokasi = `<a href="https://www.openstreetmap.org/?mlat=${entry.lokasi.latitude}&mlon=${entry.lokasi.longitude}#map=15/${entry.lokasi.latitude}/${entry.lokasi.longitude}" target="_blank" class="text-secondary-300 hover:text-secondary-200 transition-colors duration-200 hover:underline"><i class="fas fa-map-marker-alt mr-1"></i> Lihat Peta</a>`;
                                 }
                                 
                                 aggregatedData[guruId].foto = entry.foto || aggregatedData[guruId].foto;
@@ -1448,6 +2090,7 @@
                             // Calculate totals
                             aggregatedData[guruId].totalHadir = aggregatedData[guruId].dayStatuses.filter(s => s === 'Hadir').length;
                             aggregatedData[guruId].totalAlfa = aggregatedData[guruId].dayStatuses.filter(s => s === 'Alfa').length;
+                            // FIXED: Changed aggregatedData[guruId].id.filter to aggregatedData[guruId].dayStatuses.filter
                             aggregatedData[guruId].totalIzin = aggregatedData[guruId].dayStatuses.filter(s => s === 'Izin').length;
                             aggregatedData[guruId].totalSakit = aggregatedData[guruId].dayStatuses.filter(s => s === 'Sakit').length;
                             aggregatedData[guruId].totalMinggu = `${aggregatedData[guruId].totalHadir} Hadir, ${aggregatedData[guruId].totalSakit} Sakit, ${aggregatedData[guruId].totalIzin} Izin, ${aggregatedData[guruId].totalAlfa} Alfa`;
@@ -1457,13 +2100,14 @@
                         for (const userId in rawData) {
                             let isAllowed = true;
                             
+                            // Filter data based on current user role (teacher or wali kelas)
                             if (currentUserRole === 'guru') {
                                 isAllowed = await isTeacherOfStudent(userId, currentUserName);
                             } else if (currentUserRole === 'waliKelas') {
                                 isAllowed = await isStudentInWaliKelasClass(userId, currentUserClass);
                             }
                             
-                            if (!isAllowed) continue;
+                            if (!isAllowed) continue; // Skip if not allowed to see this student's data
 
                             const mapelData = rawData[userId];
                             
@@ -1500,7 +2144,7 @@
                                     aggregatedData[userId].namaGuru = entry.namaGuru || aggregatedData[userId].namaGuru;
                                     
                                     if (entry.lokasi && entry.lokasi.latitude) {
-                                        aggregatedData[userId].lokasi = `<a href="https://www.openstreetmap.org/?mlat=${entry.lokasi.latitude}&mlon=${entry.lokasi.longitude}#map=15/${entry.lokasi.latitude}/${entry.lokasi.longitude}" target="_blank" class="text-secondary-300 hover:text-secondary-200 transition-colors duration-200 hover:underline">📍 Lihat Peta</a>`;
+                                        aggregatedData[userId].lokasi = `<a href="https://www.openstreetmap.org/?mlat=${entry.lokasi.latitude}&mlon=${entry.lokasi.longitude}#map=15/${entry.lokasi.latitude}/${entry.lokasi.longitude}" target="_blank" class="text-secondary-300 hover:text-secondary-200 transition-colors duration-200 hover:underline"><i class="fas fa-map-marker-alt mr-1"></i> Lihat Peta</a>`;
                                     }
                                     
                                     aggregatedData[userId].foto = entry.foto || aggregatedData[userId].foto;
@@ -1519,20 +2163,22 @@
 
                 const finalData = Object.values(aggregatedData);
                 renderTable(type, finalData, filterDay);
+                showToast(`Data absensi ${type === 'guru' ? 'guru' : 'siswa'} berhasil dimuat`, 'success');
                 
             } catch (error) {
                 console.error("Error loading attendance data:", error);
                 tbody.innerHTML = `
                     <tr><td colspan="8" class="text-center py-12 text-danger-300">
-                        <div class="text-danger-400 text-2xl mb-3">⚠️</div>
+                        <div class="text-danger-400 text-2xl mb-3"><i class="fas fa-exclamation-triangle"></i></div>
                         <div class="font-semibold">Gagal memuat data</div>
                         <div class="text-sm opacity-75 mt-1">${error.message}</div>
                     </td></tr>
                 `;
+                showToast(`Gagal memuat data absensi: ${error.message}`, 'error');
             }
         }
 
-        // Helper Functions (keeping original logic)
+        // Helper Functions for Data Access Control
         async function getDisplayName(uid, type) {
             try {
                 const userSnapshot = await db.ref(`users/${uid}`).once('value');
@@ -1560,6 +2206,7 @@
                 }
                 return false;
             } catch (error) {
+                console.error("Error checking teacher-student relationship:", error);
                 return false;
             }
         }
@@ -1581,6 +2228,7 @@
                 }
                 return false;
             } catch (error) {
+                console.error("Error checking student-wali kelas relationship:", error);
                 return false;
             }
         }
@@ -1618,7 +2266,7 @@
             if (data.length === 0) {
                 tbody.innerHTML = `
                     <tr><td colspan="8" class="text-center py-12 opacity-60">
-                        <div class="text-4xl mb-3">📊</div>
+                        <div class="text-4xl mb-3"><i class="fas fa-database"></i></div>
                         <div class="font-semibold">Tidak ada data absensi</div>
                         <div class="text-sm mt-1">Data akan muncul setelah ada aktivitas absensi</div>
                     </td></tr>
@@ -1650,10 +2298,11 @@
                         const img = document.createElement('img');
                         img.src = entry.foto;
                         img.alt = 'Foto Guru';
-                        img.className = 'w-20 h-20 object-cover rounded-xl mx-auto shadow-lg transition-transform duration-300 hover:scale-110';
+                        img.className = 'w-20 h-20 object-cover rounded-xl mx-auto shadow-lg transition-transform duration-300 hover:scale-110 cursor-pointer';
+                        img.onclick = () => showImageModal(entry.foto, 'Foto Guru');
                         fotoCell.appendChild(img);
                     } else {
-                        fotoCell.innerHTML = '<span class="text-neutral-400">Tidak Ada</span>';
+                        fotoCell.innerHTML = '<span class="text-neutral-400"><i class="fas fa-image mr-1"></i> Tidak Ada</span>';
                     }
                     
                     addCell(row, 'Materi', entry.materi, 'hidden lg:table-cell');
@@ -1669,10 +2318,11 @@
                         const img = document.createElement('img');
                         img.src = entry.foto;
                         img.alt = 'Foto Siswa';
-                        img.className = 'w-20 h-20 object-cover rounded-xl mx-auto shadow-lg transition-transform duration-300 hover:scale-110';
+                        img.className = 'w-20 h-20 object-cover rounded-xl mx-auto shadow-lg transition-transform duration-300 hover:scale-110 cursor-pointer';
+                        img.onclick = () => showImageModal(item.image, item.title); // Make sure this calls the parent function correctly
                         fotoCell.appendChild(img);
                     } else {
-                        fotoCell.innerHTML = '<span class="text-neutral-400">Tidak Ada</span>';
+                        fotoCell.innerHTML = '<span class="text-neutral-400"><i class="fas fa-image mr-1"></i> Tidak Ada</span>';
                     }
                     
                     addCell(row, 'Nama Guru', entry.namaGuru, 'hidden lg:table-cell');
@@ -1682,23 +2332,23 @@
                 if (filterDay === 'all') {
                     entry.dayStatuses.forEach((status, index) => {
                         const cell = addCell(row, `Hari ${index + 1}`, '', 'hidden lg:table-cell');
-                        cell.innerHTML = `<span class="status-badge ${getStatusClass(status)}">${status}</span>`;
+                        cell.innerHTML = `<span class="status-badge ${getStatusClass(status)}">${getStatusIcon(status)} ${status}</span>`;
                     });
                 } else {
                     const dayIndex = parseInt(filterDay) - 1;
                     const cell = addCell(row, `Hari ${filterDay}`, '');
                     const status = entry.dayStatuses[dayIndex];
-                    cell.innerHTML = `<span class="status-badge ${getStatusClass(status)}">${status}</span>`;
+                    cell.innerHTML = `<span class="status-badge ${getStatusClass(status)}">${getStatusIcon(status)} ${status}</span>`;
                 }
 
                 // Add indicator
                 const indicatorCell = addCell(row, 'Indikator', '');
                 if (entry.totalAlfa > 0) {
-                    indicatorCell.innerHTML = `<span class="status-badge status-alfa">Perlu Perhatian</span>`;
+                    indicatorCell.innerHTML = `<span class="status-badge status-alfa"><i class="fas fa-exclamation-circle mr-1"></i> Perlu Perhatian</span>`;
                 } else if (entry.totalSakit > 0 || entry.totalIzin > 0) {
-                    indicatorCell.innerHTML = `<span class="status-badge status-izin">Cukup Baik</span>`;
+                    indicatorCell.innerHTML = `<span class="status-badge status-izin"><i class="fas fa-info-circle mr-1"></i> Cukup Baik</span>`;
                 } else {
-                    indicatorCell.innerHTML = `<span class="status-badge status-hadir">Sangat Baik</span>`;
+                    indicatorCell.innerHTML = `<span class="status-badge status-hadir"><i class="fas fa-check-circle mr-1"></i> Sangat Baik</span>`;
                 }
 
                 // Add total
@@ -1726,6 +2376,41 @@
             }
         }
 
+        function getStatusIcon(status) {
+            switch (status) {
+                case 'Hadir': return '<i class="fas fa-check-circle"></i>';
+                case 'Alfa': return '<i class="fas fa-times-circle"></i>';
+                case 'Izin': return '<i class="fas fa-envelope"></i>';
+                case 'Sakit': return '<i class="fas fa-procedures"></i>';
+                default: return '<i class="fas fa-question-circle"></i>';
+            }
+        }
+
+        // Show Image Modal
+        function showImageModal(imageSrc, title) {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay active';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold">${title}</h3>
+                        <button onclick="this.closest('.modal-overlay').classList.remove('active')" class="text-neutral-400 hover:text-white">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <img src="${imageSrc}" alt="${title}" class="w-full rounded-lg">
+                </div>
+            `;
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+            
+            document.body.appendChild(modal);
+        }
+
         // Filter Event Listeners
         document.getElementById('filterGuruHari').addEventListener('change', function() {
             loadAbsensiData('guru', this.value);
@@ -1744,15 +2429,7 @@
             XLSX.writeFile(wb, filename);
             
             // Show success feedback
-            const button = event.target;
-            const originalText = button.textContent;
-            button.textContent = '✅ Berhasil Diexport!';
-            button.style.background = 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)';
-            
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.style.background = '';
-            }, 2000);
+            showToast(`Data berhasil diekspor ke ${filename}`, 'success');
         }
 
         document.getElementById('exportGuruExcel').addEventListener('click', function() {
@@ -1790,7 +2467,7 @@
                 mapContainer.innerHTML = `
                     <div class="flex items-center justify-center h-full">
                         <div class="text-center">
-                            <div class="text-4xl mb-3">🗺️</div>
+                            <div class="text-4xl mb-3"><i class="fas fa-map-marked-alt"></i></div>
                             <div class="font-semibold">Gagal memuat peta</div>
                             <div class="text-sm opacity-75 mt-1">Silakan refresh halaman</div>
                         </div>
@@ -1833,9 +2510,9 @@
                                         // Create custom marker
                                         const customIcon = L.divIcon({
                                             className: 'custom-marker',
-                                            html: '<div class="marker-pin"></div>',
-                                            iconSize: [20, 20],
-                                            iconAnchor: [10, 10]
+                                            html: '<div class="marker-pin"></div><i class="fas fa-user-graduate marker-icon"></i>',
+                                            iconSize: [30, 30],
+                                            iconAnchor: [15, 15]
                                         });
 
                                         const marker = L.marker(position, { icon: customIcon }).addTo(map);
@@ -1844,11 +2521,11 @@
                                             <div class="p-4 text-neutral-900 min-w-[200px]">
                                                 <h4 class="font-bold text-lg mb-3 text-primary-600">${entry.nama || 'Siswa Tidak Dikenal'}</h4>
                                                 <div class="space-y-2 text-sm">
-                                                    <p><strong>Kelas:</strong> ${entry.kelas || 'Tidak Diketahui'}</p>
-                                                    <p><strong>Pelajaran:</strong> ${entry.mapel || 'Tidak Diketahui'}</p>
-                                                    <p><strong>Waktu:</strong> ${new Date(entry.waktu).toLocaleString('id-ID')}</p>
+                                                    <p><strong><i class="fas fa-users mr-1"></i> Kelas:</strong> ${entry.kelas || 'Tidak Diketahui'}</p>
+                                                    <p><strong><i class="fas fa-book mr-1"></i> Pelajaran:</strong> ${entry.mapel || 'Tidak Diketahui'}</p>
+                                                    <p><strong><i class="fas fa-clock mr-1"></i> Waktu:</strong> ${new Date(entry.waktu).toLocaleString('id-ID')}</p>
                                                 </div>
-                                                ${entry.foto ? `<img src="${entry.foto}" alt="Foto Siswa" class="w-32 h-32 object-cover rounded-lg mt-3 mx-auto shadow-lg">` : ''}
+                                                ${entry.foto ? `<img src="${entry.foto}" alt="Foto Siswa" class="w-32 h-32 object-cover rounded-lg mt-3 mx-auto shadow-lg cursor-pointer" onclick="window.parent.showImageModal('${entry.foto}', 'Foto Siswa')">` : ''}
                                             </div>
                                         `;
                                         marker.bindPopup(popupContent, {
@@ -1870,10 +2547,12 @@
                     map.fitBounds(bounds, { padding: [20, 20] });
                 } else {
                     map.setView([-6.5583, 107.4589], 12);
+                    showToast('Tidak ada lokasi siswa yang ditemukan', 'info');
                 }
 
             } catch (error) {
                 console.error("Error loading student locations:", error);
+                showToast('Gagal memuat lokasi siswa', 'error');
             }
         }
 
@@ -1887,62 +2566,184 @@
                 </div>
             `;
 
-            // Enhanced sample images with better variety
-            const sampleImages = [
-                'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop&auto=format',
-                'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=300&fit=crop&auto=format',
-                'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&h=300&fit=crop&auto=format',
-                'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&auto=format',
-                'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=300&fit=crop&auto=format',
-                'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop&auto=format'
-            ];
+            try {
+                const snapshot = await db.ref('absensi/siswa').once('value');
+                const rawData = snapshot.val();
+                let galleryItems = [];
 
-            setTimeout(() => {
-                galleryContainer.innerHTML = '';
-
-                if (sampleImages.length > 0) {
-                    sampleImages.forEach((imagePath, index) => {
-                        const imgContainer = document.createElement('div');
-                        imgContainer.className = 'gallery-item relative group';
-                        imgContainer.style.opacity = '0';
-                        imgContainer.style.transform = 'translateY(20px)';
-                        
-                        const img = document.createElement('img');
-                        img.src = imagePath;
-                        img.alt = `Foto Absensi Siswa ${index + 1}`;
-                        img.className = 'w-full h-56 object-cover transition-all duration-300';
-                        
-                        const overlay = document.createElement('div');
-                        overlay.className = 'absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4';
-                        overlay.innerHTML = `
-                            <div class="text-white">
-                                <h4 class="font-semibold">Foto Absensi #${index + 1}</h4>
-                                <p class="text-sm opacity-90">Dokumentasi kegiatan pembelajaran</p>
-                            </div>
-                        `;
-                        
-                        imgContainer.appendChild(img);
-                        imgContainer.appendChild(overlay);
-                        galleryContainer.appendChild(imgContainer);
-                        
-                        // Animate appearance
-                        setTimeout(() => {
-                            imgContainer.style.transition = 'all 0.4s ease';
-                            imgContainer.style.opacity = '1';
-                            imgContainer.style.transform = 'translateY(0)';
-                        }, index * 100);
-                    });
-                } else {
-                    galleryContainer.innerHTML = `
-                        <div class="col-span-full text-center py-12 opacity-60">
-                            <div class="text-4xl mb-3">📸</div>
-                            <div class="font-semibold">Galeri Kosong</div>
-                            <div class="text-sm mt-1">Foto akan muncul setelah siswa melakukan absensi</div>
-                        </div>
-                    `;
+                if (rawData) {
+                    for (const userId in rawData) {
+                        const mapelData = rawData[userId];
+                        for (const mapelKey in mapelData) {
+                            const waktuData = mapelData[mapelKey];
+                            for (const waktuKey in waktuData) {
+                                const entry = waktuData[waktuKey];
+                                if (entry.foto) {
+                                    galleryItems.push({
+                                        image: entry.foto,
+                                        title: `Foto Absensi ${entry.nama || 'Siswa'}`,
+                                        description: `Kelas: ${entry.kelas || 'Tidak Diketahui'}`,
+                                        date: new Date(entry.waktu).toLocaleDateString('id-ID')
+                                    });
+                                }
+                            }
+                        }
+                    }
                 }
-            }, 1000);
+
+                // If no photos found in database, use sample images
+                if (galleryItems.length === 0) {
+                    galleryItems = [
+                        {
+                            image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop&auto=format',
+                            title: 'Foto Kegiatan Belajar',
+                            description: 'Siswa sedang belajar di kelas',
+                            date: '01/01/2025'
+                        },
+                        {
+                            image: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=300&fit=crop&auto=format',
+                            title: 'Praktikum Siswa',
+                            description: 'Siswa melakukan praktikum',
+                            date: '02/01/2025'
+                        },
+                        {
+                            image: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&h=300&fit=crop&auto=format',
+                            title: 'Diskusi Kelompok',
+                            description: 'Siswa berdiskusi dalam kelompok',
+                            date: '03/01/2025'
+                        },
+                        {
+                            image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&auto=format',
+                            title: 'Presentasi Siswa',
+                            description: 'Siswa mempresentasikan hasil kerja',
+                            date: '04/01/2025'
+                        },
+                        {
+                            image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=300&fit=crop&auto=format',
+                            title: 'Kegiatan Ekstrakurikuler',
+                            description: 'Siswa dalam kegiatan ekstrakurikuler',
+                            date: '05/01/2025'
+                        },
+                        {
+                            image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop&auto=format',
+                            title: 'Kegiatan Olahraga',
+                            description: 'Siswa dalam kegiatan olahraga',
+                            date: '06/01/2025'
+                        }
+                    ];
+                }
+
+                renderGallery(galleryItems);
+                
+            } catch (error) {
+                console.error("Error loading gallery:", error);
+                galleryContainer.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-danger-300">
+                        <div class="text-danger-400 text-4xl mb-3"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="font-semibold">Gagal memuat galeri</div>
+                        <div class="text-sm opacity-75 mt-1">${error.message}</div>
+                    </div>
+                `;
+                showToast('Gagal memuat galeri foto', 'error');
+            }
         }
+
+        function renderGallery(items) {
+            const galleryContainer = document.getElementById('galleryContainer');
+            galleryContainer.innerHTML = '';
+
+            if (items.length === 0) {
+                galleryContainer.innerHTML = `
+                    <div class="col-span-full text-center py-12 opacity-60">
+                        <div class="text-4xl mb-3"><i class="fas fa-images"></i></div>
+                        <div class="font-semibold">Galeri Kosong</div>
+                        <div class="text-sm mt-1">Foto akan muncul setelah siswa melakukan absensi</div>
+                    </div>
+                `;
+                return;
+            }
+
+            items.forEach((item, index) => {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'gallery-item relative group';
+                imgContainer.style.opacity = '0';
+                imgContainer.style.transform = 'translateY(20px)';
+                
+                const img = document.createElement('img');
+                img.src = item.image;
+                img.alt = item.title;
+                img.className = 'w-full h-56 object-cover transition-all duration-300';
+                img.onclick = () => showImageModal(item.image, item.title);
+                
+                const overlay = document.createElement('div');
+                overlay.className = 'absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4';
+                overlay.innerHTML = `
+                    <div class="text-white">
+                        <h4 class="font-semibold">${item.title}</h4>
+                        <p class="text-sm opacity-90">${item.description}</p>
+                        <p class="text-xs opacity-80 mt-1"><i class="far fa-calendar-alt mr-1"></i> ${item.date}</p>
+                    </div>
+                `;
+                
+                imgContainer.appendChild(img);
+                imgContainer.appendChild(overlay);
+                galleryContainer.appendChild(imgContainer);
+                
+                // Animate appearance
+                setTimeout(() => {
+                    imgContainer.style.transition = 'all 0.4s ease';
+                    imgContainer.style.opacity = '1';
+                    imgContainer.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+
+            showToast(`Galeri foto berhasil dimuat (${items.length} foto)`, 'success');
+        }
+
+        // --- Confirmation Modal for Deletion ---
+        const confirmationModal = document.getElementById('confirmationModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMessage = document.getElementById('modalMessage');
+        const confirmDeleteBtn = document.getElementById('confirmDelete');
+        const cancelDeleteBtn = document.getElementById('cancelDelete');
+
+        function showConfirmationModal(type) {
+            dataToDeleteType = type; // Store the type of data to be deleted
+            modalTitle.textContent = `Konfirmasi Penghapusan Data Absensi ${type === 'guru' ? 'Guru' : 'Siswa'}`;
+            modalMessage.textContent = `Apakah Anda yakin ingin menghapus SEMUA data absensi ${type === 'guru' ? 'guru' : 'siswa'}? Tindakan ini tidak dapat dibatalkan dan akan menghapus data dari database.`
+            confirmationModal.classList.add('active');
+        }
+
+        cancelDeleteBtn.addEventListener('click', () => {
+            confirmationModal.classList.remove('active');
+            dataToDeleteType = null;
+        });
+
+        confirmDeleteBtn.addEventListener('click', () => {
+            confirmationModal.classList.remove('active');
+            if (dataToDeleteType) {
+                deleteAllAttendanceData(dataToDeleteType);
+            }
+        });
+
+        async function deleteAllAttendanceData(type) {
+            const refPath = type === 'guru' ? 'absensi/guru' : 'absensi/siswa';
+            try {
+                // IMPORTANT: In a real application, implement robust Firebase Security Rules
+                // to restrict who can perform this delete operation.
+                // Example Rule: ".write": "auth.uid === 'YOUR_ADMIN_UID'"
+                await db.ref(refPath).remove();
+                showToast(`Semua data absensi ${type === 'guru' ? 'guru' : 'siswa'} berhasil dihapus!`, 'success');
+                // Reload data after deletion
+                loadAbsensiData(type, document.getElementById(`filter${type === 'guru' ? 'Guru' : 'Siswa'}Hari`).value);
+            } catch (error) {
+                console.error(`Error deleting ${type} attendance data:`, error);
+                showToast(`Gagal menghapus data absensi ${type === 'guru' ? 'guru' : 'siswa'}: ${error.message}`, 'error');
+            } finally {
+                dataToDeleteType = null;
+            }
+        }
+
 
         // Enhanced Enter key support for login
         document.addEventListener('keypress', function(e) {
@@ -1959,14 +2760,27 @@
         // Add custom styles for map markers
         const customStyles = document.createElement('style');
         customStyles.innerHTML = `
-            .custom-marker .marker-pin {
-                width: 20px;
-                height: 20px;
+            .custom-marker {
+                position: relative;
+            }
+            
+            .marker-pin {
+                width: 30px;
+                height: 30px;
                 background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
                 border-radius: 50%;
                 border: 3px solid white;
                 box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
                 animation: pulse-marker 2s infinite;
+            }
+            
+            .marker-icon {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+                font-size: 12px;
             }
             
             @keyframes pulse-marker {
@@ -1978,6 +2792,16 @@
             .custom-popup .leaflet-popup-content-wrapper {
                 border-radius: 16px;
                 box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+                padding: 0;
+                overflow: hidden;
+            }
+            
+            .custom-popup .leaflet-popup-content {
+                margin: 0;
+            }
+            
+            .custom-popup .leaflet-popup-tip-container {
+                display: none;
             }
         `;
         document.head.appendChild(customStyles);
