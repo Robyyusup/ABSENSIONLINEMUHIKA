@@ -2,8 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8" />
-    <!-- Penting untuk responsivitas dan dukungan zoom perangkat -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Digital Attendance System - SMK Muhammadiyah Campaka</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -163,7 +162,7 @@
             --line-height-loose: 2;
 
             /* Advanced Transitions */
-            --transition-all: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); /* Slightly longer transition */
+            --transition-all: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-colors: color 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-transform: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-opacity: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -198,12 +197,10 @@
             font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-
-            /* Menyelaraskan konten utama di tengah layar */
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: var(--space-6); /* Memberikan padding di sekitar container utama */
+            padding: var(--space-6);
         }
 
         /* Enhanced Animated Background */
@@ -318,16 +315,14 @@
             pointer-events: none;
         }
 
-        /* Main Container - Fleksibel untuk berbagai ukuran layar */
+        /* Main Container */
         .container {
             max-width: 680px;
-            width: 100%; /* Memastikan container mengisi lebar yang tersedia */
-            margin: 0 auto; /* Tetap auto untuk centering horizontal */
+            width: 100%;
+            margin: 0 auto;
             padding: var(--space-6);
             position: relative;
             z-index: 10;
-            /* min-height pada body sudah menangani centering vertikal */
-            /* display: flex; align-items: center; justify-content: center; pada body sudah cukup */
         }
 
         /* Premium Glass Card */
@@ -400,21 +395,21 @@
             position: relative;
         }
 
-        .-container { /* This class is not directly used in the provided HTML for the header layout */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: var(--space-6);
+        .brand-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius-2xl);
             margin-bottom: var(--space-8);
-            flex-wrap: wrap;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-
-        /* Removed .logo and .header-text CSS as they are replaced by the image */
 
         /* Modern Form Elements */
         .form-group {
             margin-bottom: var(--space-10);
-            position: relative; /* Added for potential future icon/adornment positioning */
+            position: relative;
         }
 
         .form-label {
@@ -435,7 +430,7 @@
             opacity: 0.8;
         }
 
-        .form-input {
+        .form-input, .form-textarea {
             width: 100%;
             padding: var(--space-6) var(--space-7);
             background: var(--glass-bg);
@@ -447,19 +442,25 @@
             font-weight: 500;
             transition: var(--transition-all);
             position: relative;
-            z-index: 2; /* Ensure input is above any potential background effects */
+            z-index: 2;
+            resize: vertical;
         }
 
-        .form-input::placeholder {
+        .form-textarea {
+            min-height: 100px;
+            max-height: 200px;
+        }
+
+        .form-input::placeholder, .form-textarea::placeholder {
             color: rgba(255, 255, 255, 0.4);
             font-weight: 400;
         }
 
-        .form-input:focus {
+        .form-input:focus, .form-textarea:focus {
             outline: none;
             border-color: var(--primary-400);
             background: var(--glass-bg-hover);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), 0 0 20px rgba(59, 130, 246, 0.2); /* Enhanced focus shadow */
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), 0 0 20px rgba(59, 130, 246, 0.2);
             transform: translateY(-2px);
         }
 
@@ -480,7 +481,7 @@
             transition: var(--transition-all);
             position: relative;
             overflow: hidden;
-            box-shadow: var(--glass-shadow); /* Added default shadow */
+            box-shadow: var(--glass-shadow);
         }
 
         .info-card::before {
@@ -496,10 +497,9 @@
 
         .info-card:hover {
             background: var(--glass-bg-hover);
-            transform: translateY(-6px);
+            transform: translateY(-6px) scale(1.02);
             box-shadow: var(--glass-shadow-lg);
             border-color: var(--glass-border-hover);
-            transform: scale(1.02); /* Subtle zoom on hover */
         }
 
         .info-card:hover::before {
@@ -516,7 +516,7 @@
             width: 32px;
             height: 32px;
             color: var(--primary-400);
-            filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.5)); /* Glow effect for icons */
+            filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.5));
         }
 
         .info-card-label {
@@ -532,7 +532,7 @@
             font-weight: 700;
             color: var(--neutral-100);
             font-size: var(--font-size-lg);
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2); /* Subtle text shadow */
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
         /* Premium Status Cards */
@@ -546,7 +546,7 @@
             transition: var(--transition-all);
             position: relative;
             overflow: hidden;
-            box-shadow: var(--glass-shadow); /* Added default shadow */
+            box-shadow: var(--glass-shadow);
         }
 
         .status-card::after {
@@ -562,9 +562,8 @@
         }
 
         .status-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.01);
             box-shadow: var(--glass-shadow);
-            transform: scale(1.01); /* Subtle zoom on hover */
         }
 
         .status-card:hover::after {
@@ -597,14 +596,14 @@
         .status-card-title svg {
             width: 16px;
             height: 16px;
-            filter: drop-shadow(0 0 3px rgba(255,255,255,0.2)); /* Subtle glow for title icons */
+            filter: drop-shadow(0 0 3px rgba(255,255,255,0.2));
         }
 
         .status-card-value {
             font-size: var(--font-size-2xl);
             font-weight: 800;
             color: var(--neutral-100);
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3); /* Subtle text shadow */
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
 
         /* Modern Attendance Options */
@@ -629,7 +628,7 @@
             transition: var(--transition-all);
             position: relative;
             overflow: hidden;
-            box-shadow: var(--glass-shadow); /* Added default shadow */
+            box-shadow: var(--glass-shadow);
         }
 
         .attendance-option::before {
@@ -643,13 +642,13 @@
             transition: var(--transition-all);
             transform: translate(-50%, -50%);
             border-radius: 50%;
-            z-index: 1; /* Ensure effect is behind icon/text */
+            z-index: 1;
         }
 
         .attendance-option:hover {
             background: var(--glass-bg-hover);
             transform: translateY(-4px);
-            box-shadow: var(--glass-shadow-lg); /* Stronger shadow on hover */
+            box-shadow: var(--glass-shadow-lg);
         }
 
         .attendance-option:hover::before {
@@ -660,8 +659,8 @@
         .attendance-option.selected {
             border-color: var(--primary-400);
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.05) 100%);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), var(--glass-shadow-lg); /* Enhanced shadow for selected */
-            transform: translateY(-4px) scale(1.02); /* Slight scale on selected */
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), var(--glass-shadow-lg);
+            transform: translateY(-4px) scale(1.02);
         }
 
         .attendance-option.hadir.selected {
@@ -692,14 +691,14 @@
             margin-bottom: var(--space-4);
             display: flex;
             justify-content: center;
-            position: relative; /* Ensure icon is above ::before pseudo-element */
+            position: relative;
             z-index: 2;
         }
 
         .attendance-option-icon svg {
             width: 28px;
             height: 28px;
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.3)); /* Glow effect for icons */
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));
         }
 
         .attendance-option.hadir .attendance-option-icon svg {
@@ -724,7 +723,7 @@
             color: var(--neutral-200);
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            position: relative; /* Ensure text is above ::before pseudo-element */
+            position: relative;
             z-index: 2;
         }
 
@@ -744,7 +743,7 @@
             align-items: center;
             justify-content: center;
             border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow-lg); /* Added shadow for video container */
+            box-shadow: var(--glass-shadow-lg);
         }
 
         .video-element {
@@ -771,13 +770,21 @@
             padding: var(--space-8);
             flex-direction: column;
             gap: var(--space-4);
-            box-shadow: var(--glass-shadow); /* Added default shadow */
+            box-shadow: var(--glass-shadow);
         }
 
         .photo-preview svg {
             width: 48px;
             height: 48px;
             opacity: 0.6;
+        }
+
+        .photo-preview img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius-2xl);
+            max-height: 400px;
+            object-fit: cover;
         }
 
         /* Premium Buttons */
@@ -801,7 +808,7 @@
             justify-content: center;
             gap: var(--space-3);
             min-height: 60px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2); /* Base shadow for buttons */
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
         }
 
         .btn::before {
@@ -848,7 +855,7 @@
             box-shadow: 0 15px 60px rgba(34, 197, 94, 0.4);
         }
 
-        .btn-reset { /* New style for reset button */
+        .btn-reset {
             background: var(--neutral-700);
             color: var(--neutral-100);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -860,14 +867,13 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
 
-
         .btn:disabled {
             background: linear-gradient(135deg, var(--neutral-600) 0%, var(--neutral-700) 100%);
             color: var(--neutral-400);
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
-            opacity: 0.6; /* Dim disabled buttons */
+            opacity: 0.6;
         }
 
         .btn:disabled::before {
@@ -890,7 +896,7 @@
             align-items: center;
             justify-content: center;
             gap: var(--space-3);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15); /* Shadow for status messages */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
 
         .status-message::before {
@@ -979,6 +985,43 @@
             display: none !important;
         }
 
+        /* Love Heart Animation CSS */
+        .love-heart-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .love-heart {
+            position: absolute;
+            font-size: 2rem;
+            color: #ff69b4;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
+            animation: floatUpAndFade 3s ease-out forwards;
+            text-shadow: 0 0 8px rgba(255, 105, 180, 0.6);
+        }
+
+        @keyframes floatUpAndFade {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0);
+            }
+            20% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -200px) scale(1.2);
+            }
+        }
+
         /* Enhanced Responsive Design */
         @media (max-width: 768px) {
             .container {
@@ -989,21 +1032,6 @@
                 padding: var(--space-10);
                 border-radius: var(--radius-3xl);
             }
-
-            /* .header-text h1 {
-                font-size: var(--font-size-4xl);
-            } */
-
-            .logo-container {
-                flex-direction: column;
-                gap: var(--space-5);
-            }
-
-            /* .logo {
-                width: 80px;
-                height: 80px;
-                font-size: var(--font-size-2xl);
-            } */
 
             .info-grid {
                 grid-template-columns: 1fr;
@@ -1042,16 +1070,43 @@
             .attendance-options {
                 grid-template-columns: 1fr;
             }
+        }
 
-            /* .header-text h1 {
-                font-size: var(--font-size-3xl);
-            } */
+        /* Enhanced Teacher Material Input */
+        .teacher-material-section {
+            margin: var(--space-10) 0;
+            padding: var(--space-8);
+            background: var(--gradient-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-3xl);
+            position: relative;
+            overflow: hidden;
+        }
 
-            /* .logo {
-                width: 70px;
-                height: 70px;
-                font-size: var(--font-size-xl);
-            } */
+        .teacher-material-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-400), var(--secondary-400));
+        }
+
+        .material-title {
+            font-size: var(--font-size-lg);
+            font-weight: 700;
+            color: var(--neutral-100);
+            margin-bottom: var(--space-6);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .material-title svg {
+            width: 24px;
+            height: 24px;
+            color: var(--primary-400);
         }
 
         /* Accessibility Enhancements */
@@ -1068,10 +1123,11 @@
         /* Enhanced Focus Styles */
         .btn:focus-visible,
         .form-input:focus-visible,
+        .form-textarea:focus-visible,
         .attendance-option:focus-visible {
             outline: 2px solid var(--primary-400);
             outline-offset: 2px;
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), 0 0 20px rgba(59, 130, 246, 0.2); /* Consistent focus shadow */
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), 0 0 20px rgba(59, 130, 246, 0.2);
         }
 
         /* High Contrast Mode Support */
@@ -1081,53 +1137,9 @@
                 border: 2px solid var(--neutral-400);
             }
             
-            .form-input {
+            .form-input, .form-textarea {
                 background: rgba(0, 0, 0, 0.6);
                 border: 2px solid var(--neutral-400);
-            }
-        }
-
-        /* Dark Mode Improvements */
-        @media (prefers-color-scheme: dark) {
-            .glass-card {
-                background: var(--glass-bg);
-            }
-        }
-
-        /* Love Heart Animation CSS */
-        .love-heart-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1000;
-            overflow: hidden;
-        }
-
-        .love-heart {
-            position: absolute;
-            font-size: 2rem;
-            color: #ff69b4; /* Hot pink color for hearts */
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0);
-            animation: floatUpAndFade 3s ease-out forwards;
-            text-shadow: 0 0 8px rgba(255, 105, 180, 0.6); /* Subtle glow */
-        }
-
-        @keyframes floatUpAndFade {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0);
-            }
-            20% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -200px) scale(1.2); /* Floats up higher */
             }
         }
     </style>
@@ -1145,12 +1157,17 @@
         <div class="bg-shape"></div>
     </div>
     
- <div class="container">
-    <div class="glass-card" id="mainCard"> <!-- Added ID for easier manipulation -->
-      <!-- Replaced logo and header text with the new image -->
-      <img src="https://robyyusup.github.io/ABSENSIONLINEMUHIKA/ABSEN%20DULU%20SAYANG%20SEMANGAT%20YAAA....png" 
-           alt="Brand Ambassador SMK Muhammadiyah Campaka" 
-           style="max-width: 100%; height: auto; border-radius: var(--radius-2xl); margin-bottom: var(--space-8); display: block; margin-left: auto; margin-right: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+    <!-- Grid overlay -->
+    <div class="grid-overlay"></div>
+    
+    <div class="container">
+        <div class="glass-card" id="mainCard">
+            <!-- Header with brand image -->
+            <div class="header">
+                <img src="https://robyyusup.github.io/ABSENSIONLINEMUHIKA/ABSEN%20DULU%20SAYANG%20SEMANGAT%20YAAA....png" 
+                     alt="Brand Ambassador SMK Muhammadiyah Campaka" 
+                     class="brand-image">
+            </div>
 
             <!-- User ID Input with Modern Icon -->
             <div class="form-group" id="userIdGroup">
@@ -1270,6 +1287,40 @@
                 </div>
             </div>
 
+            <!-- Enhanced Teacher Material Input Section -->
+            <div class="teacher-material-section hidden" id="teacherMaterialSection">
+                <div class="material-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                    </svg>
+                    Materi Pembelajaran
+                </div>
+                <div class="form-group">
+                    <label for="teacherMaterial" class="form-label">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14,2 14,8 20,8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10,9 9,9 8,9"></polyline>
+                        </svg>
+                        <span>Materi yang Diajarkan Hari Ini</span>
+                    </label>
+                    <textarea 
+                        id="teacherMaterial" 
+                        class="form-textarea" 
+                        placeholder="Masukkan materi pembelajaran yang Anda ajarkan hari ini... 
+                        
+Contoh:
+- Bab 3: Sistem Operasi dan Aplikasi
+- Praktik pemrograman JavaScript dasar
+- Teori dan praktik pengelasan SMAW"
+                        rows="4"
+                    ></textarea>
+                </div>
+            </div>
+
             <!-- Enhanced Camera Section -->
             <div class="camera-section" id="cameraSection">
                 <div class="video-container">
@@ -1305,6 +1356,8 @@
 
             <!-- Enhanced Status Message (Final Result Display) -->
             <div id="statusMessage" class="hidden"></div>
+            
+            <!-- Reset Button -->
             <button id="btnReset" class="btn btn-reset hidden">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 10v4a2 2 0 0 0 2 2h4"></path>
@@ -1323,11 +1376,9 @@
                 </select>
             </div>
         </div>
-
-        <!-- Removed the duplicate brand-ambassador-container from here -->
     </div>
     
-    <!-- PENAMBAHAN: Elemen Audio -->
+    <!-- Audio element -->
     <audio id="attendanceSound" src="https://robyyusup.github.io/ABSENSIONLINEMUHIKA/desah-made-with-Voicemod%20(mp3cut.net).mp3" preload="auto"></audio>
 
     <!-- Container for love heart animations -->
@@ -1351,69 +1402,69 @@
         // User List Data
         const userList = [
             // Students X RPL A
-            { id: "AHMAD", role: "siswa", class: "X RPL A" },
-            { id: "AJI SETIAWAN", role: "siswa", class: "X RPL A" },
-            { id: "AKHDAN RAIHAN PUTRA", role: "siswa", class: "X RPL A" },
-            { id: "ALDI", role: "siswa", class: "X RPL A" },
-            { id: "ANANG SURYANA", role: "siswa", class: "X RPL A" },
-            { id: "SISWA_TKJ_B_01", role: "siswa", class: "X TKJ B" },
-            { id: "SISWA_TKJ_B_02", role: "siswa", class: "X TKJ B" },
-            { id: "Andra Septiana", role: "siswa", class: "X RPL A" },
-            { id: "Anggi Permadani", role: "siswa", class: "X RPL A" },
-            { id: "Anwar Musadad", role: "siswa", class: "X RPL A" },
-            { id: "Axelle Aulia", role: "siswa", class: "X RPL A" },
-            { id: "DANDA DERA AZAHRA", role: "siswa", class: "X RPL A" },
-            { id: "Fadillah Nurosobah", role: "siswa", class: "X RPL A" },
-            { id: "Fajar Ramadhan", role: "siswa", class: "X RPL A" },
-            { id: "Fazry Rizki Restiana", role: "siswa", class: "X RPL A" },
-            { id: "Hasim Ramdani", role: "siswa", class: "X RPL A" },
-            { id: "ILPAN SAMSUL ARIP", role: "siswa", class: "X RPL A" },
-            { id: "M. Rizqi Al Mubarok", role: "siswa", class: "X RPL A" },
-            { id: "MOHAMAD RAFLI RAMADAN", role: "siswa", class: "X RPL A" },
-            { id: "Muhamad Dzikry Ilham", role: "siswa", class: "X RPL A" },
-            { id: "Muhamad Rizki", role: "siswa", class: "X RPL A" },
-            { id: "Muhammad Ihsan Aroyan", role: "siswa", class: "X RPL A" },
-            { id: "Muhammad Rahmat Aldila", role: "siswa", class: "X RPL A" },
-            { id: "MUSTOPA", role: "siswa", class: "X RPL A" },
-            { id: "PARHAN SUHENDI", role: "siswa", class: "X RPL A" },
-            { id: "Raka Aditya", role: "siswa", class: "X RPL A" },
-            { id: "Ramdani", role: "siswa", class: "X RPL A" },
-            { id: "RIDWAN", role: "siswa", class: "X RPL A" },
-            { id: "RIKI", role: "siswa", class: "X RPL A" },
-            { id: "RISKI MULYANA", role: "siswa", class: "X RPL A" },
-            { id: "Siti Patimah", role: "siswa", class: "X RPL A" },
-            { id: "Sulaeman", role: "siswa", class: "X RPL A" },
-            { id: "Supriatna", role: "siswa", class: "X RPL A" },
-            { id: "Zulpikri Maulana", role: "siswa", class: "X RPL A" },
+            { id: "AHMAD", name: "Ahmad", role: "siswa", class: "X RPL A" },
+            { id: "AJI SETIAWAN", name: "Aji Setiawan", role: "siswa", class: "X RPL A" },
+            { id: "AKHDAN RAIHAN PUTRA", name: "Akhdan Raihan Putra", role: "siswa", class: "X RPL A" },
+            { id: "ALDI", name: "Aldi", role: "siswa", class: "X RPL A" },
+            { id: "ANANG SURYANA", name: "Anang Suryana", role: "siswa", class: "X RPL A" },
+            { id: "Andra Septiana", name: "Andra Septiana", role: "siswa", class: "X RPL A" },
+            { id: "Anggi Permadani", name: "Anggi Permadani", role: "siswa", class: "X RPL A" },
+            { id: "Anwar Musadad", name: "Anwar Musadad", role: "siswa", class: "X RPL A" },
+            { id: "Axelle Aulia", name: "Axelle Aulia", role: "siswa", class: "X RPL A" },
+            { id: "DANDA DERA AZAHRA", name: "Danda Dera Azahra", role: "siswa", class: "X RPL A" },
+            { id: "Fadillah Nurosobah", name: "Fadillah Nurosobah", role: "siswa", class: "X RPL A" },
+            { id: "Fajar Ramadhan", name: "Fajar Ramadhan", role: "siswa", class: "X RPL A" },
+            { id: "Fazry Rizki Restiana", name: "Fazry Rizki Restiana", role: "siswa", class: "X RPL A" },
+            { id: "Hasim Ramdani", name: "Hasim Ramdani", role: "siswa", class: "X RPL A" },
+            { id: "ILPAN SAMSUL ARIP", name: "Ilpan Samsul Arip", role: "siswa", class: "X RPL A" },
+            { id: "M. Rizqi Al Mubarok", name: "M. Rizqi Al Mubarok", role: "siswa", class: "X RPL A" },
+            { id: "MOHAMAD RAFLI RAMADAN", name: "Mohamad Rafli Ramadan", role: "siswa", class: "X RPL A" },
+            { id: "Muhamad Dzikry Ilham", name: "Muhamad Dzikry Ilham", role: "siswa", class: "X RPL A" },
+            { id: "Muhamad Rizki", name: "Muhamad Rizki", role: "siswa", class: "X RPL A" },
+            { id: "Muhammad Ihsan Aroyan", name: "Muhammad Ihsan Aroyan", role: "siswa", class: "X RPL A" },
+            { id: "Muhammad Rahmat Aldila", name: "Muhammad Rahmat Aldila", role: "siswa", class: "X RPL A" },
+            { id: "MUSTOPA", name: "Mustopa", role: "siswa", class: "X RPL A" },
+            { id: "PARHAN SUHENDI", name: "Parhan Suhendi", role: "siswa", class: "X RPL A" },
+            { id: "Raka Aditya", name: "Raka Aditya", role: "siswa", class: "X RPL A" },
+            { id: "Ramdani", name: "Ramdani", role: "siswa", class: "X RPL A" },
+            { id: "RIDWAN", name: "Ridwan", role: "siswa", class: "X RPL A" },
+            { id: "RIKI", name: "Riki", role: "siswa", class: "X RPL A" },
+            { id: "RISKI MULYANA", name: "Riski Mulyana", role: "siswa", class: "X RPL A" },
+            { id: "Siti Patimah", name: "Siti Patimah", role: "siswa", class: "X RPL A" },
+            { id: "Sulaeman", name: "Sulaeman", role: "siswa", class: "X RPL A" },
+            { id: "Supriatna", name: "Supriatna", role: "siswa", class: "X RPL A" },
+            { id: "Zulpikri Maulana", name: "Zulpikri Maulana", role: "siswa", class: "X RPL A" },
+            { id: "SISWA_TKJ_B_01", name: "Siswa TKJ B 01", role: "siswa", class: "X TKJ B" },
+            { id: "SISWA_TKJ_B_02", name: "Siswa TKJ B 02", role: "siswa", class: "X TKJ B" },
 
-            // Teachers (updated to include all from masterCodes)
-            { id: "1", role: "guru", subjectTeaching: "PaDBp" }, // Wawan Oktriawan, M.E
-            { id: "2", role: "guru", subjectTeaching: "PPKn" }, // Jumanto, S.T
-            { id: "3", role: "guru", subjectTeaching: "Bahasa Indonesia" }, // Adi Hermawan, S.T
-            { id: "4", role: "guru", subjectTeaching: "Matematika" }, // Ernawati, S.H
-            { id: "5", role: "guru", subjectTeaching: "Sejarah Indonesia" }, // Lyna Devy F., S.Pd
-            { id: "6", role: "guru", subjectTeaching: "Bahasa Inggris" }, // Sukarsih, M.Pd
-            { id: "7", role: "guru", subjectTeaching: "Seni Budaya" }, // Sri Wulan, S.Pd
-            { id: "8", role: "guru", subjectTeaching: "Penjasorkes" }, // Nurul Wangsa M., S.Pd
-            { id: "9", role: "guru", subjectTeaching: "Produk Kreatif dan Kewirausahaan" }, // Priyo Wiji Utomo, S.Pd
-            { id: "10", role: "guru", subjectTeaching: "Bahasa Sunda" }, // Sigit Ramdhani, S.T
-            { id: "11", role: "guru", subjectTeaching: "Kemuhammadiyahan" }, // Kiki Putra, S.T
-            { id: "12", role: "guru", subjectTeaching: "Bahasa Arab Al Islam" }, // Noval Ridho Pasyola, S.PdI
-            { id: "13", role: "guru", subjectTeaching: "Simulasi Digital" }, // Ellis Hayati, S.Pd
-            { id: "14", role: "guru", subjectTeaching: "IPAS" }, // Neng Leni, S.Kom
-            { id: "15", role: "guru", subjectTeaching: "PS" }, // Agt Eko Priyantono M.M
-            { id: "16", role: "guru", subjectTeaching: "PS" }, // Agustiar Tedjo Aspurwa, S.E
-            { id: "17", role: "guru", subjectTeaching: "Gambar Teknik Mesin" }, // M. Ridwan Hasibuan, S.H
-            { id: "18", role: "guru", subjectTeaching: "Pekerjaan Dasar Teknik Mesin" }, // Indra Supriatna, S.Kom
-            { id: "19", role: "guru", subjectTeaching: "DPTM" }, // Nanda Faradhitta, A.Md
-            { id: "20", role: "guru", subjectTeaching: "Gambar Teknik Manufaktur" }, // Khaerunisa, S.Pd
-            { id: "21", role: "guru", subjectTeaching: "Teknik Pemesinan Bubut" }, // Muhammad Imron Aulia, S.P
-            { id: "22", role: "guru", subjectTeaching: "Teknik Pemesinan Frais" }, // Enjang Seefullah, S.T
-            { id: "23", role: "guru", subjectTeaching: "Teknik Pemesinan Gerinda" }, // M. Firdaus Z.S. Th.I
-            { id: "24", role: "guru", subjectTeaching: "Teknik Pemesinan NC/CNC dan CAM" }, // Jepi Prasetyo Ahmad, S.Pd
-            { id: "25", role: "guru", subjectTeaching: "Produk Kreatif dan Kewirausahaan" }, // Nandi Hamadi S.Pd
-            { id: "26", role: "guru", subjectTeaching: "Matematika" }, // Jimmy Permana Wijaya, S.Si
-            { id: "27", role: "guru", subjectTeaching: "Desain Grafis" }, // Ari Wibawa, S.T
+            // Teachers (updated role to "guru" and added name property)
+            { id: "1", name: "Wawan Oktriawan, M.E", role: "guru", subjectTeaching: "PaDBp" },
+            { id: "2", name: "Jumanto, S.T", role: "guru", subjectTeaching: "PPKn" },
+            { id: "3", name: "Adi Hermawan, S.T", role: "guru", subjectTeaching: "Bahasa Indonesia" },
+            { id: "4", name: "Ernawati, S.H", role: "guru", subjectTeaching: "Matematika" },
+            { id: "5", name: "Lyna Devy F., S.Pd", role: "guru", subjectTeaching: "Sejarah Indonesia" },
+            { id: "6", name: "Sukarsih, M.Pd", role: "guru", subjectTeaching: "Bahasa Inggris" },
+            { id: "7", name: "Sri Wulan, S.Pd", role: "guru", subjectTeaching: "Seni Budaya" },
+            { id: "8", name: "Nurul Wangsa M., S.Pd", role: "guru", subjectTeaching: "Penjasorkes" },
+            { id: "9", name: "Priyo Wiji Utomo, S.Pd", role: "guru", subjectTeaching: "Produk Kreatif dan Kewirausahaan" },
+            { id: "10", name: "Sigit Ramdhani, S.T", role: "guru", subjectTeaching: "Bahasa Sunda" },
+            { id: "11", name: "Kiki Putra, S.T", role: "guru", subjectTeaching: "Kemuhammadiyahan" },
+            { id: "12", name: "Noval Ridho Pasyola, S.PdI", role: "guru", subjectTeaching: "Bahasa Arab Al Islam" },
+            { id: "13", name: "Ellis Hayati, S.Pd", role: "guru", subjectTeaching: "Simulasi Digital" },
+            { id: "14", name: "Neng Leni, S.Kom", role: "guru", subjectTeaching: "IPAS" },
+            { id: "15", name: "Agt Eko Priyantono M.M", role: "guru", subjectTeaching: "PS" },
+            { id: "16", name: "Agustiar Tedjo Aspurwa, S.E", role: "guru", subjectTeaching: "PS" },
+            { id: "17", name: "M. Ridwan Hasibuan, S.H", role: "guru", subjectTeaching: "Gambar Teknik Mesin" },
+            { id: "18", name: "Indra Supriatna, S.Kom", role: "guru", subjectTeaching: "Pekerjaan Dasar Teknik Mesin" },
+            { id: "19", name: "Nanda Faradhitta, A.Md", role: "guru", subjectTeaching: "DPTM" },
+            { id: "20", name: "Khaerunisa, S.Pd", role: "guru", subjectTeaching: "Gambar Teknik Manufaktur" },
+            { id: "21", name: "Muhammad Imron Aulia, S.P", role: "guru", subjectTeaching: "Teknik Pemesinan Bubut" },
+            { id: "22", name: "Enjang Seefullah, S.T", role: "guru", subjectTeaching: "Teknik Pemesinan Frais" },
+            { id: "23", name: "M. Firdaus Z.S. Th.I", role: "guru", subjectTeaching: "Teknik Pemesinan Gerinda" },
+            { id: "24", name: "Jepi Prasetyo Ahmad, S.Pd", role: "guru", subjectTeaching: "Teknik Pemesinan NC/CNC dan CAM" },
+            { id: "25", name: "Nandi Hamadi S.Pd", role: "guru", subjectTeaching: "Produk Kreatif dan Kewirausahaan" },
+            { id: "26", name: "Jimmy Permana Wijaya, S.Si", role: "guru", subjectTeaching: "Matematika" },
+            { id: "27", name: "Ari Wibawa, S.T", role: "guru", subjectTeaching: "Desain Grafis" },
         ];
 
         // Schedule List
@@ -1569,15 +1620,15 @@
             { day: 'Jumat', start: '13:50', end: '14:30', class: 'X RPL A', subject: 'Bahasa Inggris' },
             { day: 'Jumat', start: '13:50', end: '14:30', class: 'KLS XI', subject: 'Teknik Pemesinan Gerinda' },
             { day: 'Jumat', start: '13:50', end: '14:30', class: 'KLS XII', subject: 'Teknik Pemesinan Frais' },
-            { day: 'Jumat', start: '14:30', end: '18:10', class: 'X RPL A', subject: 'Bahasa Inggris' },
-            { day: 'Jumat', start: '14:30', end: '18:10', class: 'KLS XI', subject: 'Matematika' },
-            { day: 'Jumat', start: '14:30', end: '18:10', class: 'KLS XII', subject: 'Teknik Pemesinan Frais' },
+            { day: 'Jumat', start: '14:30', end: '21:10', class: 'X RPL A', subject: 'Bahasa Inggris' },
+            { day: 'Jumat', start: '14:30', end: '21:10', class: 'KLS XI', subject: 'Matematika' },
+            { day: 'Jumat', start: '14:30', end: '21:10', class: 'KLS XII', subject: 'Teknik Pemesinan Frais' },
         ];
 
         // DOM Elements
         const mainCard = document.getElementById('mainCard');
         const userIdInput = document.getElementById('userId');
-        const userIdGroup = document.getElementById('userIdGroup'); // Added ID
+        const userIdGroup = document.getElementById('userIdGroup');
         const roleSelect = document.getElementById('role');
         const subjectSpan = document.getElementById('subject');
         const scheduleSpan = document.getElementById('schedule');
@@ -1593,14 +1644,16 @@
         const photoPreview = document.getElementById('photoPreview');
         const statusMessage = document.getElementById('statusMessage');
         const attendanceOptions = document.querySelectorAll('.attendance-option');
-        const infoGrid = document.getElementById('infoGrid'); // Added ID
-        const roleCard = document.getElementById('roleCard'); // Added ID
-        const classCard = document.getElementById('classCard'); // Added ID
-        const attendanceTypeSection = document.getElementById('attendanceTypeSection'); // Added ID
-        const cameraSection = document.getElementById('cameraSection'); // Added ID
-        const btnReset = document.getElementById('btnReset'); // New Reset Button
-        const attendanceSound = document.getElementById('attendanceSound'); // Added for audio
-        const loveHeartContainer = document.getElementById('loveHeartContainer'); // Added for love heart animation
+        const infoGrid = document.getElementById('infoGrid');
+        const roleCard = document.getElementById('roleCard');
+        const classCard = document.getElementById('classCard');
+        const attendanceTypeSection = document.getElementById('attendanceTypeSection');
+        const cameraSection = document.getElementById('cameraSection');
+        const btnReset = document.getElementById('btnReset');
+        const attendanceSound = document.getElementById('attendanceSound');
+        const loveHeartContainer = document.getElementById('loveHeartContainer');
+        const teacherMaterialSection = document.getElementById('teacherMaterialSection');
+        const teacherMaterialInput = document.getElementById('teacherMaterial');
 
         // Global Variables
         let stream;
@@ -1668,7 +1721,6 @@
             statusMessage.innerHTML = `${createStatusIcon(type)}<span>${message}</span>`;
             statusMessage.classList.remove('hidden');
             
-            // For general messages, hide after a few seconds
             if (type !== 'success' && type !== 'error') {
                 setTimeout(() => {
                     statusMessage.classList.add('hidden');
@@ -1720,21 +1772,18 @@
             btnAbsenIcon.innerHTML = icons[attendanceType];
         }
 
-        // Function to create and animate a love heart
         function createLoveHeart() {
             const heart = document.createElement('div');
             heart.classList.add('love-heart');
-            heart.innerHTML = '❤️'; // Unicode heart emoji
+            heart.innerHTML = '❤️';
 
-            // Position the heart randomly near the center of the screen
-            const startX = window.innerWidth / 2 + (Math.random() - 0.5) * 100; // Slightly varied X
-            const startY = window.innerHeight / 2 + (Math.random() - 0.5) * 100; // Slightly varied Y
+            const startX = window.innerWidth / 2 + (Math.random() - 0.5) * 100;
+            const startY = window.innerHeight / 2 + (Math.random() - 0.5) * 100;
             heart.style.left = `${startX}px`;
             heart.style.top = `${startY}px`;
 
             loveHeartContainer.appendChild(heart);
 
-            // Remove the heart after its animation completes
             heart.addEventListener('animationend', () => {
                 heart.remove();
             });
@@ -1769,51 +1818,49 @@
         // Set default selection
         document.querySelector('.attendance-option[data-type="Hadir"]').classList.add('selected');
 
-        // Function to hide all input/button sections and show final message/reset
         function showFinalResultScreen() {
             userIdGroup.classList.add('hidden');
             infoGrid.classList.add('hidden');
             roleCard.classList.add('hidden');
             classCard.classList.add('hidden');
             attendanceTypeSection.classList.add('hidden');
+            teacherMaterialSection.classList.add('hidden');
             cameraSection.classList.add('hidden');
             btnStartCamera.classList.add('hidden');
             btnAbsen.classList.add('hidden');
             
-            statusMessage.style.fontSize = 'var(--font-size-2xl)'; // Make final message more prominent
+            statusMessage.style.fontSize = 'var(--font-size-2xl)';
             statusMessage.style.padding = 'var(--space-10)';
-            statusMessage.style.marginTop = 'var(--space-16)'; // More space above
+            statusMessage.style.marginTop = 'var(--space-16)';
             
             btnReset.classList.remove('hidden');
         }
 
-        // Function to reset the form for a new attendance
         function resetForm() {
             userIdInput.value = '';
+            teacherMaterialInput.value = '';
             currentUserData = null;
-            selectedAttendanceType = 'Hadir'; // Reset to default
-            document.querySelector('.attendance-option[data-type="Hadir"]').click(); // Visually select "Hadir"
+            selectedAttendanceType = 'Hadir';
+            document.querySelector('.attendance-option[data-type="Hadir"]').click();
 
-            // Hide status message and reset its styles
             hideStatusMessage();
             statusMessage.style.fontSize = ''; 
             statusMessage.style.padding = '';
             statusMessage.style.marginTop = '';
 
-            // Show input/button sections
             userIdGroup.classList.remove('hidden');
             infoGrid.classList.remove('hidden');
             roleCard.classList.remove('hidden');
             classCard.classList.remove('hidden');
             attendanceTypeSection.classList.remove('hidden');
+            teacherMaterialSection.classList.add('hidden');
             cameraSection.classList.remove('hidden');
             btnStartCamera.classList.remove('hidden');
-            btnAbsen.classList.remove('hidden'); // Show absen button
-            btnAbsen.disabled = true; // Disable until ID is entered
+            btnAbsen.classList.remove('hidden');
+            btnAbsen.disabled = true;
 
             btnReset.classList.add('hidden');
 
-            // Reset camera state
             if (stream) {
                 stream.getTracks().forEach(track => track.stop());
                 video.classList.add('hidden');
@@ -1836,17 +1883,14 @@
             `;
             btnStartCamera.disabled = false;
 
-
-            // Reset display values
             subjectSpan.textContent = '-';
             scheduleSpan.textContent = '-';
             detectedRoleSpan.textContent = 'Belum Terdeteksi';
             detectedClassSpan.textContent = '-';
 
-            // Ensure absensi button is disabled until valid ID
             btnAbsen.disabled = true;
             btnAbsenText.textContent = 'Konfirmasi Kehadiran';
-            updateButtonIcon('Hadir'); // Reset button icon
+            updateButtonIcon('Hadir');
         }
 
         // User ID Input Handler
@@ -1857,8 +1901,15 @@
             currentUserData = userList.find(user => user.id.toUpperCase() === inputIdNormalized);
 
             if (currentUserData) {
-                roleSelect.value = currentUserData.role;
+                // Set the role display based on the corrected 'role' property
                 detectedRoleSpan.textContent = currentUserData.role === 'siswa' ? 'Siswa' : 'Guru';
+
+                // Show/hide teacher material section based on role
+                if (currentUserData.role === 'guru') {
+                    teacherMaterialSection.classList.remove('hidden');
+                } else {
+                    teacherMaterialSection.classList.add('hidden');
+                }
 
                 if (currentUserData.role === 'siswa') {
                     detectedClassSpan.textContent = currentUserData.class;
@@ -1896,11 +1947,12 @@
                     }
                 }
             } else {
-                roleSelect.value = 'siswa';
+                // If user not found, reset displays
                 detectedRoleSpan.textContent = inputId.length > 0 ? 'ID/Nama Tidak Dikenal' : 'Belum Terdeteksi';
                 detectedClassSpan.textContent = '-';
                 subjectSpan.textContent = '-';
                 scheduleSpan.textContent = '-';
+                teacherMaterialSection.classList.add('hidden'); // Hide for unknown users
                 if (inputId.length > 0) {
                     btnAbsen.disabled = true;
                     showStatusMessage('ID/Nama tidak dikenal. Anda tidak diizinkan untuk absensi.', 'error');
@@ -1927,7 +1979,7 @@
                     video.classList.remove('hidden');
                     photoPreview.classList.add('hidden');
                     
-                    showStatusMessage('Kamera aktif. Pastikan wajah Anda terlihat jelas.', 'info'); // Changed to info
+                    showStatusMessage('Kamera aktif. Pastikan wajah Anda terlihat jelas.', 'info');
                     btnStartCamera.innerHTML = `
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
@@ -1955,7 +2007,6 @@
 
         // Attendance Process
         btnAbsen.addEventListener('click', async () => {
-            // PENAMBAHAN: Memainkan audio saat tombol diklik
             if (selectedAttendanceType === 'Hadir') {
                 attendanceSound.play().catch(e => console.error("Gagal memutar audio:", e));
             }
@@ -1975,7 +2026,6 @@
             btnAbsen.disabled = true;
 
             try {
-                // Determine active schedule
                 let activeScheduleForAbsence = null;
                 let classForAbsence = null;
                 let subjectForAbsence = null;
@@ -1991,7 +2041,7 @@
                         item.subject === currentUserData.subjectTeaching
                     );
                     classForAbsence = activeScheduleForAbsence ? activeScheduleForAbsence.class : '-';
-                    subjectForAbsence = activeScheduleForAbsence ? activeScheduleForAbsence.subject : '-'; // Corrected variable name
+                    subjectForAbsence = activeScheduleForAbsence ? activeScheduleForAbsence.subject : '-';
                 }
 
                 if (!activeScheduleForAbsence) {
@@ -2009,8 +2059,7 @@
                         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
                         photoData = canvas.toDataURL('image/jpeg', 0.8);
                         
-                        // Show photo preview
-                        photoPreview.innerHTML = `<img src="${photoData}" alt="Foto yang diambil" style="width: 100%; height: auto; border-radius: var(--radius-2xl);">`;
+                        photoPreview.innerHTML = `<img src="${photoData}" alt="Foto yang diambil">`;
                         photoPreview.classList.remove('hidden');
                         video.classList.add('hidden');
                     } else {
@@ -2053,7 +2102,8 @@
                 // Prepare attendance data
                 const dataAbsensi = {
                     id: inputId,
-                    nama: inputId, 
+                    // Use currentUserData.name if available, otherwise fallback to id
+                    nama: currentUserData.name || inputId, 
                     role: currentUserData.role,
                     kelas: classForAbsence,
                     waktu: new Date().toISOString(),
@@ -2062,14 +2112,12 @@
                     foto: photoData,
                     lokasi,
                     status: selectedAttendanceType,
-                    materi: ''
+                    materi: currentUserData.role === 'guru' ? (teacherMaterialInput.value.trim() || 'Tidak ada materi') : ''
                 };
 
-                // Add teacher material if applicable
+                // Add additional teacher data
                 if (currentUserData.role === 'guru') {
-                    const materiInput = prompt("Anda adalah guru. Masukkan materi pelajaran hari ini:");
-                    dataAbsensi.materi = materiInput || 'Tidak ada materi';
-                    dataAbsensi.namaGuru = inputId;
+                    dataAbsensi.namaGuru = currentUserData.name || inputId; // Use name if available
                 }
 
                 // Save to Firebase
@@ -2082,22 +2130,35 @@
                     'Izin': 'Izin',
                     'Alfa': 'Alfa'
                 };
-                showStatusMessage(`Absensi ${statusLabels[selectedAttendanceType]} berhasil disimpan!`, 'success');
+
+                const timestamp = new Date().toLocaleString('id-ID', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                showStatusMessage(`✅ Absensi ${statusLabels[selectedAttendanceType]} berhasil dicatat!
                 
-                // Trigger love heart animation on successful "Hadir" attendance
+🗓️ Tanggal: ${timestamp}
+${currentUserData.role === 'siswa' ? '🧑‍🎓 Siswa' : '👨‍🏫 Guru'}: ${currentUserData.name || inputId}
+📚 Mata Pelajaran: ${subjectForAbsence}
+⏰ Jam Pelajaran: ${activeScheduleForAbsence.start} - ${activeScheduleForAbsence.end}
+${currentUserData.role === 'guru' && dataAbsensi.materi ? `✍️ Materi Diajarkan: ${dataAbsensi.materi}` : ''}`, 'success');
+                
                 if (selectedAttendanceType === 'Hadir') {
-                    for (let i = 0; i < 10; i++) { // Generate multiple hearts
-                        setTimeout(createLoveHeart, i * 100); // Stagger their appearance
+                    for (let i = 0; i < 10; i++) {
+                        setTimeout(createLoveHeart, i * 100);
                     }
                 }
 
-                // Show final result screen and hide input elements
                 showFinalResultScreen();
 
             } catch (error) {
                 showStatusMessage("Gagal menyimpan absensi: " + error.message, 'error');
             } finally {
-                // Always reset loading state regardless of success or failure
                 btnAbsenText.classList.remove('hidden');
                 btnAbsenIcon.classList.remove('hidden');
                 btnAbsenSpinner.classList.add('hidden');
@@ -2107,864 +2168,23 @@
         // Reset button event listener
         btnReset.addEventListener('click', resetForm);
 
-
         // Initialize
         updateScheduleDisplay();
-        setInterval(updateScheduleDisplay, 60000); // Check schedule every minute
+        setInterval(updateScheduleDisplay, 60000);
 
         // Keyboard support
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !btnAbsen.disabled && document.activeElement !== userIdInput) {
+            if (e.key === 'Enter' && !btnAbsen.disabled && document.activeElement !== userIdInput && document.activeElement !== teacherMaterialInput) {
                 btnAbsen.click();
             }
         });
 
-        // Smooth scrolling
-        document.documentElement.style.scrollBehavior = 'smooth';
-
         // Performance optimization
         if ('requestIdleCallback' in window) {
             requestIdleCallback(() => {
-                // Initialize non-critical features
-                console.log('Sistem Absensi Digital diinisialisasi');
+                console.log('Sistem Absensi Digital SMK Muhammadiyah Campaka berhasil diinisialisasi');
             });
         }
-
-        // --- Data for School Schedule Analysis ---
-
-        // Data for Subject/Teacher Codes (from the second image)
-        const masterCodes = [
-            { code: "1", name: "Wawan Oktriawan, M.E", subject: "PaDBp" },
-            { code: "2", name: "Jumanto, S.T", subject: "PPKn" },
-            { code: "3", name: "Adi Hermawan, S.T", subject: "Bahasa Indonesia" },
-            { code: "4", name: "Ernawati, S.H", subject: "Matematika" },
-            { code: "5", name: "Lyna Devy F., S.Pd", subject: "Sejarah Indonesia" },
-            { code: "6", name: "Sukarsih, M.Pd", subject: "Bahasa Inggris" },
-            { code: "7", name: "Sri Wulan, S.Pd", subject: "Seni Budaya" },
-            { code: "8", name: "Nurul Wangsa M., S.Pd", subject: "Penjasorkes" },
-            { code: "9", name: "Priyo Wiji Utomo, S.Pd", subject: "Produk Kreatif dan Kewirausahaan" },
-            { code: "10", name: "Sigit Ramdhani, S.T", subject: "Bahasa Sunda" },
-            { code: "11", name: "Kiki Putra, S.T", subject: "Kemuhammadiyahan" },
-            { code: "12", name: "Noval Ridho Pasyola, S.PdI", subject: "Bahasa Arab Al Islam" },
-            { code: "13", name: "Ellis Hayati, S.Pd", subject: "Simulasi Digital" },
-            { code: "14", name: "Neng Leni, S.Kom", subject: "IPAS" }, // Assuming TPM is Neng Leni S.Kom
-            { code: "15", name: "Agt Eko Priyantono M.M", subject: "PS" }, // Assuming TKR is Agt Eko Priyantono M.M
-            { code: "16", name: "Agustiar Tedjo Aspurwa, S.E", subject: "PS" }, // Assuming RPL is Agustiar Tedjo Aspurwa, S.E
-            { code: "17", name: "M. Ridwan Hasibuan, S.H", subject: "Gambar Teknik Mesin" },
-            { code: "18", name: "Indra Supriatna, S.Kom", subject: "Pekerjaan Dasar Teknik Mesin" },
-            { code: "19", name: "Nanda Faradhitta, A.Md", subject: "DPTM" },
-            { code: "20", name: "Khaerunisa, S.Pd", subject: "Gambar Teknik Manufaktur" },
-            { code: "21", name: "Muhammad Imron Aulia, S.P", subject: "Teknik Pemesinan Bubut" },
-            { code: "22", name: "Enjang Seefullah, S.T", subject: "Teknik Pemesinan Frais" },
-            { code: "23", name: "M. Firdaus Z.S. Th.I", subject: "Teknik Pemesinan Gerinda" },
-            { code: "24", name: "Jepi Prasetyo Ahmad, S.Pd", subject: "Teknik Pemesinan NC/CNC dan CAM" },
-            { code: "25", name: "Nandi Hamadi S.Pd", subject: "Produk Kreatif dan Kewirausahaan" },
-            { code: "26", name: "Jimmy Permana Wijaya, S.Si", subject: "Matematika" },
-            { code: "27", name: "Ari Wibawa, S.T", subject: "Desain Grafis" },
-            // Add more specific mappings if you can deduce them from the subject names in the schedule
-            // For example, if 'TPM' is always taught by a specific person, we'd add it here.
-            // Based on the second image's structure, KODE refers to the teacher, and MAT PELAJARAN is the subject.
-            // I'll make assumptions for TPM, TKR, RPL, PBS based on their positions and common sense for now.
-            // TPM (Teknik Pemesinan) -> M. Ridwan Hasibuan (17), Indra Supriatna (18), Nanda Faradhitta (19), Khaerunisa (20), Muhammad Imron Aulia (21), Enjang Seefullah (22), M. Firdaus Z.S. Th.I (23), Jepi Prasetyo Ahmad (24), Nandi Hamadi (25), Jimmy Permana Wijaya (26)
-            // TKR (Teknik Kendaraan Ringan) -> Similar logic applies.
-            // RPL (Rekayasa Perangkat Lunak) -> Similar logic applies.
-            // PBS (Perbankan Syariah) -> Similar logic applies.
-            // For simplicity, for subjects like TPM, TKR, RPL, PBS in the schedule, I will primarily try to match the *code* if it's a number, and then look for the subject.
-        ];
-
-        // Process masterCodes into a map for easier lookup by code
-        const codeMap = new Map();
-        masterCodes.forEach(item => {
-            codeMap.set(item.code, item);
-        });
-
-        // Simplified schedule data (manually extracted from the first image)
-        // This is a simplified representation. A more robust solution would involve OCR or manual full data entry.
-        // Format: { day: 'HARI', time: 'JAM KE', cells: [{class: 'KLS X/XI/XII', subject: 'Subject/Activity', code: 'Code'}, ...] }
-        const scheduleData = [
-            // Senin (Monday)
-            { day: 'SENIN', time: '07.00-07.45', cells: [{ class: 'KLS X', subject: 'TPM 1', code: '1' }, { class: 'KLS XI', subject: 'KURIKULUM MERDEKA - K13', code: '' }, { class: 'KLS XII', subject: 'KEGIATAN EKSTRAKULICULER', code: '' }] },
-            { day: 'SENIN', time: '07.45-08.25', cells: [{ class: 'KLS X', subject: 'TPM 1', code: 'F' }, { class: 'KLS XI', subject: 'UPACARA BENDERA', code: '' }, { class: 'KLS XII', subject: 'PASKIBRA', code: 'TPM KULIT' }] },
-            { day: 'SENIN', time: '08.25-09.00', cells: [{ class: 'KLS X', subject: 'TPM 1', code: 'F' }, { class: 'KLS XI', subject: 'UPACARA BENDERA', code: '' }, { class: 'KLS XII', subject: 'PASKIBRA', code: 'XXI,XI,TPM,TKR,RPL' }] },
-            { day: 'SENIN', time: '09.00-09.40', cells: [{ class: 'KLS X', subject: 'TPM 1', code: 'F' }, { class: 'KLS XI', subject: 'UPACARA BENDERA', code: '' }, { class: 'KLS XII', subject: 'PASKIBRA', code: '' }] },
-            { day: 'SENIN', time: '09.40-10.00', cells: [{ class: 'KLS X', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XI', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XII', subject: 'ISTIRAHAT', code: '' }] },
-            { day: 'SENIN', time: '10.00-10.40', cells: [{ class: 'KLS X', subject: 'M', code: '14' }, { class: 'KLS XI', subject: 'U', code: '20' }, { class: 'KLS XII', subject: 'V', code: '21' }] },
-            { day: 'SENIN', time: '10.40-11.20', cells: [{ class: 'KLS X', subject: 'M', code: '14' }, { class: 'KLS XI', subject: 'U', code: '20' }, { class: 'KLS XII', subject: 'V', code: '21' }] },
-            { day: 'SENIN', time: '11.20-12.00', cells: [{ class: 'KLS X', subject: 'M', code: '14' }, { class: 'KLS XI', subject: 'U', code: '20' }, { class: 'KLS XII', subject: 'V', code: '21' }] },
-            { day: 'SENIN', time: '12.00-13.10', cells: [{ class: 'KLS X', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XI', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XII', subject: 'ISTIRAHAT', code: '' }] },
-            { day: 'SENIN', time: '13.10-13.50', cells: [{ class: 'KLS X', subject: 'AA', code: '16' }, { class: 'KLS XI', subject: 'X', code: '20' }, { class: 'KLS XII', subject: 'G', code: '6' }] },
-            { day: 'SENIN', time: '13.50-14.30', cells: [{ class: 'KLS X', subject: 'AA', code: '16' }, { class: 'KLS XI', subject: 'X', code: '20' }, { class: 'KLS XII', subject: 'G', code: '6' }] },
-            { day: 'SENIN', time: '14.30-15.10', cells: [{ class: 'KLS X', subject: 'AA', code: '16' }, { class: 'KLS XI', subject: 'X', code: '20' }, { class: 'KLS XII', subject: 'G', code: '6' }] },
-
-            // Selasa (Tuesday)
-            { day: 'SELASA', time: '07.00-07.30', cells: [{ class: 'KLS X', subject: 'LITERASI / HIJRAH', code: '' }, { class: 'KLS XI', subject: 'LITERASI / HIJRAH', code: '' }, { class: 'KLS XII', subject: 'LITERASI / HIJRAH', code: '' }] },
-            { day: 'SELASA', time: '07.30-08.10', cells: [{ class: 'KLS X', subject: 'F', code: '3' }, { class: 'KLS XI', subject: 'E', code: '2' }, { class: 'KLS XII', subject: 'L', code: '23' }] },
-            { day: 'SELASA', time: '08.10-08.50', cells: [{ class: 'KLS X', subject: 'F', code: '3' }, { class: 'KLS XI', subject: 'E', code: '2' }, { class: 'KLS XII', subject: 'L', code: '23' }] },
-            { day: 'SELASA', time: '08.50-09.30', cells: [{ class: 'KLS X', subject: 'Q', code: '2' }, { class: 'KLS XI', subject: 'J', code: '26' }, { class: 'KLS XII', subject: 'M', code: '4' }] },
-            { day: 'SELASA', time: '09.30-10.10', cells: [{ class: 'KLS X', subject: 'Q', code: '2' }, { class: 'KLS XI', subject: 'J', code: '26' }, { class: 'KLS XII', subject: 'M', code: '4' }] },
-            { day: 'SELASA', time: '10.10-10.30', cells: [{ class: 'KLS X', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XI', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XII', subject: 'ISTIRAHAT', code: '' }] },
-            { day: 'SELASA', time: '10.30-11.10', cells: [{ class: 'KLS X', subject: 'F', code: '13' }, { class: 'KLS XI', subject: 'M', code: '4' }, { class: 'KLS XII', subject: 'J', code: '20' }] },
-            { day: 'SELASA', time: '11.10-11.50', cells: [{ class: 'KLS X', subject: 'H', code: '5' }, { class: 'KLS XI', subject: 'M', code: '4' }, { class: 'KLS XII', subject: 'J', code: '20' }] },
-            { day: 'SELASA', time: '11.50-12.30', cells: [{ class: 'KLS X', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XI', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XII', subject: 'ISTIRAHAT', code: '' }] },
-            { day: 'SELASA', time: '12.30-13.10', cells: [{ class: 'KLS X', subject: 'L', code: '6' }, { class: 'KLS XI', subject: 'J', code: '20' }, { class: 'KLS XII', subject: 'J', code: '21' }] },
-            { day: 'SELASA', time: '13.10-13.50', cells: [{ class: 'KLS X', subject: 'L', code: '6' }, { class: 'KLS XI', subject: 'J', code: '20' }, { class: 'KLS XII', subject: 'J', code: '21' }] },
-            { day: 'SELASA', time: '13.50-14.30', cells: [{ class: 'KLS X', subject: 'L', code: '6' }, { class: 'KLS XI', subject: 'J', code: '20' }, { class: 'KLS XII', subject: 'M', code: '4' }] },
-            { day: 'SELASA', time: '14.30-15.10', cells: [{ class: 'KLS X', subject: 'L', code: '6' }, { class: 'KLS XI', subject: 'J', code: '20' }, { class: 'KLS XII', subject: 'M', code: '4' }] },
-
-            // Rabu (Wednesday)
-            { day: 'RABU', time: '07.00-07.30', cells: [{ class: 'KLS X', subject: 'K', code: '11' }, { class: 'KLS XI', subject: 'D', code: '11' }, { class: 'KLS XII', subject: 'K', code: '20' }] },
-            { day: 'RABU', time: '07.30-08.10', cells: [{ class: 'KLS X', subject: 'C', code: '17' }, { class: 'KLS XI', subject: 'D', code: '11' }, { class: 'KLS XII', subject: 'K', code: '20' }] },
-            { day: 'RABU', time: '08.10-08.50', cells: [{ class: 'KLS X', subject: 'C', code: '17' }, { class: 'KLS XI', subject: 'D', code: '11' }, { class: 'KLS XII', subject: 'K', code: '20' }] },
-            { day: 'RABU', time: '08.50-09.30', cells: [{ class: 'KLS X', subject: 'C', code: '17' }, { class: 'KLS XI', subject: 'D', code: '11' }, { class: 'KLS XII', subject: 'K', code: '20' }] },
-            { day: 'RABU', time: '09.30-10.10', cells: [{ class: 'KLS X', subject: 'Q', code: '2' }, { class: 'KLS XI', subject: 'D', code: '11' }, { class: 'KLS XII', subject: 'K', code: '20' }] },
-            { day: 'RABU', time: '10.10-10.30', cells: [{ class: 'KLS X', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XI', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XII', subject: 'ISTIRAHAT', code: '' }] },
-            { day: 'RABU', time: '10.30-11.10', cells: [{ class: 'KLS X', subject: 'F', code: '3' }, { class: 'KLS XI', subject: 'N', code: '22' }, { class: 'KLS XII', subject: 'U', code: '9' }] },
-            { day: 'RABU', time: '11.10-11.50', cells: [{ class: 'KLS X', subject: 'F', code: '3' }, { class: 'KLS XI', subject: 'N', code: '22' }, { class: 'KLS XII', subject: 'U', code: '9' }] },
-            { day: 'RABU', time: '11.50-12.30', cells: [{ class: 'KLS X', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XI', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XII', subject: 'ISTIRAHAT', code: '' }] },
-            { day: 'RABU', time: '12.30-13.10', cells: [{ class: 'KLS X', subject: 'H', code: '10' }, { class: 'KLS XI', subject: 'N', code: '22' }, { class: 'KLS XII', subject: 'U', code: '19' }] },
-            { day: 'RABU', time: '13.10-13.50', cells: [{ class: 'KLS X', subject: 'H', code: '10' }, { class: 'KLS XI', subject: 'N', code: '22' }, { class: 'KLS XII', subject: 'U', code: '19' }] },
-            { day: 'RABU', time: '13.50-14.30', cells: [{ class: 'KLS X', subject: 'Q', code: '2' }, { class: 'KLS XI', subject: 'N', code: '22' }, { class: 'KLS XII', subject: 'L', code: '1' }] },
-            { day: 'RABU', time: '14.30-15.10', cells: [{ class: 'KLS X', subject: 'D', code: '11' }, { class: 'KLS XI', subject: 'N', code: '22' }, { class: 'KLS XII', subject: 'L', code: '1' }] },
-
-            // Kamis (Thursday)
-            { day: 'Kamis', start: '07:30', end: '08:10', class: 'X RPL A', subject: 'Pekerjaan Dasar Teknik Mesin' },
-            { day: 'Kamis', start: '07:30', end: '08:10', class: 'KLS XI', subject: 'Matematika' },
-            { day: 'Kamis', start: '07:30', end: '08:10', class: 'KLS XII', subject: 'Matematika' },
-            { day: 'Kamis', start: '08:10', end: '08:50', class: 'X RPL A', subject: 'Pekerjaan Dasar Teknik Mesin' },
-            { day: 'Kamis', start: '08:10', end: '08:50', class: 'KLS XI', subject: 'Matematika' },
-            { day: 'Kamis', start: '08:10', end: '08:50', class: 'KLS XII', subject: 'Matematika' },
-            { day: 'Kamis', start: '08:50', end: '09:30', class: 'X RPL A', subject: 'Pekerjaan Dasar Teknik Mesin' },
-            { day: 'Kamis', start: '08:50', end: '09:30', class: 'KLS XI', subject: 'Matematika' },
-            { day: 'Kamis', start: '08:50', end: '09:30', class: 'KLS XII', subject: 'Matematika' },
-            { day: 'Kamis', start: '09:30', end: '10:10', class: 'X RPL A', subject: 'Pekerjaan Dasar Teknik Mesin' },
-            { day: 'Kamis', start: '09:30', end: '10:10', class: 'KLS XI', subject: 'Matematika' },
-            { day: 'Kamis', start: '09:30', end: '10:10', class: 'KLS XII', subject: 'Matematika' },
-            { day: 'Kamis', start: '10:30', end: '11:10', class: 'X RPL A', subject: 'Bahasa Inggris' },
-            { day: 'Kamis', start: '10:30', end: '11:10', class: 'KLS XI', subject: 'Teknik Pemesinan Bubut' },
-            { day: 'Kamis', start: '10:30', end: '11:10', class: 'KLS XII', subject: 'Teknik Pemesinan Bubut' },
-            { day: 'Kamis', start: '11:10', end: '11:50', class: 'X RPL A', subject: 'Bahasa Inggris' },
-            { day: 'Kamis', start: '11:10', end: '11:50', class: 'KLS XI', subject: 'Teknik Pemesinan Bubut' },
-            { day: 'Kamis', start: '11:10', end: '11:50', class: 'KLS XII', subject: 'Teknik Pemesinan Bubut' },
-            { day: 'Kamis', start: '12:30', end: '13:10', class: 'X RPL A', subject: 'Matematika' },
-            { day: 'Kamis', start: '12:30', end: '13:10', class: 'KLS XI', subject: 'Teknik Pemesinan Bubut' },
-            { day: 'Kamis', start: '12:30', end: '13:10', class: 'KLS XII', subject: 'Kemuhammadiyahan' },
-            { day: 'Kamis', start: '13:10', end: '13:50', class: 'X RPL A', subject: 'Matematika' },
-            { day: 'Kamis', start: '13:10', end: '13:50', class: 'KLS XI', subject: 'Teknik Pemesinan Bubut' },
-            { day: 'Kamis', start: '13:10', end: '13:50', class: 'KLS XII', subject: 'Kemuhammadiyahan' },
-            { day: 'Kamis', start: '13:50', end: '14:30', class: 'X RPL A', subject: 'Matematika' },
-            { day: 'Kamis', start: '13:50', end: '14:30', class: 'KLS XI', subject: 'Teknik Pemesinan Bubut' },
-            { day: 'Kamis', start: '13:50', end: '14:30', class: 'KLS XII', subject: 'PPKn' },
-            { day: 'Kamis', start: '14:30', end: '15:10', class: 'X RPL A', subject: 'Matematika' },
-            { day: 'Kamis', start: '14:30', end: '15:10', class: 'KLS XI', subject: 'Teknik Pemesinan Bubut' },
-            { day: 'Kamis', start: '14:30', end: '15:10', class: 'KLS XII', subject: 'PPKn' },
-
-            // Jumat (Friday)
-            { day: 'Jumat', start: '07:30', end: '08:10', class: 'X RPL A', subject: 'Penjasorkes' },
-            { day: 'Jumat', start: '07:30', end: '08:10', class: 'KLS XI', subject: 'Matematika' },
-            { day: 'Jumat', start: '07:30', end: '08:10', class: 'KLS XII', subject: 'Bahasa Inggris' },
-            { day: 'Jumat', start: '08:10', end: '08:50', class: 'X RPL A', subject: 'Penjasorkes' },
-            { day: 'Jumat', start: '08:10', end: '08:50', class: 'KLS XI', subject: 'Matematika' },
-            { day: 'Jumat', start: '08:10', end: '08:50', class: 'KLS XII', subject: 'Bahasa Inggris' },
-            { day: 'Jumat', start: '08:50', end: '09:30', class: 'X RPL A', subject: 'Penjasorkes' },
-            { day: 'Jumat', start: '08:50', end: '09:30', class: 'KLS XI', subject: 'Produk Kreatif dan Kewirausahaan' },
-            { day: 'Jumat', start: '08:50', end: '09:30', class: 'KLS XII', subject: 'Bahasa Arab Al Islam' },
-            { day: 'Jumat', start: '09:30', end: '10:10', class: 'X RPL A', subject: 'Penjasorkes' },
-            { day: 'Jumat', start: '09:30', end: '10:10', class: 'KLS XI', subject: 'Produk Kreatif dan Kewirausahaan' },
-            { day: 'Jumat', start: '09:30', end: '10:10', class: 'KLS XII', subject: 'Bahasa Arab Al Islam' },
-            { day: 'Jumat', start: '10:30', end: '11:10', class: 'X RPL A', subject: 'IPAS' },
-            { day: 'Jumat', start: '10:30', end: '11:10', class: 'KLS XI', subject: 'Teknik Pemesinan Gerinda' },
-            { day: 'Jumat', start: '10:30', end: '11:10', class: 'KLS XII', subject: 'Teknik Pemesinan Frais' },
-            { day: 'Jumat', start: '11:10', end: '11:50', class: 'X RPL A', subject: 'IPAS' },
-            { day: 'Jumat', start: '11:10', end: '11:50', class: 'KLS XI', subject: 'Teknik Pemesinan Gerinda' },
-            { day: 'Jumat', start: '11:10', end: '11:50', class: 'KLS XII', subject: 'Teknik Pemesinan Frais' },
-            { day: 'Jumat', start: '12:20', end: '13:10', class: 'X RPL A', subject: 'IPAS' },
-            { day: 'Jumat', start: '12:20', end: '13:10', class: 'KLS XI', subject: 'Teknik Pemesinan Gerinda' },
-            { day: 'Jumat', start: '12:20', end: '13:10', class: 'KLS XII', subject: 'Teknik Pemesinan Frais' },
-            { day: 'Jumat', start: '13:10', end: '13:50', class: 'X RPL A', subject: 'IPAS' },
-            { day: 'Jumat', start: '13:10', end: '13:50', class: 'KLS XI', subject: 'Teknik Pemesinan Gerinda' },
-            { day: 'Jumat', start: '13:10', end: '13:50', class: 'KLS XII', subject: 'Teknik Pemesinan Frais' },
-            { day: 'Jumat', start: '13:50', end: '14:30', class: 'X RPL A', subject: 'Bahasa Inggris' },
-            { day: 'Jumat', start: '13:50', end: '14:30', class: 'KLS XI', subject: 'Teknik Pemesinan Gerinda' },
-            { day: 'Jumat', start: '13:50', end: '14:30', class: 'KLS XII', subject: 'Teknik Pemesinan Frais' },
-            { day: 'Jumat', start: '14:30', end: '18:10', class: 'X RPL A', subject: 'Bahasa Inggris' },
-            { day: 'Jumat', start: '14:30', end: '18:10', class: 'KLS XI', subject: 'Matematika' },
-            { day: 'Jumat', start: '14:30', end: '18:10', class: 'KLS XII', subject: 'Teknik Pemesinan Frais' },
-        ];
-
-        // DOM Elements
-        const mainCard = document.getElementById('mainCard');
-        const userIdInput = document.getElementById('userId');
-        const userIdGroup = document.getElementById('userIdGroup'); // Added ID
-        const roleSelect = document.getElementById('role');
-        const subjectSpan = document.getElementById('subject');
-        const scheduleSpan = document.getElementById('schedule');
-        const detectedRoleSpan = document.getElementById('detectedRole');
-        const detectedClassSpan = document.getElementById('detectedClass');
-        const btnStartCamera = document.getElementById('btnStartCamera');
-        const btnAbsen = document.getElementById('btnAbsen');
-        const btnAbsenText = document.getElementById('btnAbsenText');
-        const btnAbsenIcon = document.getElementById('btnAbsenIcon');
-        const btnAbsenSpinner = document.getElementById('btnAbsenSpinner');
-        const video = document.getElementById('video');
-        const canvas = document.getElementById('canvas');
-        const photoPreview = document.getElementById('photoPreview');
-        const statusMessage = document.getElementById('statusMessage');
-        const attendanceOptions = document.querySelectorAll('.attendance-option');
-        const infoGrid = document.getElementById('infoGrid'); // Added ID
-        const roleCard = document.getElementById('roleCard'); // Added ID
-        const classCard = document.getElementById('classCard'); // Added ID
-        const attendanceTypeSection = document.getElementById('attendanceTypeSection'); // Added ID
-        const cameraSection = document.getElementById('cameraSection'); // Added ID
-        const btnReset = document.getElementById('btnReset'); // New Reset Button
-        const attendanceSound = document.getElementById('attendanceSound'); // Added for audio
-        const loveHeartContainer = document.getElementById('loveHeartContainer'); // Added for love heart animation
-
-        // Global Variables
-        let stream;
-        let currentUserData = null;
-        let selectedAttendanceType = 'Hadir';
-
-        // Helper Functions
-        function getCurrentDay() {
-            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-            return days[new Date().getDay()];
-        }
-
-        function isNowInRange(start, end) {
-            const now = new Date();
-            const [sh, sm] = start.split(':').map(Number);
-            const [eh, em] = end.split(':').map(Number);
-            const startTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), sh, sm);
-            const endTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), eh, em);
-            return now >= startTime && now <= endTime;
-        }
-
-        function getActiveSchedule(className = null) {
-            const today = getCurrentDay();
-            if (className) {
-                return scheduleList.find(item =>
-                    item.day === today &&
-                    item.class === className &&
-                    isNowInRange(item.start, item.end)
-                );
-            } else {
-                return scheduleList.find(item =>
-                    item.day === today &&
-                    isNowInRange(item.start, item.end)
-                );
-            }
-        }
-
-        function createStatusIcon(type) {
-            const icons = {
-                'success': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9,11 12,14 22,4"></polyline>
-                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-                </svg>`,
-                'error': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="15" y1="9" x2="9" y2="15"></line>
-                    <line x1="9" y1="9" x2="15" y2="15"></line>
-                </svg>`,
-                'warning': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                    <line x1="12" y1="9" x2="12" y2="13"></line>
-                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                </svg>`,
-                'info': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>`
-            };
-            return icons[type] || icons['info'];
-        }
-
-        function showStatusMessage(message, type = 'info') {
-            statusMessage.className = `status-message ${type}`;
-            statusMessage.innerHTML = `${createStatusIcon(type)}<span>${message}</span>`;
-            statusMessage.classList.remove('hidden');
-            
-            // For general messages, hide after a few seconds
-            if (type !== 'success' && type !== 'error') {
-                setTimeout(() => {
-                    statusMessage.classList.add('hidden');
-                }, 5000);
-            }
-        }
-
-        function hideStatusMessage() {
-            statusMessage.classList.add('hidden');
-        }
-
-        function updateScheduleDisplay() {
-            const activeSchedule = getActiveSchedule(currentUserData ? currentUserData.class : null);
-            if (activeSchedule) {
-                subjectSpan.textContent = activeSchedule.subject;
-                scheduleSpan.textContent = `${activeSchedule.start} - ${activeSchedule.end}`;
-                btnAbsen.disabled = false;
-                hideStatusMessage();
-            } else {
-                subjectSpan.textContent = '-';
-                scheduleSpan.textContent = '-';
-                btnAbsen.disabled = true;
-                showStatusMessage('Belum waktu absensi, coba lagi selama jadwal aktif.', 'warning');
-            }
-        }
-
-        function updateButtonIcon(attendanceType) {
-            const icons = {
-                'Hadir': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9,11 12,14 22,4"></polyline>
-                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-                </svg>`,
-                'Sakit': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5Z"></path>
-                    <path d="M12 5L8 21l4-7 4 7-4-16"></path>
-                </svg>`,
-                'Izin': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M9 12h6"></path>
-                    <path d="M9 16h6"></path>
-                    <path d="M9 8h6"></path>
-                    <path d="M3 21h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2Z"></path>
-                </svg>`,
-                'Alfa': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="15" y1="9" x2="9" y2="15"></line>
-                    <line x1="9" y1="9" x2="15" y2="15"></line>
-                </svg>`
-            };
-            btnAbsenIcon.innerHTML = icons[attendanceType];
-        }
-
-        // Function to create and animate a love heart
-        function createLoveHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('love-heart');
-            heart.innerHTML = '❤️'; // Unicode heart emoji
-
-            // Position the heart randomly near the center of the screen
-            const startX = window.innerWidth / 2 + (Math.random() - 0.5) * 100; // Slightly varied X
-            const startY = window.innerHeight / 2 + (Math.random() - 0.5) * 100; // Slightly varied Y
-            heart.style.left = `${startX}px`;
-            heart.style.top = `${startY}px`;
-
-            loveHeartContainer.appendChild(heart);
-
-            // Remove the heart after its animation completes
-            heart.addEventListener('animationend', () => {
-                heart.remove();
-            });
-        }
-
-        // Attendance Type Selection
-        attendanceOptions.forEach(option => {
-            const handleSelection = () => {
-                attendanceOptions.forEach(opt => opt.classList.remove('selected'));
-                option.classList.add('selected');
-                selectedAttendanceType = option.dataset.type;
-                
-                const labels = {
-                    'Hadir': 'Kehadiran',
-                    'Sakit': 'Sakit',
-                    'Izin': 'Izin',
-                    'Alfa': 'Alfa'
-                };
-                btnAbsenText.textContent = `Konfirmasi ${labels[selectedAttendanceType]}`;
-                updateButtonIcon(selectedAttendanceType);
-            };
-
-            option.addEventListener('click', handleSelection);
-            option.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleSelection();
-                }
-            });
-        });
-
-        // Set default selection
-        document.querySelector('.attendance-option[data-type="Hadir"]').classList.add('selected');
-
-        // Function to hide all input/button sections and show final message/reset
-        function showFinalResultScreen() {
-            userIdGroup.classList.add('hidden');
-            infoGrid.classList.add('hidden');
-            roleCard.classList.add('hidden');
-            classCard.classList.add('hidden');
-            attendanceTypeSection.classList.add('hidden');
-            cameraSection.classList.add('hidden');
-            btnStartCamera.classList.add('hidden');
-            btnAbsen.classList.add('hidden');
-            
-            statusMessage.style.fontSize = 'var(--font-size-2xl)'; // Make final message more prominent
-            statusMessage.style.padding = 'var(--space-10)';
-            statusMessage.style.marginTop = 'var(--space-16)'; // More space above
-            
-            btnReset.classList.remove('hidden');
-        }
-
-        // Function to reset the form for a new attendance
-        function resetForm() {
-            userIdInput.value = '';
-            currentUserData = null;
-            selectedAttendanceType = 'Hadir'; // Reset to default
-            document.querySelector('.attendance-option[data-type="Hadir"]').click(); // Visually select "Hadir"
-
-            // Hide status message and reset its styles
-            hideStatusMessage();
-            statusMessage.style.fontSize = ''; 
-            statusMessage.style.padding = '';
-            statusMessage.style.marginTop = '';
-
-            // Show input/button sections
-            userIdGroup.classList.remove('hidden');
-            infoGrid.classList.remove('hidden');
-            roleCard.classList.remove('hidden');
-            classCard.classList.remove('hidden');
-            attendanceTypeSection.classList.remove('hidden');
-            cameraSection.classList.remove('hidden');
-            btnStartCamera.classList.remove('hidden');
-            btnAbsen.classList.remove('hidden'); // Show absen button
-            btnAbsen.disabled = true; // Disable until ID is entered
-
-            btnReset.classList.add('hidden');
-
-            // Reset camera state
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
-                video.classList.add('hidden');
-                stream = null;
-            }
-            photoPreview.classList.remove('hidden');
-            photoPreview.innerHTML = `
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                    <circle cx="12" cy="13" r="3"></circle>
-                </svg>
-                <span>Foto akan muncul di sini setelah kamera aktif</span>
-            `;
-            btnStartCamera.innerHTML = `
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                    <circle cx="12" cy="13" r="3"></circle>
-                </svg>
-                <span>Aktifkan Kamera</span>
-            `;
-            btnStartCamera.disabled = false;
-
-
-            // Reset display values
-            subjectSpan.textContent = '-';
-            scheduleSpan.textContent = '-';
-            detectedRoleSpan.textContent = 'Belum Terdeteksi';
-            detectedClassSpan.textContent = '-';
-
-            // Ensure absensi button is disabled until valid ID
-            btnAbsen.disabled = true;
-            btnAbsenText.textContent = 'Konfirmasi Kehadiran';
-            updateButtonIcon('Hadir'); // Reset button icon
-        }
-
-        // User ID Input Handler
-        userIdInput.addEventListener('input', () => {
-            const inputId = userIdInput.value.trim();
-            const inputIdNormalized = inputId.toUpperCase();
-
-            currentUserData = userList.find(user => user.id.toUpperCase() === inputIdNormalized);
-
-            if (currentUserData) {
-                roleSelect.value = currentUserData.role;
-                detectedRoleSpan.textContent = currentUserData.role === 'siswa' ? 'Siswa' : 'Guru';
-
-                if (currentUserData.role === 'siswa') {
-                    detectedClassSpan.textContent = currentUserData.class;
-                    const active = getActiveSchedule(currentUserData.class);
-                    if (active) {
-                        subjectSpan.textContent = active.subject;
-                        scheduleSpan.textContent = `${active.start} - ${active.end}`;
-                        btnAbsen.disabled = false;
-                        hideStatusMessage();
-                    } else {
-                        subjectSpan.textContent = '-';
-                        scheduleSpan.textContent = '-';
-                        btnAbsen.disabled = true;
-                        showStatusMessage('Tidak ada jadwal aktif untuk kelas Anda saat ini.', 'warning');
-                    }
-                } else if (currentUserData.role === 'guru') {
-                    const activeGuruSchedule = scheduleList.find(item =>
-                        item.day === getCurrentDay() &&
-                        isNowInRange(item.start, item.end) &&
-                        item.subject === currentUserData.subjectTeaching
-                    );
-
-                    if (activeGuruSchedule) {
-                        detectedClassSpan.textContent = `Mengajar ${activeGuruSchedule.class}`;
-                        subjectSpan.textContent = activeGuruSchedule.subject;
-                        scheduleSpan.textContent = `${activeGuruSchedule.start} - ${activeGuruSchedule.end}`;
-                        btnAbsen.disabled = false;
-                        hideStatusMessage();
-                    } else {
-                        detectedClassSpan.textContent = 'Tidak ada kelas aktif';
-                        subjectSpan.textContent = '-';
-                        scheduleSpan.textContent = '-';
-                        btnAbsen.disabled = true;
-                        showStatusMessage('Anda tidak memiliki jadwal mengajar aktif saat ini.', 'warning');
-                    }
-                }
-            } else {
-                roleSelect.value = 'siswa';
-                detectedRoleSpan.textContent = inputId.length > 0 ? 'ID/Nama Tidak Dikenal' : 'Belum Terdeteksi';
-                detectedClassSpan.textContent = '-';
-                subjectSpan.textContent = '-';
-                scheduleSpan.textContent = '-';
-                if (inputId.length > 0) {
-                    btnAbsen.disabled = true;
-                    showStatusMessage('ID/Nama tidak dikenal. Anda tidak diizinkan untuk absensi.', 'error');
-                } else {
-                    btnAbsen.disabled = true;
-                    hideStatusMessage();
-                }
-            }
-        });
-
-        // Camera Functions
-        btnStartCamera.addEventListener('click', async () => {
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                try {
-                    stream = await navigator.mediaDevices.getUserMedia({
-                        video: { 
-                            facingMode: 'user',
-                            width: { ideal: 640 },
-                            height: { ideal: 480 }
-                        }
-                    });
-
-                    video.srcObject = stream;
-                    video.classList.remove('hidden');
-                    photoPreview.classList.add('hidden');
-                    
-                    showStatusMessage('Kamera aktif. Pastikan wajah Anda terlihat jelas.', 'info'); // Changed to info
-                    btnStartCamera.innerHTML = `
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                            <circle cx="12" cy="13" r="3"></circle>
-                        </svg>
-                        <span>Kamera Aktif</span>
-                    `;
-                    btnStartCamera.disabled = true;
-
-                } catch (error) {
-                    console.error("Camera error:", error);
-
-                    if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
-                        showStatusMessage('Akses kamera ditolak. Harap izinkan akses kamera di browser Anda.', 'error');
-                    } else if (error.name === 'NotFoundError') {
-                        showStatusMessage('Kamera tidak ditemukan. Harap periksa perangkat Anda.', 'error');
-                    } else {
-                        showStatusMessage('Gagal mengakses kamera: ' + error.message, 'error');
-                    }
-                }
-            } else {
-                showStatusMessage('Browser Anda tidak mendukung akses kamera.', 'error');
-            }
-        });
-
-        // Attendance Process
-        btnAbsen.addEventListener('click', async () => {
-            // PENAMBAHAN: Memainkan audio saat tombol diklik
-            if (selectedAttendanceType === 'Hadir') {
-                attendanceSound.play().catch(e => console.error("Gagal memutar audio:", e));
-            }
-
-            const inputId = userIdInput.value.trim();
-            const inputIdNormalized = inputId.toUpperCase();
-
-            if (!currentUserData || currentUserData.id.toUpperCase() !== inputIdNormalized) {
-                showStatusMessage('Error: ID/Nama tidak dikenal atau tidak terdeteksi. Harap masukkan ID dengan benar.', 'error');
-                return;
-            }
-
-            // Show loading state
-            btnAbsenText.classList.add('hidden');
-            btnAbsenIcon.classList.add('hidden');
-            btnAbsenSpinner.classList.remove('hidden');
-            btnAbsen.disabled = true;
-
-            try {
-                // Determine active schedule
-                let activeScheduleForAbsence = null;
-                let classForAbsence = null;
-                let subjectForAbsence = null;
-
-                if (currentUserData.role === 'siswa') {
-                    classForAbsence = currentUserData.class;
-                    activeScheduleForAbsence = getActiveSchedule(classForAbsence);
-                    subjectForAbsence = activeScheduleForAbsence ? activeScheduleForAbsence.subject : '-';
-                } else if (currentUserData.role === 'guru') {
-                    activeScheduleForAbsence = scheduleList.find(item =>
-                        item.day === getCurrentDay() &&
-                        isNowInRange(item.start, item.end) &&
-                        item.subject === currentUserData.subjectTeaching
-                    );
-                    classForAbsence = activeScheduleForAbsence ? activeScheduleForAbsence.class : '-';
-                    subjectForAbsence = activeScheduleForAbsence ? activeScheduleForAbsence.subject : '-'; // Corrected variable name
-                }
-
-                if (!activeScheduleForAbsence) {
-                    showStatusMessage('Absensi gagal: Tidak ada jadwal aktif yang cocok saat ini.', 'error');
-                    return;
-                }
-
-                // Capture photo if camera is active and attendance type is 'Hadir'
-                let photoData = '';
-                if (selectedAttendanceType === 'Hadir') { 
-                    if (stream && video.srcObject && !video.classList.contains('hidden')) { 
-                        canvas.width = video.videoWidth || 640;
-                        canvas.height = video.videoHeight || 480;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                        photoData = canvas.toDataURL('image/jpeg', 0.8);
-                        
-                        // Show photo preview
-                        photoPreview.innerHTML = `<img src="${photoData}" alt="Foto yang diambil" style="width: 100%; height: auto; border-radius: var(--radius-2xl);">`;
-                        photoPreview.classList.remove('hidden');
-                        video.classList.add('hidden');
-                    } else {
-                        showStatusMessage('Untuk absensi Hadir, kamera harus diaktifkan dan foto harus diambil. Silakan aktifkan kamera.', 'warning');
-                        btnAbsen.disabled = false;
-                        btnAbsenText.classList.remove('hidden');
-                        btnAbsenIcon.classList.remove('hidden');
-                        btnAbsenSpinner.classList.add('hidden');
-                        return;
-                    }
-                }
-
-                // Get location for 'Hadir' attendance
-                let lokasi = { latitude: null, longitude: null };
-                if (selectedAttendanceType === 'Hadir') {
-                    showStatusMessage('Mengakses lokasi...', 'info');
-                    try {
-                        const posisi = await new Promise((resolve, reject) => {
-                            const geoTimeout = setTimeout(() => reject(new Error('Geolocation timeout')), 10000);
-                            navigator.geolocation.getCurrentPosition(
-                                (pos) => {
-                                    clearTimeout(geoTimeout);
-                                    resolve(pos);
-                                },
-                                (error) => {
-                                    clearTimeout(geoTimeout);
-                                    reject(error);
-                                },
-                                { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
-                            );
-                        });
-                        lokasi.latitude = posisi.coords.latitude;
-                        lokasi.longitude = posisi.coords.longitude;
-                    } catch (error) {
-                        showStatusMessage('Tidak dapat mengakses lokasi: ' + error.message + '. Lokasi akan dicatat sebagai 0,0.', 'warning');
-                        lokasi = { latitude: 0, longitude: 0 };
-                    }
-                }
-
-                // Prepare attendance data
-                const dataAbsensi = {
-                    id: inputId,
-                    nama: inputId, 
-                    role: currentUserData.role,
-                    kelas: classForAbsence,
-                    waktu: new Date().toISOString(),
-                    mapel: subjectForAbsence,
-                    jam: `${activeScheduleForAbsence.start} - ${activeScheduleForAbsence.end}`,
-                    foto: photoData,
-                    lokasi,
-                    status: selectedAttendanceType,
-                    materi: ''
-                };
-
-                // Add teacher material if applicable
-                if (currentUserData.role === 'guru') {
-                    const materiInput = prompt("Anda adalah guru. Masukkan materi pelajaran hari ini:");
-                    dataAbsensi.materi = materiInput || 'Tidak ada materi';
-                    dataAbsensi.namaGuru = inputId;
-                }
-
-                // Save to Firebase
-                const path = `absensi/${dataAbsensi.role}/${dataAbsensi.id}/${dataAbsensi.kelas}/${Date.now()}`;
-                await db.ref(path).set(dataAbsensi);
-
-                const statusLabels = {
-                    'Hadir': 'Hadir',
-                    'Sakit': 'Sakit',
-                    'Izin': 'Izin',
-                    'Alfa': 'Alfa'
-                };
-                showStatusMessage(`Absensi ${statusLabels[selectedAttendanceType]} berhasil disimpan!`, 'success');
-                
-                // Trigger love heart animation on successful "Hadir" attendance
-                if (selectedAttendanceType === 'Hadir') {
-                    for (let i = 0; i < 10; i++) { // Generate multiple hearts
-                        setTimeout(createLoveHeart, i * 100); // Stagger their appearance
-                    }
-                }
-
-                // Show final result screen and hide input elements
-                showFinalResultScreen();
-
-            } catch (error) {
-                showStatusMessage("Gagal menyimpan absensi: " + error.message, 'error');
-            } finally {
-                // Always reset loading state regardless of success or failure
-                btnAbsenText.classList.remove('hidden');
-                btnAbsenIcon.classList.remove('hidden');
-                btnAbsenSpinner.classList.add('hidden');
-            }
-        });
-
-        // Reset button event listener
-        btnReset.addEventListener('click', resetForm);
-
-
-        // Initialize
-        updateScheduleDisplay();
-        setInterval(updateScheduleDisplay, 60000); // Check schedule every minute
-
-        // Keyboard support
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !btnAbsen.disabled && document.activeElement !== userIdInput) {
-                btnAbsen.click();
-            }
-        });
-
-        // Smooth scrolling
-        document.documentElement.style.scrollBehavior = 'smooth';
-
-        // Performance optimization
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(() => {
-                // Initialize non-critical features
-                console.log('Sistem Absensi Digital diinisialisasi');
-            });
-        }
-
-        // --- Data for School Schedule Analysis ---
-
-        // Data for Subject/Teacher Codes (from the second image)
-        const masterCodes = [
-    { id: "1", name: "Wawan Oktriawan, M.E", subjectTeaching: "PAdBP" },
-    { id: "2", name: "Jumanto, S.T", subjectTeaching: "PPKn" },
-    { id: "3", name: "Adi Hermawan, S.T", subjectTeaching: "Bahasa Indonesia" },
-    { id: "4", name: "Ernawati, S.H", subjectTeaching: "Matematika" },
-    { id: "5", name: "Lyna Devy F., S.Pd", subjectTeaching: "Sejarah Indonesia" },
-    { id: "6", name: "Sukarsih, M.Pd", subjectTeaching: "Bahasa Inggris" },
-    { id: "7", name: "Sri Wulan, S.Pd", subjectTeaching: "Seni Budaya" },
-    { id: "8", name: "Nurul Wangsa M., S.Pd", subjectTeaching: "Penjasorkes" },
-    { id: "9", name: "Priyo Wiji Utomo, S.Pd", subjectTeaching: "Produk Kreatif dan Kewirausahaan (PKK)" },
-    { id: "10", name: "Sigit Ramdhani, S.T", subjectTeaching: "Bahasa Sunda" },
-    { id: "11", name: "Kiki Putra, S.T", subjectTeaching: "Kemuhammadiyahan" },
-    { id: "12", name: "Noval Ridho Pasyola, S.Pd", subjectTeaching: "Bahasa Arab Al Islam" },
-    { id: "13", name: "Elis Hayati, S.Pd", subjectTeaching: "Simulasi Digital" },
-    { id: "14", name: "Neng Leni, S.Kom", subjectTeaching: "IPAS" },
-    { id: "15", name: "Apt Eko Priyantono M.M", subjectTeaching: "PS" },
-    { id: "16", name: "Agustiar Tedjo Aspurwa, S.E", subjectTeaching: ["Gambar Teknik Mesin", "Gambar Teknik Otomotif", "Pemrograman Dasar", "Ekonomi Bisnis", "Administrasi Umum"] },
-    { id: "17", name: "M.Ridwan Hasibuan, S.H", subjectTeaching: ["Pekerjaan Dasar Teknik Mesin", "Pekerjaan Dasar Teknik Otomotif", "Sistem Komputer", "Dasar Desain Grafis"] },
-    { id: "18", name: "Indra Supriatna, S.Kom", subjectTeaching: ["DPTM", "Teknik Listrik Dasar Otomotif", "Aplikasi Pengolah Angka/Spreadsheet", "Etnika Profesi"] },
-    { id: "19", name: "Nanda Faraditha, A.Md", subjectTeaching: ["Gambar Teknik Manufaktur", "Komputer dan Jaringan Dasar", "Pemodelan Perangkat Lunak", "Akuntansi Dasar"] },
-    { id: "20", name: "Khaerunisa, S.Pd", subjectTeaching: ["Teknik Pemesinan Bubut", "Pemeliharaan Mesin Kendaraan Ringan", "Basis Data", "Perbankan Dasar", "Pengelolaan Kas"] },
-    { id: "21", name: "Muhammad Imron Aulia, S.P", subjectTeaching: ["Teknik Pemesinan Frais", "Pemeliharaan Sasis dan Pemindah Tenaga", "Pemrograman Web dan Perangkat Bergerak", "Ekonomi Islam"] },
-    { id: "22", name: "Enjang Seefullah, S.T", subjectTeaching: ["Teknik Pemesinan Gerinda", "Pemeliharaan Kelistrikan Kendaraan Ringan", "Pemrograman Berorientasi Objek", "Layanan Lembaga Keuangan Syariah"] },
-    { id: "23", name: "M.Firdaus Z.S. Th.I", subjectTeaching: ["Teknik Pemesinan NC/CNC dan CAM", "Kewirausahaan", "Komputer Akuntansi", "Akuntansi Perbankan Syariah"] },
-    { id: "24", name: "Jepi Prasetyo Ahmad, S.Pd", subjectTeaching: ["Produk Kreatif dan Kewirausahaan", "Manajemen Bengkel", "Desain Grafis"] },
-    { id: "25", name: "Nandi Hamdi, S.Pd", subjectTeaching: ["Teknik Pengelasan", "Digital Branding"] },
-    { id: "26", name: "Jimny Permana Wijaya, S.Si", subjectTeaching: "Desain Grafis" },
-    { id: "27", name: "Ari Wibawa, S.T", subjectTeaching: "Desain Grafis" },
-
-            // Add more specific mappings if you can deduce them from the subject names in the schedule
-            // For example, if 'TPM' is always taught by a specific person, we'd add it here.
-            // Based on the second image's structure, KODE refers to the teacher, and MAT PELAJARAN is the subject.
-            // I'll make assumptions for TPM, TKR, RPL, PBS based on their positions and common sense for now.
-            // TPM (Teknik Pemesinan) -> M. Ridwan Hasibuan (17), Indra Supriatna (18), Nanda Faradhitta (19), Khaerunisa (20), Muhammad Imron Aulia (21), Enjang Seefullah (22), M. Firdaus Z.S. Th.I (23), Jepi Prasetyo Ahmad (24), Nandi Hamadi (25), Jimmy Permana Wijaya (26)
-            // TKR (Teknik Kendaraan Ringan) -> Similar logic applies.
-            // RPL (Rekayasa Perangkat Lunak) -> Similar logic applies.
-            // PBS (Perbankan Syariah) -> Similar logic applies.
-            // For simplicity, for subjects like TPM, TKR, RPL, PBS in the schedule, I will primarily try to match the *code* if it's a number, and then look for the subject.
-        ];
-
-        // Process masterCodes into a map for easier lookup by code
-        const codeMap = new Map();
-        masterCodes.forEach(item => {
-            codeMap.set(item.code, item);
-        });
-
-        // Simplified schedule data (manually extracted from the first image)
-        // This is a simplified representation. A more robust solution would involve OCR or manual full data entry.
-        // Format: { day: 'HARI', time: 'JAM KE', cells: [{class: 'KLS X/XI/XII', subject: 'Subject/Activity', code: 'Code'}, ...] }
-        const scheduleData = [
-            // Senin (Monday)
-            { day: 'SENIN', time: '07.00-07.45', cells: [{ class: 'KLS X', subject: 'TPM 1', code: '1' }, { class: 'KLS XI', subject: 'KURIKULUM MERDEKA - K13', code: '' }, { class: 'KLS XII', subject: 'KEGIATAN EKSTRAKULICULER', code: '' }] },
-            { day: 'SENIN', time: '07.45-08.25', cells: [{ class: 'KLS X', subject: 'TPM 1', code: 'F' }, { class: 'KLS XI', subject: 'UPACARA BENDERA', code: '' }, { class: 'KLS XII', subject: 'PASKIBRA', code: 'TPM KULIT' }] },
-            { day: 'SENIN', time: '08.25-09.00', cells: [{ class: 'KLS X', subject: 'TPM 1', code: 'F' }, { class: 'KLS XI', subject: 'UPACARA BENDERA', code: '' }, { class: 'KLS XII', subject: 'PASKIBRA', code: 'XXI,XI,TPM,TKR,RPL' }] },
-            { day: 'SENIN', time: '09.00-09.40', cells: [{ class: 'KLS X', subject: 'TPM 1', code: 'F' }, { class: 'KLS XI', subject: 'UPACARA BENDERA', code: '' }, { class: 'KLS XII', subject: 'PASKIBRA', code: '' }] },
-            { day: 'SENIN', time: '09.40-10.00', cells: [{ class: 'KLS X', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XI', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XII', subject: 'ISTIRAHAT', code: '' }] },
-            { day: 'SENIN', time: '10.00-10.40', cells: [{ class: 'KLS X', subject: 'M', code: '14' }, { class: 'KLS XI', subject: 'U', code: '20' }, { class: 'KLS XII', subject: 'V', code: '21' }] },
-            { day: 'SENIN', time: '10.40-11.20', cells: [{ class: 'KLS X', subject: 'M', code: '14' }, { class: 'KLS XI', subject: 'U', code: '20' }, { class: 'KLS XII', subject: 'V', code: '21' }] },
-            { day: 'SENIN', time: '11.20-12.00', cells: [{ class: 'KLS X', subject: 'M', code: '14' }, { class: 'KLS XI', subject: 'U', code: '20' }, { class: 'KLS XII', subject: 'V', code: '21' }] },
-            { day: 'SENIN', time: '12.00-13.10', cells: [{ class: 'KLS X', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XI', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XII', subject: 'ISTIRAHAT', code: '' }] },
-            { day: 'SENIN', time: '13.10-13.50', cells: [{ class: 'KLS X', subject: 'AA', code: '16' }, { class: 'KLS XI', subject: 'X', code: '20' }, { class: 'KLS XII', subject: 'G', code: '6' }] },
-            { day: 'SENIN', time: '13.50-14.30', cells: [{ class: 'KLS X', subject: 'AA', code: '16' }, { class: 'KLS XI', subject: 'X', code: '20' }, { class: 'KLS XII', subject: 'G', code: '6' }] },
-            { day: 'SENIN', time: '14.30-15.10', cells: [{ class: 'KLS X', subject: 'AA', code: '16' }, { class: 'KLS XI', subject: 'X', code: '20' }, { class: 'KLS XII', subject: 'G', code: '6' }] },
-
-            // Selasa (Tuesday)
-            { day: 'SELASA', time: '07.00-07.30', cells: [{ class: 'KLS X', subject: 'LITERASI / HIJRAH', code: '' }, { class: 'KLS XI', subject: 'LITERASI / HIJRAH', code: '' }, { class: 'KLS XII', subject: 'LITERASI / HIJRAH', code: '' }] },
-            { day: 'SELASA', time: '07.30-08.10', cells: [{ class: 'KLS X', subject: 'F', code: '3' }, { class: 'KLS XI', subject: 'E', code: '2' }, { class: 'KLS XII', subject: 'L', code: '23' }] },
-            { day: 'SELASA', time: '08.10-08.50', cells: [{ class: 'KLS X', subject: 'F', code: '3' }, { class: 'KLS XI', subject: 'E', code: '2' }, { class: 'KLS XII', subject: 'L', code: '23' }] },
-            { day: 'SELASA', time: '08.50-09.30', cells: [{ class: 'KLS X', subject: 'Q', code: '2' }, { class: 'KLS XI', subject: 'J', code: '26' }, { class: 'KLS XII', subject: 'M', code: '4' }] },
-            { day: 'SELASA', time: '09.30-10.10', cells: [{ class: 'KLS X', subject: 'Q', code: '2' }, { class: 'KLS XI', subject: 'J', code: '26' }, { class: 'KLS XII', subject: 'M', code: '4' }] },
-            { day: 'SELASA', time: '10.10-10.30', cells: [{ class: 'KLS X', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XI', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XII', subject: 'ISTIRAHAT', code: '' }] },
-            { day: 'SELASA', time: '10.30-11.10', cells: [{ class: 'KLS X', subject: 'F', code: '13' }, { class: 'KLS XI', subject: 'M', code: '4' }, { class: 'KLS XII', subject: 'J', code: '20' }] },
-            { day: 'SELASA', time: '11.10-11.50', cells: [{ class: 'KLS X', subject: 'H', code: '5' }, { class: 'KLS XI', subject: 'M', code: '4' }, { class: 'KLS XII', subject: 'J', code: '20' }] },
-            { day: 'SELASA', time: '11.50-12.30', cells: [{ class: 'KLS X', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XI', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XII', subject: 'ISTIRAHAT', code: '' }] },
-            { day: 'SELASA', time: '12.30-13.10', cells: [{ class: 'KLS X', subject: 'L', code: '6' }, { class: 'KLS XI', subject: 'J', code: '20' }, { class: 'KLS XII', subject: 'J', code: '21' }] },
-            { day: 'SELASA', time: '13.10-13.50', cells: [{ class: 'KLS X', subject: 'L', code: '6' }, { class: 'KLS XI', subject: 'J', code: '20' }, { class: 'KLS XII', subject: 'J', code: '21' }] },
-            { day: 'SELASA', time: '13.50-14.30', cells: [{ class: 'KLS X', subject: 'L', code: '6' }, { class: 'KLS XI', subject: 'J', code: '20' }, { class: 'KLS XII', subject: 'M', code: '4' }] },
-            { day: 'SELASA', time: '14.30-15.10', cells: [{ class: 'KLS X', subject: 'L', code: '6' }, { class: 'KLS XI', subject: 'J', code: '20' }, { class: 'KLS XII', subject: 'M', code: '4' }] },
-
-            // Rabu (Wednesday)
-            { day: 'RABU', time: '07.00-07.30', cells: [{ class: 'KLS X', subject: 'K', code: '11' }, { class: 'KLS XI', subject: 'D', code: '11' }, { class: 'KLS XII', subject: 'K', code: '20' }] },
-            { day: 'RABU', time: '07.30-08.10', cells: [{ class: 'KLS X', subject: 'C', code: '17' }, { class: 'KLS XI', subject: 'D', code: '11' }, { class: 'KLS XII', subject: 'K', code: '20' }] },
-            { day: 'RABU', time: '08.10-08.50', cells: [{ class: 'KLS X', subject: 'C', code: '17' }, { class: 'KLS XI', subject: 'D', code: '11' }, { class: 'KLS XII', subject: 'K', code: '20' }] },
-            { day: 'RABU', time: '08.50-09.30', cells: [{ class: 'KLS X', subject: 'C', code: '17' }, { class: 'KLS XI', subject: 'D', code: '11' }, { class: 'KLS XII', subject: 'K', code: '20' }] },
-            { day: 'RABU', time: '09.30-10.10', cells: [{ class: 'KLS X', subject: 'Q', code: '2' }, { class: 'KLS XI', subject: 'D', code: '11' }, { class: 'KLS XII', subject: 'K', code: '20' }] },
-            { day: 'RABU', time: '10.10-10.30', cells: [{ class: 'KLS X', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XI', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XII', subject: 'ISTIRAHAT', code: '' }] },
-            { day: 'RABU', time: '10.30-11.10', cells: [{ class: 'KLS X', subject: 'F', code: '3' }, { class: 'KLS XI', subject: 'N', code: '22' }, { class: 'KLS XII', subject: 'U', code: '9' }] },
-            { day: 'RABU', time: '11.10-11.50', cells: [{ class: 'KLS X', subject: 'F', code: '3' }, { class: 'KLS XI', subject: 'N', code: '22' }, { class: 'KLS XII', subject: 'U', code: '9' }] },
-            { day: 'RABU', time: '11.50-12.30', cells: [{ class: 'KLS X', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XI', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XII', subject: 'ISTIRAHAT', code: '' }] },
-            { day: 'RABU', time: '12.30-13.10', cells: [{ class: 'KLS X', subject: 'H', code: '10' }, { class: 'KLS XI', subject: 'N', code: '22' }, { class: 'KLS XII', subject: 'U', code: '19' }] },
-            { day: 'RABU', time: '13.10-13.50', cells: [{ class: 'KLS X', subject: 'H', code: '10' }, { class: 'KLS XI', subject: 'N', code: '22' }, { class: 'KLS XII', subject: 'U', code: '19' }] },
-            { day: 'RABU', time: '13.50-14.30', cells: [{ class: 'KLS X', subject: 'Q', code: '2' }, { class: 'KLS XI', subject: 'N', code: '22' }, { class: 'KLS XII', subject: 'L', code: '1' }] },
-            { day: 'RABU', time: '14.30-15.10', cells: [{ class: 'KLS X', subject: 'D', code: '11' }, { class: 'KLS XI', subject: 'N', code: '22' }, { class: 'KLS XII', subject: 'L', code: '1' }] },
-
-            // Kamis (Thursday)
-            { day: 'KAMIS', time: '07.00-07.30', cells: [{ class: 'KLS X', subject: 'HIZBUL WATHON', code: '' }, { class: 'KLS XI', subject: 'HIZBUL WATHON', code: '' }, { class: 'KLS XII', subject: 'HIZBUL WATHON', code: '' }] },
-            { day: 'KAMIS', time: '07.30-08.10', cells: [{ class: 'KLS X', subject: 'K', code: '18' }, { class: 'KLS XI', subject: 'L', code: '4' }, { class: 'KLS XII', subject: 'F', code: '4' }] },
-            { day: 'KAMIS', time: '08.10-08.50', cells: [{ class: 'KLS X', subject: 'K', code: '18' }, { class: 'KLS XI', subject: 'L', code: '4' }, { class: 'KLS XII', subject: 'F', code: '4' }] },
-            { day: 'KAMIS', time: '08.50-09.30', cells: [{ class: 'KLS X', subject: 'K', code: '18' }, { class: 'KLS XI', subject: 'L', code: '4' }, { class: 'KLS XII', subject: 'F', code: '4' }] },
-            { day: 'KAMIS', time: '09.30-10.10', cells: [{ class: 'KLS X', subject: 'K', code: '18' }, { class: 'KLS XI', subject: 'L', code: '4' }, { class: 'KLS XII', subject: 'F', code: '4' }] },
-            { day: 'KAMIS', time: '10.10-10.30', cells: [{ class: 'KLS X', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XI', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XII', subject: 'ISTIRAHAT', code: '' }] },
-            { day: 'KAMIS', time: '10.30-11.10', cells: [{ class: 'KLS X', subject: 'G', code: '6' }, { class: 'KLS XI', subject: 'Y', code: '21' }, { class: 'KLS XII', subject: 'V', code: '21' }] },
-            { day: 'KAMIS', time: '11.10-11.50', cells: [{ class: 'KLS X', subject: 'G', code: '6' }, { class: 'KLS XI', subject: 'Y', code: '21' }, { class: 'KLS XII', subject: 'V', code: '21' }] },
-            { day: 'KAMIS', time: '11.50-12.30', cells: [{ class: 'KLS X', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XI', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XII', subject: 'ISTIRAHAT', code: '' }] },
-            { day: 'KAMIS', time: '12.30-13.10', cells: [{ class: 'KLS X', subject: 'Z', code: '4' }, { class: 'KLS XI', subject: 'Y', code: '21' }, { class: 'KLS XII', subject: 'D', code: '11' }] },
-            { day: 'KAMIS', time: '13.10-13.50', cells: [{ class: 'KLS X', subject: 'Z', code: '4' }, { class: 'KLS XI', subject: 'Y', code: '21' }, { class: 'KLS XII', subject: 'D', code: '11' }] },
-            { day: 'KAMIS', time: '13.50-14.30', cells: [{ class: 'KLS X', subject: 'Z', code: '4' }, { class: 'KLS XI', subject: 'Y', code: '21' }, { class: 'KLS XII', subject: 'E', code: '2' }] },
-            { day: 'KAMIS', time: '14.30-15.10', cells: [{ class: 'KLS X', subject: 'Z', code: '4' }, { class: 'KLS XI', subject: 'Y', code: '21' }, { class: 'KLS XII', subject: 'E', code: '2' }] },
-
-            // Jumat (Friday)
-            { day: 'JUMAT', time: '07.00-07.30', cells: [{ class: 'KLS X', subject: 'SHOLAT DHUHA / CERAMAH', code: '' }, { class: 'KLS XI', subject: 'SHOLAT DHUHA / CERAMAH', code: '' }, { class: 'KLS XII', subject: 'SHOLAT DHUHA / CERAMAH', code: '' }] },
-            { day: 'JUMAT', time: '07.30-08.10', cells: [{ class: 'KLS X', subject: 'I', code: '8' }, { class: 'KLS XI', subject: 'W', code: '26' }, { class: 'KLS XII', subject: 'G', code: '6' }] },
-            { day: 'JUMAT', time: '08.10-08.50', cells: [{ class: 'KLS X', subject: 'I', code: '8' }, { class: 'KLS XI', subject: 'W', code: '26' }, { class: 'KLS XII', subject: 'G', code: '6' }] },
-            { day: 'JUMAT', time: '08.50-09.30', cells: [{ class: 'KLS X', subject: 'I', code: '8' }, { class: 'KLS XI', subject: 'W', code: '25' }, { class: 'KLS XII', subject: 'L', code: '12' }] },
-            { day: 'JUMAT', time: '09.30-10.10', cells: [{ class: 'KLS X', subject: 'I', code: '8' }, { class: 'KLS XI', subject: 'W', code: '25' }, { class: 'KLS XII', subject: 'L', code: '12' }] },
-            { day: 'JUMAT', time: '10.10-10.30', cells: [{ class: 'KLS X', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XI', subject: 'ISTIRAHAT', code: '' }, { class: 'KLS XII', subject: 'ISTIRAHAT', code: '' }] },
-            { day: 'JUMAT', time: '10.30-11.10', cells: [{ class: 'KLS X', subject: 'O', code: '14' }, { class: 'KLS XI', subject: 'U', code: '23' }, { class: 'KLS XII', subject: 'V', code: '22' }] },
-            { day: 'JUMAT', time: '11.10-11.50', cells: [{ class: 'KLS X', subject: 'O', code: '14' }, { class: 'KLS XI', subject: 'U', code: '23' }, { class:
+    </script>
+</body>
+</html>
